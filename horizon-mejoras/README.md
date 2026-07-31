@@ -89,7 +89,8 @@ oculto esperando una animación que no va a correr.
 | Texto revelado palabra por palabra tras una máscara | `h1`, `h2`, `h3` fuera de header, pie y diálogos |
 | Entrada con desplazamiento y zoom, en cascada | Tarjetas de producto y de colección |
 | Parallax | Imagen del hero y tarjetas de categoría |
-| Secciones apiladas | La frase de marca se fija y Accesorios sube encima |
+| Secciones apiladas | El hero se fija y la página sube encima; más abajo, la frase de marca hace lo mismo |
+| Desvanecido del hero | Su contenido sube y se desvanece al ritmo del scroll |
 
 El logotipo gigante del cierre es un bloque `jumbo-text` en su propia sección
 del pie (`brand_wordmark`), colocada debajo de los enlaces legales. Ese bloque
@@ -99,7 +100,8 @@ edita desde el editor; es literal, no acepta `{{ shop.name }}` porque el
 ajuste es un textarea y no evalúa Liquid.
 
 **Cuidado con el apilado.** Se hace con selectores de ID en el CSS
-(`#shopify-section-statement_section` y `#shopify-section-col_accesorios`).
+(`#shopify-section-hero_main`, `#shopify-section-statement_section` y los
+z-index de las secciones intermedias).
 Esos IDs salen de las claves de sección en `templates/index.json`. Si borras
 o recreas alguna de esas dos secciones desde el editor, Shopify le asigna un
 ID nuevo y el apilado deja de aplicarse en silencio — no rompe nada, sólo

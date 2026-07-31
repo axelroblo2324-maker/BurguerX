@@ -228,6 +228,17 @@ def build_product():
     details = d["sections"]["main"]["blocks"]["product-details"]
     b = details["blocks"]
 
+    # Galería: una sola columna vertical, como la referencia. Estaba en
+    # rejilla de dos columnas, que parte la secuencia de la prenda.
+    g = d["sections"]["main"]["blocks"]["media-gallery"]["settings"]
+    g["media_columns"] = "one"
+    g["large_first_image"] = False        # sólo aplica con dos columnas
+    # "portrait" no es un valor del esquema: la proporción vertical es
+    # "1/1.25". Con el valor inválido no se aplicaba ninguna proporción.
+    g["aspect_ratio"] = "1/1.25"
+    # Igual con "none", que no está entre los iconos de carrusel.
+    g["icons_style"] = "arrow"
+
     # Muestras de color visuales en lugar de botones de texto.
     b["variant_picker"]["settings"]["show_swatches"] = True
 

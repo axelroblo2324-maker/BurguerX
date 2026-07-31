@@ -127,6 +127,40 @@
     });
   }
 
+  /* ----------------------------------------------- 4. desvanecido del hero */
+
+  // El hero queda fijo por CSS y la página sube encima. Para que no se lea
+  // el título del hero a través del hueco mientras eso pasa, su contenido
+  // se desvanece y sube al mismo ritmo del scroll.
+  var heroContenido = null;
+
+  function prepararHero() {
+    if (heroContenido) return;
+    var hero = document.getElementById('shopify-section-hero_main');
+    if (!hero) return;
+    heroContenido =
+      hero.querySelector('.hero__content-wrapper') ||
+      hero.querySelector('.hero__content');
+    if (heroContenido) heroContenido.classList.add('lu-hero-content');
+  }
+
+  function pintarHero() {
+    if (!heroContenido) return;
+    var hero = document.getElementById('shopify-section-hero_main');
+    if (!hero) return;
+
+    var caja = hero.getBoundingClientRect();
+    // Termina de desvanecerse a media altura del hero: pasado ese punto ya
+    // está tapado por la sección siguiente y seguir animando no se ve.
+    var recorrido = caja.height * 0.5;
+    var avance = recorrido > 0 ? -caja.top / recorrido : 0;
+    avance = Math.min(1, Math.max(0, avance));
+
+    heroContenido.style.opacity = String(1 - avance);
+    heroContenido.style.transform =
+      'translate3d(0, ' + (-avance * 48).toFixed(1) + 'px, 0)';
+  }
+
   function pintarParallax() {
     enCola = false;
     var alto = window.innerHeight;
@@ -141,6 +175,8 @@
       var desfase = (centro - alto / 2) / alto;
       img.style.setProperty('--lu-py', (desfase * -16).toFixed(1) + 'px');
     });
+
+    pintarHero();
   }
 
   function alHacerScroll() {
@@ -163,6 +199,7 @@
     });
 
     recogerCapas(ambito === document ? null : ambito);
+    prepararHero();
     pintarParallax();
   }
 

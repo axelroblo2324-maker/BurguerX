@@ -43,6 +43,20 @@ barra promete un envío gratis que el checkout no va a dar.
 Estos no viven en archivos del tema, así que `build.py` no los reproduce. Se
 hicieron por la API de Shopify y quedan registrados aquí:
 
+- **Publicación de las colecciones.** Las cinco (`nueva-coleccion`, `mujeres`,
+  `hombres`, `accesorios`, `mas-vendidos`) existían con sus productos dentro
+  pero **no estaban publicadas en ningún canal de venta**
+  (`resourcePublicationsCount: 0`). En Liquid una colección sin publicar
+  resuelve a nulo, así que Horizon caía a los productos de ejemplo: toda la
+  portada salía con "Nombre del producto — $19.99" y playeras de relleno, y
+  los cinco enlaces del menú de categorías daban 404.
+
+  Ya están publicadas en Tienda online y Shop. Los 22 productos nunca
+  tuvieron este problema: estaban ACTIVE y en cuatro canales.
+
+  Si vuelves a ver placeholders en la tienda, esto es lo primero que hay que
+  revisar — no es el tema, es la publicación del recurso.
+
 - **Imágenes de colección** para las cinco colecciones, tomadas de un producto
   representativo de cada una. Antes estaban vacías.
 - **Menú `main-menu-1`** reescrito a las cinco categorías reales (Nuevos

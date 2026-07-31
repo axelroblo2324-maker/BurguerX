@@ -68,6 +68,33 @@ hicieron por la API de Shopify y quedan registrados aquí:
   activo**, así que el cambio ya se ve en la tienda publicada. Es aditivo (no
   se quitó nada), pero conviene saberlo.
 
+## Animaciones
+
+Viven en `theme/assets/levelup-motion.css` y `.js`. La sección "Animaciones
+LevelUP" del pie sólo los carga, así que se pueden apagar desde el editor sin
+tocar código. Todo va dentro de `prefers-reduced-motion: no-preference`: quien
+pida menos movimiento ve la página estática y completa, nunca con contenido
+oculto esperando una animación que no va a correr.
+
+| Efecto | Dónde |
+|---|---|
+| Texto revelado palabra por palabra tras una máscara | `h1`, `h2`, `h3` fuera de header, pie y diálogos |
+| Entrada con desplazamiento y zoom, en cascada | Tarjetas de producto y de colección |
+| Parallax | Imagen del hero y tarjetas de categoría |
+| Secciones apiladas | La frase de marca se fija y Accesorios sube encima |
+
+**Cuidado con el apilado.** Se hace con selectores de ID en el CSS
+(`#shopify-section-statement_section` y `#shopify-section-col_accesorios`).
+Esos IDs salen de las claves de sección en `templates/index.json`. Si borras
+o recreas alguna de esas dos secciones desde el editor, Shopify le asigna un
+ID nuevo y el apilado deja de aplicarse en silencio — no rompe nada, sólo
+deja de verse. Habría que actualizar el CSS con los IDs nuevos.
+
+Dos detalles del texto: los títulos que llevan marcado dentro (un enlace, un
+`<strong>`) se saltan a propósito, porque reescribir su contenido lo
+destruiría; y los de más de 40 palabras también, porque el escalonado se
+volvería absurdo.
+
 ## Qué falta verificar
 
 La revisión visual en 390×844, 768×1024 y 1440×900 no se pudo hacer: el dominio

@@ -1,0 +1,81 @@
+/* ==========================================================================
+   LevelUP — sistema de movimiento
+
+   Cuatro efectos, todos dentro de prefers-reduced-motion: no-preference.
+   Quien pida menos movimiento en su sistema ve la página completamente
+   estática, sin nada oculto: los estados iniciales sólo existen dentro de
+   la media query, así que si no aplica, el contenido ya está visible.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* --- 1. Revelado de texto tipo cortina ---------------------------------
+     Cada palabra va dentro de una máscara con overflow oculto y sube desde
+     abajo. El escalonado es por palabra, con tope para que un título largo
+     no tarde una eternidad en terminar. */
+
+  .lu-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    /* Sin esto, las tildes y las colas de la g/y se recortan. */
+    padding-block-end: 0.08em;
+    margin-block-end: -0.08em;
+  }
+
+  .lu-word > span {
+    display: inline-block;
+    transform: translateY(110%);
+    transition: transform 720ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition-delay: var(--lu-d, 0ms);
+  }
+
+  .lu-split.lu-in .lu-word > span {
+    transform: none;
+  }
+
+  /* --- 2. Entrada de tarjetas con zoom ----------------------------------- */
+
+  .lu-rise {
+    opacity: 0;
+    transform: translateY(26px) scale(0.985);
+    transition:
+      opacity 620ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition-delay: var(--lu-d, 0ms);
+  }
+
+  .lu-rise.lu-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* --- 3. Parallax -------------------------------------------------------
+     La imagen se escala un poco para tener margen por donde moverse; sin
+     ese margen el desplazamiento dejaría franjas vacías arriba o abajo. */
+
+  .lu-par {
+    overflow: hidden;
+  }
+
+  .lu-par-img {
+    transform: translate3d(0, var(--lu-py, 0px), 0) scale(1.08);
+    will-change: transform;
+  }
+
+  /* --- 4. Secciones que se apilan ----------------------------------------
+     La frase de marca se queda fija y la sección siguiente sube encima.
+     Un elemento sticky es posicionado y por defecto pinta por encima de sus
+     hermanos estáticos, así que al de abajo hay que darle z-index para que
+     efectivamente lo tape. */
+
+  #shopify-section-statement_section {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+  }
+
+  #shopify-section-col_accesorios {
+    position: relative;
+    z-index: 1;
+  }
+}

@@ -420,6 +420,16 @@ def build_footer():
     if "payment_icons" not in order:
         order = list(order) + ["payment_icons"]
     foot["block_order"] = order
+
+    # Las animaciones vivían como CSS y JS incrustados en un ajuste de texto:
+    # imposibles de leer y de mantener. Pasan a assets/ y esta sección sólo
+    # los carga. Sigue siendo una sección del editor, así que se puede
+    # desactivar sin tocar código.
+    d["sections"]["levelup_animations"]["settings"]["custom_liquid"] = (
+        "{{ 'levelup-motion.css' | asset_url | stylesheet_tag }}\n"
+        "<script src=\"{{ 'levelup-motion.js' | asset_url }}\" defer></script>"
+    )
+    d["sections"]["levelup_animations"]["name"] = "Animaciones LevelUP"
     return d
 
 

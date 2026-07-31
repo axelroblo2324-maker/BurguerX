@@ -28,10 +28,38 @@ STYLE_CLASSES = {"button", "button-secondary", "button-unstyled", "button-custom
 STYLE_ALIAS = {"link": "button-unstyled", "button-primary": "button"}
 
 
+# typography-style.liquid compone las variables así:
+#
+#   --line-height:   var(--line-height--{tipo}-{line_height})
+#   --letter-spacing: var(--letter-spacing--{tipo}-{letter_spacing})
+#
+# El prefijo display-/heading-/body- lo pone el snippet según el tamaño, así
+# que el ajuste sólo debe traer el sufijo. Un "display-tight" guardado
+# produce var(--line-height--display-display-tight), que no existe, y el
+# navegador se queda con el valor heredado.
+ESCALA = {"tight", "normal", "loose"}
+PREFIJOS = ("display-", "heading-", "body-")
+ESCALA_ALIAS = {"wide": "loose", "narrow": "tight"}
+
+
+def _escala(valor):
+    """Deja sólo el sufijo válido de un line_height o letter_spacing."""
+    if not isinstance(valor, str):
+        return valor
+    limpio = valor
+    for prefijo in PREFIJOS:
+        if limpio.startswith(prefijo):
+            limpio = limpio[len(prefijo):]
+            break
+    limpio = ESCALA_ALIAS.get(limpio, limpio)
+    return limpio if limpio in ESCALA else valor
+
+
 def normalizar_estilos(nodo, ruta=""):
     """Corrige alias conocidos y revienta ante un valor que no existe."""
     for bid, bloque in (nodo or {}).items():
         settings = bloque.get("settings", {})
+
         sc = settings.get("style_class")
         if sc is not None:
             if sc in STYLE_ALIAS:
@@ -41,6 +69,20 @@ def normalizar_estilos(nodo, ruta=""):
                     f"style_class desconocido en {ruta}/{bid}: {sc!r}. "
                     f"Válidos: {sorted(STYLE_CLASSES)}"
                 )
+
+        for clave in ("line_height", "letter_spacing"):
+            if clave in settings:
+                settings[clave] = _escala(settings[clave])
+
+        # La variante en columna no acepta space-between; sólo la de fila.
+        col = settings.get("horizontal_alignment_flex_direction_column")
+        if col == "space-between":
+            settings["horizontal_alignment_flex_direction_column"] = "flex-start"
+
+        # product-title toma el título del producto; no tiene ajuste de texto.
+        if bloque.get("type") == "product-title":
+            settings.pop("text", None)
+
         normalizar_estilos(bloque.get("blocks"), f"{ruta}/{bid}")
 
 

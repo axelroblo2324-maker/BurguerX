@@ -16,7 +16,15 @@ tocó en ningún momento.
 
 ```bash
 python3 build.py     # regenera theme/ desde actual/
+python3 validar.py   # contrasta lo generado contra los esquemas del tema
 ```
+
+`validar.py` existe porque Shopify **no avisa** cuando un ajuste trae un valor
+que su esquema no acepta: simplemente no lo aplica. Así se colaron un botón
+del hero sin estilo y tres `letter_spacing` que nunca llegaron al CSS, y los
+tres sólo se vieron abriendo la tienda en un teléfono. El script compara cada
+valor contra `schemas/`, extraídos del propio tema. Córrelo después de cada
+`build.py`.
 
 ## El umbral de envío gratis
 

@@ -38,6 +38,22 @@ Shopify. El 1 es código y hay que cambiarlo en el archivo.
 **Si cambias la tarifa de envío en Shopify, actualiza los seis.** Si no, la
 barra promete un envío gratis que el checkout no va a dar.
 
+## Cambios fuera del tema
+
+Estos no viven en archivos del tema, así que `build.py` no los reproduce. Se
+hicieron por la API de Shopify y quedan registrados aquí:
+
+- **Imágenes de colección** para las cinco colecciones, tomadas de un producto
+  representativo de cada una. Antes estaban vacías.
+- **Menú `main-menu-1`** reescrito a las cinco categorías reales (Nuevos
+  Ingresos, Mujeres, Hombres, Accesorios, Más Vendidos). Estaba huérfano; el
+  header del borrador ahora apunta a él. `main-menu` no se tocó, así que el
+  tema activo conserva su navegación.
+- **Menú `footer`** ampliado de sólo "Buscar" a Sobre Nosotros, Contacto,
+  Envíos, Preguntas Frecuentes y Buscar. ⚠️ Este menú **sí lo usa el tema
+  activo**, así que el cambio ya se ve en la tienda publicada. Es aditivo (no
+  se quitó nada), pero conviene saberlo.
+
 ## Qué falta verificar
 
 La revisión visual en 390×844, 768×1024 y 1440×900 no se pudo hacer: el dominio

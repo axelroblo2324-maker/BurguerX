@@ -275,6 +275,10 @@ def build_header():
         "ann_pay": msg("Pago seguro · Envíos a todo México"),
     }
     ann["block_order"] = ["ann_ship", "ann_ret", "ann_pay"]
+
+    # El header apuntaba a 'main-menu' (Inicio / Catálogo / Contacto), que no
+    # deja llegar a ninguna categoría. 'main-menu-1' tiene las cinco reales.
+    d["sections"]["header_section"]["blocks"]["header-menu"]["settings"]["menu"] = "main-menu-1"
     return d
 
 

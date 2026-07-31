@@ -15,7 +15,7 @@
         "products_per_page": 24,
         "columns_desktop": 4,
         "columns_tablet": 3,
-        "columns_mobile": 2,
+        "columns_mobile": "2",
         "image_ratio": "tall",
         "enable_filtering": true,
         "enable_sorting": true,
@@ -24,5 +24,8 @@
       }
     }
   },
-  "order": ["banner", "product-grid"]
+  "order": [
+    "banner",
+    "product-grid"
+  ]
 }

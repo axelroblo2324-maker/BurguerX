@@ -5,27 +5,41 @@
       "blocks": {
         "vendor": {
           "type": "vendor",
-          "settings": { "placement": "info" }
+          "settings": {
+            "placement": "info"
+          }
         },
         "title": {
           "type": "title",
-          "settings": { "placement": "info" }
+          "settings": {
+            "placement": "info"
+          }
         },
         "text": {
           "type": "text",
-          "settings": { "placement": "info" }
+          "settings": {
+            "placement": "info"
+          }
         },
         "price": {
           "type": "price",
-          "settings": { "show_tax_note": true, "placement": "purchase" }
+          "settings": {
+            "show_tax_note": true,
+            "placement": "purchase"
+          }
         },
         "variant_picker": {
           "type": "variant_picker",
-          "settings": { "placement": "purchase" }
+          "settings": {
+            "placement": "purchase"
+          }
         },
         "inventory": {
           "type": "inventory",
-          "settings": { "low_stock_threshold": 8, "placement": "purchase" }
+          "settings": {
+            "low_stock_threshold": 8,
+            "placement": "purchase"
+          }
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -37,7 +51,9 @@
         },
         "sku": {
           "type": "sku",
-          "settings": { "placement": "purchase" }
+          "settings": {
+            "placement": "purchase"
+          }
         },
         "description": {
           "type": "description",
@@ -76,7 +92,9 @@
         },
         "share": {
           "type": "share",
-          "settings": { "placement": "extras" }
+          "settings": {
+            "placement": "extras"
+          }
         }
       },
       "block_order": [
@@ -109,9 +127,12 @@
         "heading": "También te puede gustar",
         "products_to_show": 4,
         "padding_top": 100,
-        "padding_bottom": 110
+        "padding_bottom": 112
       }
     }
   },
-  "order": ["main", "recommendations"]
+  "order": [
+    "main",
+    "recommendations"
+  ]
 }

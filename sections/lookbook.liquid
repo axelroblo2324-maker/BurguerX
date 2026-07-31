@@ -235,14 +235,15 @@
           "default": 0
         },
         {
-          "type": "range",
+          "type": "select",
           "id": "width_mobile",
           "label": "Ancho en celular",
           "info": "Sobre una rejilla de 2 columnas.",
-          "min": 1,
-          "max": 2,
-          "step": 1,
-          "default": 1
+          "options": [
+            { "value": "1", "label": "Media fila" },
+            { "value": "2", "label": "Fila completa" }
+          ],
+          "default": "1"
         }
       ]
     },
@@ -308,13 +309,14 @@
           "default": 0
         },
         {
-          "type": "range",
+          "type": "select",
           "id": "width_mobile",
           "label": "Ancho en celular",
-          "min": 1,
-          "max": 2,
-          "step": 1,
-          "default": 2
+          "options": [
+            { "value": "1", "label": "Media fila" },
+            { "value": "2", "label": "Fila completa" }
+          ],
+          "default": "2"
         }
       ]
     },
@@ -377,13 +379,14 @@
           "default": 0
         },
         {
-          "type": "range",
+          "type": "select",
           "id": "width_mobile",
           "label": "Ancho en celular",
-          "min": 1,
-          "max": 2,
-          "step": 1,
-          "default": 2
+          "options": [
+            { "value": "1", "label": "Media fila" },
+            { "value": "2", "label": "Fila completa" }
+          ],
+          "default": "2"
         }
       ]
     }

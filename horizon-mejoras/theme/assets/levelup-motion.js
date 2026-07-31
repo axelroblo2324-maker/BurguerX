@@ -136,6 +136,40 @@
     });
   }
 
+  /* --------------------------------------- 4. barra de compra en celular */
+
+  // Horizon muestra su barra fija cuando el botón real sale de pantalla.
+  // Con la galería en vertical ese botón está debajo de todas las fotos, así
+  // que se adelanta: aparece al pasar la primera foto y se retira al llegar
+  // al bloque de datos, para no duplicar el botón que ya está a la vista.
+  var enCelular = window.matchMedia('(max-width: 749px)');
+  var barra = null;
+  var detalles = null;
+  var primeraFoto = null;
+
+  function prepararBarra() {
+    barra = document.querySelector('sticky-add-to-cart');
+    detalles = document.querySelector('.product-details');
+    primeraFoto = document.querySelector(GALERIA);
+  }
+
+  function pintarBarra() {
+    if (!barra || !detalles) return;
+
+    if (!enCelular.matches) {
+      barra.classList.remove('lu-bar-on');
+      return;
+    }
+
+    var alto = window.innerHeight;
+    var pasoLaFoto = primeraFoto
+      ? primeraFoto.getBoundingClientRect().bottom < alto * 0.5
+      : window.scrollY > alto * 0.5;
+    var datosALaVista = detalles.getBoundingClientRect().top < alto * 0.85;
+
+    barra.classList.toggle('lu-bar-on', pasoLaFoto && !datosALaVista);
+  }
+
   function pintarParallax() {
     enCola = false;
     var alto = window.innerHeight;
@@ -150,6 +184,8 @@
       var desfase = (centro - alto / 2) / alto;
       img.style.setProperty('--lu-py', (desfase * -18).toFixed(1) + 'px');
     });
+
+    pintarBarra();
   }
 
   function alHacerScroll() {
@@ -180,6 +216,7 @@
     });
 
     recogerCapas(ambito === document ? null : ambito);
+    prepararBarra();
     pintarParallax();
   }
 

@@ -76,6 +76,22 @@
     }
   }
 
+  /* --- Barra de compra adelantada en celular -----------------------------
+     Con la galería en vertical, el botón de compra real queda debajo de
+     todas las fotos: en una prenda con 16 imágenes se puede recorrer medio
+     producto sin ver nunca el precio.
+
+     Horizon ya trae la barra fija con foto, título, variante, precio y
+     botón, pero la muestra sólo cuando el botón real sale de pantalla. El
+     JS de este mismo paquete la adelanta poniendo .lu-bar-on. */
+
+  @media screen and (max-width: 749px) {
+    sticky-add-to-cart[data-variant-available='true'].lu-bar-on .sticky-add-to-cart__bar {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0%);
+    }
+  }
+
   /* --- Parallax dentro de cada foto --------------------------------------
      La imagen se escala un poco para tener margen por donde moverse; sin
      ese margen el desplazamiento dejaría franjas vacías arriba o abajo.

@@ -109,6 +109,15 @@ Las animaciones apuntan sólo a `.media-gallery__grid > .product-media-container
 y no a `.product-media-container` a secas: si no, se animarían también las
 copias del carrusel, que están ocultas.
 
+**Barra de compra adelantada en celular.** Con la galería en vertical, el
+botón de compra real queda debajo de todas las fotos: en el Pantalón Sastre
+son 16, y se puede recorrer medio producto sin ver nunca el precio. Horizon
+ya trae una barra fija con foto, título, variante, precio y botón, pero la
+muestra sólo cuando el botón real sale de pantalla, que aquí es demasiado
+tarde. El JS la adelanta con `.lu-bar-on`: aparece al pasar la primera foto
+y se retira al llegar al bloque de datos, para no duplicar un botón que ya
+está a la vista. Sólo por debajo de 750px.
+
 La primera foto de la galería se salta a propósito: es la imagen que carga
 con prioridad alta y marca el LCP, y arrancarla en opacidad cero retrasaría
 lo que el visitante percibe como "ya cargó".

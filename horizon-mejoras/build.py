@@ -103,6 +103,37 @@ def trust_item(icon_name, label):
     )
 
 
+def plain_section(name, blocks, order, bg="", pt=48, pb=48, halign="center", gap=24):
+    """Sección genérica de Horizon.
+
+    Se usa en lugar de 'media-with-content' porque esa sección siempre exige
+    una imagen: si no se le da una, pinta un placeholder gigante de playera.
+    'section' acepta bloques @theme sin media.
+    """
+    return {
+        "type": "section",
+        "blocks": blocks,
+        "block_order": order,
+        "name": name,
+        "settings": {
+            "content_direction": "column", "vertical_on_mobile": True,
+            "horizontal_alignment": halign, "vertical_alignment": "center",
+            "align_baseline": False,
+            "horizontal_alignment_flex_direction_column": halign,
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": gap, "section_width": "page-width",
+            "section_height_custom": 50,
+            "background_media": "none", "background_color": bg,
+            "video_position": "cover", "background_image_position": "cover",
+            "border": "none", "border_width": 1, "border_opacity": 100,
+            "border_color": "", "border_radius": 0,
+            "toggle_overlay": False, "overlay_color": "#00000026",
+            "overlay_style": "solid", "gradient_direction": "to top",
+            "padding-block-start": pt, "padding-block-end": pb,
+        },
+    }
+
+
 def acc_row(heading, children, order, open_default=False, icon_name="none"):
     return {
         "type": "_accordion-row",
@@ -279,6 +310,11 @@ def build_header():
     # El header apuntaba a 'main-menu' (Inicio / Catálogo / Contacto), que no
     # deja llegar a ninguna categoría. 'main-menu-1' tiene las cinco reales.
     d["sections"]["header_section"]["blocks"]["header-menu"]["settings"]["menu"] = "main-menu-1"
+
+    # Con el header transparente sobre el hero, Horizon usa por defecto el
+    # color de texto de la página (negro) y el logo y los iconos quedaban
+    # ilegibles sobre una foto oscura.
+    d["sections"]["header_section"]["settings"]["text_color_transparent_home"] = "#FFFFFF"
     return d
 
 
@@ -306,50 +342,20 @@ def build_cart():
 
 def build_collection():
     d = load("collection.json")
-    d["sections"]["trust_strip"] = {
-        "type": "media-with-content",
-        "blocks": {
-            "media": {
-                "type": "_media-without-appearance", "name": "Media",
-                "static": True,
-                "settings": {
-                    "media_type": "image", "link": "", "video_loop": True,
-                    "video_autoplay": False, "image_position": "cover",
-                    "video_position": "cover",
-                },
-                "blocks": {},
+    d["sections"]["trust_strip"] = plain_section(
+        "Garantías",
+        {"row": group(
+            {
+                "t1": trust_item("truck", f"Envío gratis desde ${UMBRAL}"),
+                "t2": trust_item("return", "30 días para cambios"),
+                "t3": trust_item("lock", "Pago 100% seguro"),
             },
-            "content": {
-                "type": "_content-without-appearance", "name": "Contenido",
-                "static": True,
-                "settings": {
-                    "horizontal_alignment_flex_direction_column": "center",
-                    "vertical_alignment_flex_direction_column": "center",
-                    "gap": 16,
-                },
-                "blocks": {
-                    "row": group(
-                        {
-                            "t1": trust_item("truck", f"Envío gratis desde ${UMBRAL}"),
-                            "t2": trust_item("return", "30 días para cambios"),
-                            "t3": trust_item("lock", "Pago 100% seguro"),
-                        },
-                        ["t1", "t2", "t3"], direction="row", gap=16,
-                        halign="space-between", valign="flex-start",
-                        vertical_on_mobile=False,
-                    )
-                },
-                "block_order": ["row"],
-            },
-        },
-        "name": "Garantías",
-        "settings": {
-            "media_position": "left", "media_width": "wide",
-            "media_height": "auto", "section_width": "page-width",
-            "extend_media": False, "background_color": "#f5f5f5",
-            "padding-block-start": 24, "padding-block-end": 24,
-        },
-    }
+            ["t1", "t2", "t3"], direction="row", gap=16,
+            halign="space-between", valign="flex-start",
+            vertical_on_mobile=False,
+        )},
+        ["row"], bg="#F1F1F1", pt=20, pb=20, gap=0,
+    )
     d["order"] = ["collection_hero", "trust_strip", "main"]
     return d
 
@@ -394,51 +400,43 @@ def build_index():
     with open(os.path.join(os.path.dirname(__file__), "index.json"), encoding="utf-8") as fh:
         d = json.load(fh)
 
-    d["sections"]["trust_band"] = {
-        "type": "media-with-content",
-        "blocks": {
-            "media": {
-                "type": "_media-without-appearance", "name": "Media",
-                "static": True,
-                "settings": {
-                    "media_type": "image", "link": "", "video_loop": True,
-                    "video_autoplay": False, "image_position": "cover",
-                    "video_position": "cover",
-                },
-                "blocks": {},
+    # "button-primary" no es una clase válida en Horizon (button /
+    # button-secondary / button-unstyled / button-custom). Al no serlo, el
+    # botón caía a texto sin fondo: gris oscuro sobre una foto oscura.
+    boton = d["sections"]["hero_main"]["blocks"]["btn_primary"]["settings"]
+    boton["style_class"] = "button-custom"
+    boton["custom_button_background"] = "#FFFFFF"
+    boton["custom_button_text"] = "#0A0A0A"
+    boton["custom_button_border"] = "#FFFFFF"
+
+    d["sections"]["trust_band"] = plain_section(
+        "Garantías",
+        {"row": group(
+            {
+                "t1": trust_item("truck", f"Envío gratis desde ${UMBRAL}"),
+                "t2": trust_item("return", "30 días para cambios"),
+                "t3": trust_item("lock", "Pago 100% seguro"),
+                "t4": trust_item("stopwatch", "Entrega en 1–7 días"),
             },
-            "content": {
-                "type": "_content-without-appearance", "name": "Contenido",
-                "static": True,
-                "settings": {
-                    "horizontal_alignment_flex_direction_column": "center",
-                    "vertical_alignment_flex_direction_column": "center",
-                    "gap": 16,
-                },
-                "blocks": {
-                    "row": group(
-                        {
-                            "t1": trust_item("truck", f"Envío gratis desde ${UMBRAL}"),
-                            "t2": trust_item("return", "30 días para cambios"),
-                            "t3": trust_item("lock", "Pago 100% seguro"),
-                            "t4": trust_item("stopwatch", "Entrega en 1–7 días"),
-                        },
-                        ["t1", "t2", "t3", "t4"], direction="row", gap=16,
-                        halign="space-between", valign="flex-start",
-                        vertical_on_mobile=False,
-                    )
-                },
-                "block_order": ["row"],
-            },
-        },
-        "name": "Garantías",
-        "settings": {
-            "media_position": "left", "media_width": "wide",
-            "media_height": "auto", "section_width": "page-width",
-            "extend_media": False, "background_color": "#f5f5f5",
-            "padding-block-start": 20, "padding-block-end": 20,
-        },
-    }
+            ["t1", "t2", "t3", "t4"], direction="row", gap=16,
+            halign="space-between", valign="flex-start",
+            vertical_on_mobile=False,
+        )},
+        ["row"], bg="#F1F1F1", pt=20, pb=20, gap=0,
+    )
+
+    # Beneficios, frase de marca y FAQ también usaban media-with-content sin
+    # imagen. Se conserva su contenido y se sube un nivel al quitar la media.
+    for sid, pad in (("benefits_section", 56), ("statement_section", 96),
+                     ("faq_section", 56)):
+        vieja = d["sections"][sid]
+        contenido = vieja["blocks"]["content"]
+        d["sections"][sid] = plain_section(
+            vieja.get("name", sid), contenido["blocks"],
+            contenido["block_order"],
+            bg=vieja["settings"].get("background_color", ""),
+            pt=pad, pb=pad,
+        )
 
     # collection-list arma las tarjetas iterando el ajuste collection_list con
     # un bloque estático _collection-card; no lleva una tarjeta por colección.

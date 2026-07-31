@@ -10,7 +10,7 @@ tocó en ningún momento.
 |---|---|
 | `actual/` | Estado de las plantillas **antes** de estos cambios. Es la base desde la que trabaja el generador, no lo borres. |
 | `theme/` | Lo que quedó subido al borrador. Refleja 1:1 los archivos del tema. |
-| `build.py` | Genera `theme/` a partir de `actual/`. Idempotente: se puede volver a correr. |
+| `build.py` | Genera `theme/` a partir de `actual/`. Idempotente: se puede volver a correr. Ojo: **no** regenera los archivos parcheados a mano (`snippets/`, `templates/404.json`, `list-collections.json`, `page.contact.json`); esos se editaron sobre la copia del tema. |
 | `index.json` | Portada base que usa `build.py` (paso previo, con los productos ya conectados). |
 | `settings_data.json` | Ajustes de tipografía ya aplicados al borrador. |
 

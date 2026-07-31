@@ -1,0 +1,239 @@
+{{ 'home.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign collection = collections[section.settings.collection]
+  assign limit = section.settings.products_to_show
+  assign initial = section.settings.products_initial | at_most: limit
+  assign products = collection.products
+
+  assign section_class = 'section'
+  if section.settings.background == 'warm'
+    assign section_class = section_class | append: ' section--warm'
+  endif
+-%}
+
+<div
+  class="{{ section_class }}"
+  style="--section-padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;"
+>
+  <div class="page-width">
+    <div class="editorial-header">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow" data-reveal>{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="h1 editorial-header__title" data-reveal style="--reveal-delay: 60ms;">
+            {{ section.settings.heading | escape }}
+          </h2>
+        {%- endif -%}
+      </div>
+
+      <div class="editorial-header__aside">
+        {%- if section.settings.description != blank -%}
+          <p class="text-small text-muted" data-reveal style="--reveal-delay: 120ms;">
+            {{ section.settings.description | escape }}
+          </p>
+        {%- endif -%}
+        {%- if section.settings.show_view_all and collection != blank -%}
+          <a
+            href="{{ collection.url }}"
+            class="link-underline large-hide"
+            data-reveal
+            style="--reveal-delay: 160ms;"
+          >
+            {{ section.settings.view_all_label | default: 'Ver todos' | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if products.size > 0 -%}
+      <show-more data-initial="{{ initial }}">
+        <ul
+          class="editorial-grid{% if section.settings.stagger %} editorial-grid--staggered{% endif %}"
+          data-show-more-list
+        >
+          {%- for product in products limit: limit -%}
+            <li
+              class="editorial-grid__item{% if forloop.index > initial and section.settings.enable_show_more %} is-hidden-item{% endif %}"
+              {% if forloop.index > initial and section.settings.enable_show_more %}hidden{% endif %}
+            >
+              {% render 'product-card',
+                product: product,
+                image_loading: 'lazy',
+                image_ratio: section.settings.image_ratio,
+                sizes: '(min-width: 990px) 23vw, (min-width: 750px) 31vw, 46vw'
+              %}
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- if section.settings.enable_show_more and products.size > initial -%}
+          <div class="editorial-footer">
+            <button type="button" class="button button--outline button--compact" data-show-more-button>
+              {{ section.settings.show_more_label | default: 'Ver más' | escape }}
+            </button>
+          </div>
+        {%- endif -%}
+      </show-more>
+
+      {%- if section.settings.show_view_all and collection != blank -%}
+        <div class="editorial-footer small-hide medium-hide">
+          <a href="{{ collection.url }}" class="button button--outline button--compact">
+            {{ section.settings.view_all_label | default: 'Ver todos' | escape }}
+          </a>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <ul class="editorial-grid">
+        {%- for i in (1..4) -%}
+          <li class="editorial-grid__item">
+            <div class="product-card">
+              <div class="product-card__media media media--tall">
+                {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+              <div class="product-card__info">
+                <h3 class="product-card__title">{{ 'onboarding.product_title' | t }}</h3>
+                <p class="product-card__price">{{ 1990 | money }}</p>
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Nuevos lanzamientos",
+  "tag": "section",
+  "class": "section-featured-collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta pequeña",
+      "default": "Recién llegado"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Nuevos lanzamientos"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Texto editorial"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Productos a mostrar",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "products_initial",
+      "label": "Productos visibles al inicio",
+      "info": "Solo aplica si activas el botón «Ver más».",
+      "min": 4,
+      "max": 16,
+      "step": 4,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_show_more",
+      "label": "Mostrar botón «Ver más»",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "show_more_label",
+      "label": "Texto del botón «Ver más»",
+      "default": "Ver más"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Mostrar enlace a la colección completa",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "Texto del enlace",
+      "default": "Ver todos"
+    },
+    {
+      "type": "header",
+      "content": "Estilo"
+    },
+    {
+      "type": "checkbox",
+      "id": "stagger",
+      "label": "Desfase editorial entre columnas",
+      "info": "Da distintos espacios verticales a cada columna.",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Proporción de imagen",
+      "options": [
+        { "value": "adapt", "label": "Adaptar a la imagen" },
+        { "value": "portrait", "label": "Vertical 3:4" },
+        { "value": "tall", "label": "Vertical alta 2:3" },
+        { "value": "square", "label": "Cuadrada 1:1" }
+      ],
+      "default": "tall"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Fondo",
+      "options": [
+        { "value": "default", "label": "Blanco" },
+        { "value": "warm", "label": "Blanco cálido" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    }
+  ],
+  "presets": [
+    {
+      "name": "Nuevos lanzamientos"
+    }
+  ]
+}
+{% endschema %}

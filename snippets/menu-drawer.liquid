@@ -1,0 +1,79 @@
+{%- comment -%}
+  Menú lateral para celular.
+  Parámetros: menu (link_list), show_account, show_social
+{%- endcomment -%}
+
+<menu-drawer
+  id="MenuDrawer"
+  class="drawer drawer--left menu-drawer"
+  role="dialog"
+  aria-modal="true"
+  aria-label="{{ 'sections.header.menu' | t }}"
+  aria-hidden="true"
+  hidden
+>
+  <div class="drawer__header">
+    <span class="drawer__title">{{ 'sections.header.menu' | t }}</span>
+    <button type="button" class="icon-button" data-panel-close aria-label="{{ 'accessibility.close' | t }}">
+      {% render 'icon', icon: 'close', size: 20 %}
+    </button>
+  </div>
+
+  <div class="drawer__body">
+    <ul class="menu-drawer__list">
+      {%- for link in menu.links -%}
+        <li>
+          {%- if link.links.size > 0 -%}
+            <details>
+              <summary class="menu-drawer__link">
+                <span>{{ link.title | escape }}</span>
+                {% render 'icon', icon: 'plus-toggle', size: 16 %}
+              </summary>
+              <ul class="menu-drawer__sublist">
+                <li>
+                  <a href="{{ link.url }}" class="menu-drawer__sublink">
+                    {{ 'general.view_all' | t }}
+                  </a>
+                </li>
+                {%- for child in link.links -%}
+                  <li>
+                    <a
+                      href="{{ child.url }}"
+                      class="menu-drawer__sublink"
+                      {% if child.current %}aria-current="page"{% endif %}
+                    >
+                      {{ child.title | escape }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </details>
+          {%- else -%}
+            <a
+              href="{{ link.url }}"
+              class="menu-drawer__link"
+              {% if link.current %}aria-current="page"{% endif %}
+            >
+              <span>{{ link.title | escape }}</span>
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    <div class="menu-drawer__meta">
+      {%- if show_account and shop.customer_accounts_enabled -%}
+        {%- if customer -%}
+          <a href="{{ routes.account_url }}">{{ 'customer.account.title' | t }}</a>
+          <a href="{{ routes.account_logout_url }}">{{ 'customer.log_out' | t }}</a>
+        {%- else -%}
+          <a href="{{ routes.account_login_url }}">{{ 'customer.log_in' | t }}</a>
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if show_social -%}
+        {% render 'social-links', wrapper_class: 'footer__social' %}
+      {%- endif -%}
+    </div>
+  </div>
+</menu-drawer>

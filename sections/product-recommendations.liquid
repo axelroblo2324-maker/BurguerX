@@ -1,0 +1,81 @@
+{{ 'product.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign limit = section.settings.products_to_show
+  assign recommendations_url = routes.product_recommendations_url | append: '?section_id=' | append: section.id | append: '&product_id=' | append: product.id | append: '&limit=' | append: limit
+-%}
+
+<div
+  class="section"
+  data-recommendations-section
+  style="--section-padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;"
+>
+  <div class="page-width">
+    <product-recommendations data-url="{{ recommendations_url }}">
+      {%- if recommendations.performed and recommendations.products_count > 0 -%}
+        <div class="editorial-header">
+          <h2 class="h2 editorial-header__title">
+            {{ section.settings.heading | default: 'También te puede gustar' | escape }}
+          </h2>
+        </div>
+
+        <ul class="product-recommendations__grid">
+          {%- for recommended_product in recommendations.products -%}
+            <li>
+              {% render 'product-card',
+                product: recommended_product,
+                image_loading: 'lazy',
+                sizes: '(min-width: 990px) 23vw, 46vw'
+              %}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </product-recommendations>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Recomendaciones",
+  "tag": "section",
+  "class": "section-product-recommendations",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "También te puede gustar"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Productos a mostrar",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 110
+    }
+  ]
+}
+{% endschema %}

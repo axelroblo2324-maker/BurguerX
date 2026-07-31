@@ -1,0 +1,80 @@
+{{ 'home.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign items = section.blocks | where: 'type', 'item'
+-%}
+
+{%- if items.size > 0 -%}
+  <div
+    class="marquee {% if section.settings.background == 'dark' %}section--dark{% elsif section.settings.background == 'warm' %}section--warm{% endif %}"
+    style="--marquee-duration: {{ section.settings.speed }}s;"
+    aria-hidden="true"
+  >
+    <div class="marquee__track">
+      {%- for i in (1..2) -%}
+        <div class="marquee__item">
+          {%- for block in items -%}
+            <span>{{ block.settings.text | escape }}</span>
+            <span class="marquee__dot"></span>
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Marquesina",
+  "tag": "section",
+  "class": "section-marquee",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Duración del recorrido",
+      "min": 15,
+      "max": 90,
+      "step": 5,
+      "unit": "s",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Fondo",
+      "options": [
+        { "value": "default", "label": "Blanco" },
+        { "value": "warm", "label": "Blanco cálido" },
+        { "value": "dark", "label": "Negro" }
+      ],
+      "default": "default"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Texto",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Envíos a todo México"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquesina",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Envíos a todo México" } },
+        { "type": "item", "settings": { "text": "Piezas limitadas" } },
+        { "type": "item", "settings": { "text": "Cambios sin complicaciones" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

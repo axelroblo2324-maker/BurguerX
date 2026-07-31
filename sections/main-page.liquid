@@ -1,0 +1,61 @@
+<div
+  class="section"
+  style="--section-padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;"
+>
+  <div class="page-width {% if section.settings.narrow %}page-width--narrow{% endif %}">
+    <div class="content-header">
+      <h1 class="{{ section.settings.heading_size }}" data-reveal>{{ page.title | escape }}</h1>
+    </div>
+
+    <div class="rte" data-reveal style="--reveal-delay: 80ms;">
+      {{ page.content }}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Página",
+  "tag": "section",
+  "class": "section-main-page",
+  "settings": [
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamaño del título",
+      "options": [
+        { "value": "h2", "label": "Mediano" },
+        { "value": "h1", "label": "Grande" },
+        { "value": "h0", "label": "Gigante" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "checkbox",
+      "id": "narrow",
+      "label": "Ancho de lectura reducido",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    }
+  ]
+}
+{% endschema %}

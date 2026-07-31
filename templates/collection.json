@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_image": false,
+        "show_description": true,
+        "show_product_count": true,
+        "show_breadcrumbs": true
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 24,
+        "columns_desktop": 4,
+        "columns_tablet": 3,
+        "columns_mobile": 2,
+        "image_ratio": "tall",
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "pagination_type": "load_more",
+        "padding_bottom": 120
+      }
+    }
+  },
+  "order": ["banner", "product-grid"]
+}

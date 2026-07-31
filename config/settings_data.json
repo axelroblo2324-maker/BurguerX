@@ -1,0 +1,63 @@
+{
+  "current": {
+    "color_background": "#ffffff",
+    "color_background_warm": "#f4f1ea",
+    "color_text": "#0a0a0a",
+    "color_text_muted": "#6f6d69",
+    "color_border": "#e3dfd7",
+    "color_button_background": "#0a0a0a",
+    "color_button_text": "#ffffff",
+    "color_badge_sold_out": "#9a9791",
+    "color_badge_sale": "#8a2b1f",
+    "type_body_font": "assets/helvetica_n4",
+    "type_body_scale": 100,
+    "type_heading_font": "assets/helvetica_n7",
+    "type_heading_scale": 100,
+    "type_heading_transform": "uppercase",
+    "type_heading_tracking": -3,
+    "type_eyebrow_tracking": 12,
+    "layout_page_width": 1800,
+    "layout_gutter": 48,
+    "layout_gutter_mobile": 20,
+    "layout_section_spacing": 120,
+    "logo_width": 130,
+    "card_image_ratio": "tall",
+    "card_hover_second_image": true,
+    "card_show_vendor": false,
+    "card_show_swatches": true,
+    "card_show_badges": true,
+    "card_new_days": 30,
+    "card_color_option_names": "Color, Colour, Colores",
+    "card_size_option_names": "Talla, Tallas, Size, Tamaño",
+    "cart_type": "drawer",
+    "cart_show_note": true,
+    "cart_free_shipping_enabled": true,
+    "cart_free_shipping_threshold": "1500",
+    "animations_enabled": true,
+    "animations_image_zoom": true,
+    "animations_parallax": true,
+    "search_predictive_enabled": true,
+    "search_show_collections": true,
+    "search_show_pages": false
+  },
+  "presets": {
+    "Editorial claro": {
+      "color_background": "#ffffff",
+      "color_background_warm": "#f4f1ea",
+      "color_text": "#0a0a0a",
+      "color_text_muted": "#6f6d69",
+      "color_border": "#e3dfd7",
+      "color_button_background": "#0a0a0a",
+      "color_button_text": "#ffffff"
+    },
+    "Editorial cálido": {
+      "color_background": "#faf7f2",
+      "color_background_warm": "#efe9df",
+      "color_text": "#141210",
+      "color_text_muted": "#736c62",
+      "color_border": "#ddd5c8",
+      "color_button_background": "#141210",
+      "color_button_text": "#faf7f2"
+    }
+  }
+}

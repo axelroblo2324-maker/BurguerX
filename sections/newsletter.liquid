@@ -1,0 +1,159 @@
+{{ 'home.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="section {% if section.settings.background == 'warm' %}section--warm{% elsif section.settings.background == 'dark' %}section--dark{% endif %}"
+  style="--section-padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;"
+>
+  <div class="page-width">
+    <div class="newsletter {% if section.settings.layout == 'split' %}newsletter--split{% endif %}">
+      <div data-reveal>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow {% if section.settings.background == 'dark' %}eyebrow--contrast{% endif %}">
+            {{ section.settings.eyebrow | escape }}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="h1" style="margin-top: 0.75rem;">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.text != blank -%}
+          <div class="rte text-small" style="margin-top: 1rem; opacity: 0.75;">
+            {{ section.settings.text }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div data-reveal style="--reveal-delay: 120ms;">
+        {%- form 'customer', class: 'newsletter__form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+
+          {%- if form.posted_successfully? -%}
+            <p class="newsletter__success" role="status">{{ 'general.newsletter_form.success' | t }}</p>
+          {%- endif -%}
+
+          {%- if form.errors -%}
+            <p class="form-status form-status--error" id="NewsletterError-{{ section.id }}" role="alert">
+              {{ form.errors.translated_fields.email | capitalize }}
+              {{ form.errors.messages.email }}
+            </p>
+          {%- endif -%}
+
+          <div class="field">
+            <label class="field__label" for="NewsletterEmail-{{ section.id }}">
+              {{ 'general.newsletter_form.label' | t }}
+            </label>
+            <input
+              id="NewsletterEmail-{{ section.id }}"
+              class="field__input"
+              type="email"
+              name="contact[email]"
+              value="{{ form.email }}"
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="email"
+              placeholder="{{ 'general.newsletter_form.placeholder' | t | escape }}"
+              required
+            >
+          </div>
+
+          <button
+            type="submit"
+            class="button button--compact {% if section.settings.background == 'dark' %}button--inverse{% endif %}"
+          >
+            {{ 'general.newsletter_form.submit' | t }}
+          </button>
+        {%- endform -%}
+
+        {%- if section.settings.legal_text != blank -%}
+          <p class="text-small text-muted" style="margin-top: 1rem; max-width: 46ch;">
+            {{ section.settings.legal_text | escape }}
+          </p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "section",
+  "class": "section-newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta pequeña",
+      "default": "Lista privada"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Acceso anticipado"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "<p>Suscríbete y entérate antes que nadie de cada lanzamiento limitado.</p>"
+    },
+    {
+      "type": "text",
+      "id": "legal_text",
+      "label": "Aviso legal"
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Composición",
+      "options": [
+        { "value": "split", "label": "Dos columnas" },
+        { "value": "stacked", "label": "Apilada" }
+      ],
+      "default": "split"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Fondo",
+      "options": [
+        { "value": "default", "label": "Blanco" },
+        { "value": "warm", "label": "Blanco cálido" },
+        { "value": "dark", "label": "Negro" }
+      ],
+      "default": "warm"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior",
+      "min": 0,
+      "max": 220,
+      "step": 4,
+      "unit": "px",
+      "default": 110
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior",
+      "min": 0,
+      "max": 220,
+      "step": 4,
+      "unit": "px",
+      "default": 110
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

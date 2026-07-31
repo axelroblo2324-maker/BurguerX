@@ -1,0 +1,174 @@
+{{ 'collection.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign per_page = section.settings.products_per_page
+  assign enable_filtering = section.settings.enable_filtering
+  assign enable_sorting = section.settings.enable_sorting
+-%}
+
+{% paginate collection.products by per_page %}
+  {%- if enable_filtering or enable_sorting -%}
+    {% render 'facets',
+      results: collection,
+      results_url: collection.url,
+      enable_filtering: enable_filtering,
+      enable_sorting: enable_sorting,
+      section_id: section.id,
+      product_count: collection.products_count
+    %}
+  {%- endif -%}
+
+  <div
+    class="section section--flush-top"
+    style="--section-padding-block: 0 {{ section.settings.padding_bottom }}px;"
+  >
+    <div class="page-width">
+      <div class="collection-results" data-facets-results>
+        {%- if collection.products.size > 0 -%}
+          <ul
+            class="collection-grid"
+            data-collection-grid
+            style="--grid-columns: {{ section.settings.columns_desktop }}; --grid-columns-tablet: {{ section.settings.columns_tablet }}; --grid-columns-mobile: {{ section.settings.columns_mobile }};"
+          >
+            {%- for product in collection.products -%}
+              <li>
+                {% render 'product-card',
+                  product: product,
+                  image_loading: 'lazy',
+                  image_ratio: section.settings.image_ratio,
+                  sizes: '(min-width: 990px) 24vw, (min-width: 750px) 32vw, 46vw'
+                %}
+              </li>
+            {%- endfor -%}
+          </ul>
+
+          {%- if paginate.pages > 1 -%}
+            {%- if section.settings.pagination_type == 'load_more' -%}
+              {%- if paginate.next -%}
+                <div class="editorial-footer">
+                  <load-more
+                    data-next-url="{{ paginate.next.url }}"
+                    data-target="[data-collection-grid]"
+                  >
+                    <button type="button" class="button button--outline button--compact">
+                      {{ 'general.load_more' | t }}
+                    </button>
+                  </load-more>
+                </div>
+              {%- endif -%}
+            {%- else -%}
+              {% render 'pagination', paginate: paginate %}
+            {%- endif -%}
+          {%- endif -%}
+        {%- else -%}
+          <div class="empty-state">
+            <p class="h3">{{ 'sections.collection_template.empty' | t }}</p>
+            <p class="text-small text-muted">
+              {{ 'sections.collection_template.use_fewer_filters_html' | t: link: collection.url }}
+            </p>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "Rejilla de productos",
+  "tag": "section",
+  "class": "section-collection-grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Productos por página",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columnas en escritorio",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "label": "Columnas en tableta",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columnas en celular",
+      "min": 1,
+      "max": 2,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Proporción de imagen",
+      "options": [
+        { "value": "adapt", "label": "Adaptar a la imagen" },
+        { "value": "portrait", "label": "Vertical 3:4" },
+        { "value": "tall", "label": "Vertical alta 2:3" },
+        { "value": "square", "label": "Cuadrada 1:1" }
+      ],
+      "default": "tall"
+    },
+    {
+      "type": "header",
+      "content": "Filtros"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Activar filtros",
+      "info": "Los filtros se configuran en la aplicación Search & Discovery de Shopify.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "Activar ordenamiento",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Paginación"
+    },
+    {
+      "type": "select",
+      "id": "pagination_type",
+      "label": "Tipo de paginación",
+      "options": [
+        { "value": "paginate", "label": "Números de página" },
+        { "value": "load_more", "label": "Botón «Cargar más»" }
+      ],
+      "default": "load_more"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    }
+  ]
+}
+{% endschema %}

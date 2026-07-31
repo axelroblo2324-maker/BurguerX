@@ -1,0 +1,125 @@
+{{ 'collection.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="section"
+  style="--section-padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;"
+>
+  <div class="page-width">
+    <header class="article__header">
+      <p class="article-card__meta">
+        {{ article.published_at | date: '%d.%m.%Y' }}
+        {%- if section.settings.show_author and article.author != blank %}
+          · {{ 'sections.article.by_author' | t: author: article.author }}
+        {%- endif -%}
+      </p>
+      <h1 class="h1" data-reveal>{{ article.title | escape }}</h1>
+    </header>
+
+    {%- if article.image and section.settings.show_image -%}
+      <div class="article__featured-image" data-reveal>
+        {{
+          article.image
+          | image_url: width: 2400
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '600, 900, 1200, 1600, 2000, 2400',
+            sizes: '100vw',
+            alt: article.image.alt
+        }}
+      </div>
+    {%- endif -%}
+
+    <div class="article__body rte" data-reveal>
+      {{ article.content }}
+    </div>
+
+    {%- if blog.comments_enabled? -%}
+      <div class="article__body" style="margin-top: clamp(2.5rem, 5vw, 4rem);">
+        {%- if article.comments_count > 0 -%}
+          <h2 class="h3" style="margin-bottom: 1.5rem;">{{ article.comments_count }}</h2>
+          {%- for comment in article.comments -%}
+            <div style="border-top: 1px solid var(--color-border); padding-block: 1.25rem;">
+              <p class="text-small">{{ comment.content }}</p>
+              <p class="article-card__meta" style="margin-top: 0.5rem;">{{ comment.author }}</p>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+
+        {%- form 'new_comment', article -%}
+          {%- if form.errors -%}
+            <div class="errors">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+          {%- if form.posted_successfully? -%}
+            <p class="form-status">{{ 'general.newsletter_form.success' | t }}</p>
+          {%- endif -%}
+          <div style="display: grid; gap: 1rem; margin-top: 1.5rem;">
+            <div class="field">
+              <label class="field__label" for="CommentAuthor">{{ 'customer.register.first_name' | t }}</label>
+              <input class="field__input" id="CommentAuthor" type="text" name="comment[author]" required>
+            </div>
+            <div class="field">
+              <label class="field__label" for="CommentEmail">{{ 'customer.register.email' | t }}</label>
+              <input class="field__input" id="CommentEmail" type="email" name="comment[email]" required>
+            </div>
+            <div class="field">
+              <label class="field__label" for="CommentBody">{{ 'sections.blog.read_more' | t }}</label>
+              <textarea class="field__input" id="CommentBody" name="comment[body]" required></textarea>
+            </div>
+            <button type="submit" class="button button--compact" style="justify-self: start;">
+              {{ 'general.newsletter_form.submit' | t }}
+            </button>
+          </div>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+
+    <div class="article__body" style="margin-top: clamp(2.5rem, 5vw, 4rem);">
+      <a href="{{ blog.url }}" class="link-underline">
+        {{ 'sections.article.back_to_blog' | t: title: blog.title }}
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Artículo",
+  "tag": "section",
+  "class": "section-main-article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Mostrar imagen destacada",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Mostrar autoría",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    }
+  ]
+}
+{% endschema %}

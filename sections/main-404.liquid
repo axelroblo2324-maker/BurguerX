@@ -1,0 +1,17 @@
+<div class="section" style="--section-padding-block: 120px 140px;">
+  <div class="page-width">
+    <div class="empty-state">
+      <p class="display">{{ 'not_found.title' | t }}</p>
+      <p class="text-muted">{{ 'not_found.subtext' | t }}</p>
+      <a href="{{ routes.root_url }}" class="button button--compact">{{ 'not_found.link' | t }}</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Página no encontrada",
+  "tag": "section",
+  "class": "section-404"
+}
+{% endschema %}

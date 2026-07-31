@@ -1,0 +1,80 @@
+{%- comment -%}
+  Sección usada solo por la Section Rendering API para las sugerencias
+  de búsqueda mientras se escribe.
+{%- endcomment -%}
+
+{%- if predictive_search.performed -%}
+  {%- assign has_results = false -%}
+  {%- if predictive_search.resources.products.size > 0
+      or predictive_search.resources.collections.size > 0
+      or predictive_search.resources.pages.size > 0
+      or predictive_search.resources.articles.size > 0
+  -%}
+    {%- assign has_results = true -%}
+  {%- endif -%}
+
+  {%- if has_results -%}
+    {%- if predictive_search.resources.products.size > 0 -%}
+      <div class="predictive-search__group">
+        <p class="predictive-search__heading">{{ 'general.search.products' | t }}</p>
+        <ul class="product-grid" style="--grid-columns: 4; --grid-columns-tablet: 3; --grid-columns-mobile: 2;">
+          {%- for product in predictive_search.resources.products -%}
+            <li>
+              {% render 'product-card', product: product, image_loading: 'lazy', show_swatches: false %}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.collections.size > 0 -%}
+      <div class="predictive-search__group">
+        <p class="predictive-search__heading">{{ 'general.search.collections' | t }}</p>
+        <ul class="predictive-search__links">
+          {%- for collection in predictive_search.resources.collections -%}
+            <li><a href="{{ collection.url }}">{{ collection.title | escape }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.pages.size > 0 -%}
+      <div class="predictive-search__group">
+        <p class="predictive-search__heading">{{ 'general.search.pages' | t }}</p>
+        <ul class="predictive-search__links">
+          {%- for page in predictive_search.resources.pages -%}
+            <li><a href="{{ page.url }}">{{ page.title | escape }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.articles.size > 0 -%}
+      <div class="predictive-search__group">
+        <p class="predictive-search__heading">{{ 'general.search.articles' | t }}</p>
+        <ul class="predictive-search__links">
+          {%- for article in predictive_search.resources.articles -%}
+            <li><a href="{{ article.url }}">{{ article.title | escape }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    <div class="predictive-search__footer">
+      <a
+        class="link-underline"
+        href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}"
+      >
+        {{ 'general.search.view_all_results' | t }}
+      </a>
+    </div>
+  {%- else -%}
+    <p class="text-muted">{{ 'general.search.no_results' | t: terms: predictive_search.terms }}</p>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Sugerencias de búsqueda"
+}
+{% endschema %}

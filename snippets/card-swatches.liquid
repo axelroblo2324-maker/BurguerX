@@ -1,0 +1,46 @@
+{%- comment -%}
+  Muestra hasta cinco colores disponibles del producto.
+  Detecta la opción de color con los nombres definidos en los ajustes.
+{%- endcomment -%}
+
+{%- liquid
+  assign color_names = settings.card_color_option_names | downcase | split: ','
+  assign color_option = null
+
+  for option in product.options_with_values
+    assign option_name = option.name | downcase | strip
+    for candidate in color_names
+      assign candidate_name = candidate | strip
+      if option_name == candidate_name
+        assign color_option = option
+        break
+      endif
+    endfor
+    if color_option
+      break
+    endif
+  endfor
+-%}
+
+{%- if color_option and color_option.values.size > 1 -%}
+  <div class="product-card__swatches" aria-hidden="true">
+    {%- for value in color_option.values limit: 5 -%}
+      {%- liquid
+        assign swatch_style = ''
+        if value.swatch.image
+          assign swatch_url = value.swatch.image | image_url: width: 40
+          assign swatch_style = 'background-image: url(' | append: swatch_url | append: ');'
+        elsif value.swatch.color
+          assign swatch_style = 'background-color: ' | append: value.swatch.color | append: ';'
+        else
+          assign fallback_color = value | downcase | replace: ' ', ''
+          assign swatch_style = 'background-color: ' | append: fallback_color | append: ';'
+        endif
+      -%}
+      <span class="swatch-dot" style="{{ swatch_style }}"></span>
+    {%- endfor -%}
+    {%- if color_option.values.size > 5 -%}
+      <span class="product-card__swatch-more">+{{ color_option.values.size | minus: 5 }}</span>
+    {%- endif -%}
+  </div>
+{%- endif -%}

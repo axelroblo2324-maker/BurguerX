@@ -1,0 +1,119 @@
+{%- comment -%}
+  Tarjeta de producto editorial: sin caja, sin borde y sin sombra.
+  Parámetros:
+    product        — objeto product (obligatorio)
+    image_loading  — 'lazy' | 'eager'
+    image_ratio    — sobrescribe el ajuste global
+    sizes          — atributo sizes de la imagen
+    show_swatches  — muestra los colores disponibles
+    show_badges    — muestra etiquetas
+    heading_class  — clase extra para el título
+{%- endcomment -%}
+
+{%- liquid
+  assign ratio = image_ratio | default: settings.card_image_ratio
+  assign loading = image_loading | default: 'lazy'
+  assign image_sizes = sizes | default: '(min-width: 990px) 24vw, (min-width: 750px) 32vw, 46vw'
+
+  assign swatches_enabled = settings.card_show_swatches
+  if show_swatches == false
+    assign swatches_enabled = false
+  endif
+
+  assign badges_enabled = settings.card_show_badges
+  if show_badges == false
+    assign badges_enabled = false
+  endif
+
+  assign media_class = 'media media--tall'
+  case ratio
+    when 'adapt'
+      assign media_class = 'media media--adapt'
+    when 'portrait'
+      assign media_class = 'media media--portrait'
+    when 'square'
+      assign media_class = 'media media--square'
+  endcase
+
+  assign secondary_image = null
+  if settings.card_hover_second_image and product.media.size > 1
+    assign secondary_image = product.media[1].preview_image
+  endif
+
+  assign is_new = false
+  if badges_enabled and settings.card_new_days > 0 and product.published_at
+    assign now_stamp = 'now' | date: '%s' | plus: 0
+    assign published_stamp = product.published_at | date: '%s' | plus: 0
+    assign age_days = now_stamp | minus: published_stamp | divided_by: 86400
+    if age_days <= settings.card_new_days
+      assign is_new = true
+    endif
+  endif
+-%}
+
+<div class="product-card" data-reveal>
+  <a
+    class="product-card__media {{ media_class }} {% if settings.animations_image_zoom %}media-zoom{% endif %}"
+    href="{{ product.url }}"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    {%- if product.featured_media -%}
+      {{
+        product.featured_media
+        | image_url: width: 1200
+        | image_tag:
+          loading: loading,
+          widths: '200, 300, 400, 500, 600, 800, 1000, 1200',
+          sizes: image_sizes,
+          class: 'product-card__image--primary',
+          alt: product.featured_media.alt
+      }}
+
+      {%- if secondary_image -%}
+        {{
+          secondary_image
+          | image_url: width: 1200
+          | image_tag:
+            loading: 'lazy',
+            widths: '200, 300, 400, 500, 600, 800, 1000, 1200',
+            sizes: image_sizes,
+            class: 'product-card__image--secondary',
+            alt: secondary_image.alt
+        }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </a>
+
+  {%- if badges_enabled -%}
+    <div class="product-card__badges">
+      {%- unless product.available -%}
+        <span class="badge badge--sold-out">{{ 'products.product.sold_out' | t }}</span>
+      {%- else -%}
+        {%- if product.compare_at_price > product.price -%}
+          <span class="badge badge--sale">{{ 'products.product.on_sale' | t }}</span>
+        {%- elsif is_new -%}
+          <span class="badge">{{ 'products.product.new' | t }}</span>
+        {%- endif -%}
+      {%- endunless -%}
+    </div>
+  {%- endif -%}
+
+  <div class="product-card__info">
+    {%- if settings.card_show_vendor and product.vendor != blank -%}
+      <span class="product-card__vendor">{{ product.vendor | escape }}</span>
+    {%- endif -%}
+
+    <h3 class="product-card__title {{ heading_class }}">
+      <a href="{{ product.url }}">{{ product.title | escape }}</a>
+    </h3>
+
+    {% render 'price', product: product, show_from: true, class: 'product-card__price' %}
+
+    {%- if swatches_enabled -%}
+      {% render 'card-swatches', product: product %}
+    {%- endif -%}
+  </div>
+</div>

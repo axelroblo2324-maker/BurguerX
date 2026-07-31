@@ -1,0 +1,87 @@
+{%- comment -%}
+  Galería vertical del producto.
+  Parámetros: product, gallery_style ('stacked' | 'editorial'), section_id
+{%- endcomment -%}
+
+{%- liquid
+  assign media_items = product.media
+  assign style_class = 'product-gallery'
+  if gallery_style == 'editorial'
+    assign style_class = style_class | append: ' product-gallery--editorial'
+  endif
+-%}
+
+<product-gallery
+  class="{{ style_class }}"
+  role="region"
+  aria-label="{{ 'products.product.media.gallery_label' | t }}"
+>
+  <div class="product-gallery__viewport" data-gallery-viewport>
+    {%- if media_items.size > 0 -%}
+      {%- for media in media_items -%}
+        {%- liquid
+          assign loading = 'lazy'
+          assign priority = 'auto'
+          if forloop.first
+            assign loading = 'eager'
+            assign priority = 'high'
+          endif
+        -%}
+        <div class="product-gallery__item" data-media-id="{{ media.id }}">
+          {%- case media.media_type -%}
+            {%- when 'image' -%}
+              {{
+                media
+                | image_url: width: 2200
+                | image_tag:
+                  loading: loading,
+                  fetchpriority: priority,
+                  widths: '400, 600, 800, 1000, 1300, 1600, 2000, 2200',
+                  sizes: '(min-width: 990px) 52vw, 88vw',
+                  alt: media.alt
+              }}
+
+            {%- when 'video' -%}
+              {{
+                media
+                | video_tag: image_size: '1600x', controls: true, muted: false, playsinline: true
+              }}
+
+            {%- when 'external_video' -%}
+              <div class="media media--wide">
+                {%- if media.host == 'youtube' -%}
+                  {{ media | external_video_url: loop: '0' | external_video_tag: loading: 'lazy' }}
+                {%- else -%}
+                  {{ media | external_video_tag: loading: 'lazy' }}
+                {%- endif -%}
+              </div>
+
+            {%- when 'model' -%}
+              {{ media | model_viewer_tag }}
+
+            {%- else -%}
+              {{ media | media_tag }}
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      <div class="product-gallery__item" data-media-id="placeholder">
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if media_items.size > 1 -%}
+    <div class="product-gallery__dots" role="tablist" aria-label="{{ 'products.product.media.gallery_label' | t }}">
+      {%- for media in media_items -%}
+        <button
+          type="button"
+          class="product-gallery__dot{% if forloop.first %} is-active{% endif %}"
+          data-gallery-dot
+          aria-label="{{ 'products.product.media.image_available' | t: index: forloop.index }}"
+          aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+        ></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</product-gallery>

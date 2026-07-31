@@ -1,0 +1,52 @@
+{%- comment -%}
+  Enlaces a redes sociales configurados en los ajustes del tema.
+  Parámetros: wrapper_class
+{%- endcomment -%}
+
+{%- liquid
+  assign has_social = false
+  if settings.social_instagram != blank or settings.social_tiktok != blank or settings.social_facebook != blank or settings.social_youtube != blank or settings.social_pinterest != blank or settings.social_x != blank
+    assign has_social = true
+  endif
+-%}
+
+{%- if has_social -%}
+  <div class="{{ wrapper_class | default: 'footer__social' }}">
+    {%- if settings.social_instagram != blank -%}
+      <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener noreferrer">
+        {% render 'icon', icon: 'instagram', size: 16 %}
+        <span class="visually-hidden">{{ 'general.social.instagram' | t }}</span>
+      </a>
+    {%- endif -%}
+    {%- if settings.social_tiktok != blank -%}
+      <a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener noreferrer">
+        {% render 'icon', icon: 'tiktok', size: 16 %}
+        <span class="visually-hidden">{{ 'general.social.tiktok' | t }}</span>
+      </a>
+    {%- endif -%}
+    {%- if settings.social_facebook != blank -%}
+      <a href="{{ settings.social_facebook }}" target="_blank" rel="noopener noreferrer">
+        {% render 'icon', icon: 'facebook', size: 16 %}
+        <span class="visually-hidden">{{ 'general.social.facebook' | t }}</span>
+      </a>
+    {%- endif -%}
+    {%- if settings.social_youtube != blank -%}
+      <a href="{{ settings.social_youtube }}" target="_blank" rel="noopener noreferrer">
+        {% render 'icon', icon: 'youtube', size: 16 %}
+        <span class="visually-hidden">{{ 'general.social.youtube' | t }}</span>
+      </a>
+    {%- endif -%}
+    {%- if settings.social_pinterest != blank -%}
+      <a href="{{ settings.social_pinterest }}" target="_blank" rel="noopener noreferrer">
+        {% render 'icon', icon: 'pinterest', size: 16 %}
+        <span class="visually-hidden">{{ 'general.social.pinterest' | t }}</span>
+      </a>
+    {%- endif -%}
+    {%- if settings.social_x != blank -%}
+      <a href="{{ settings.social_x }}" target="_blank" rel="noopener noreferrer">
+        {% render 'icon', icon: 'x', size: 15 %}
+        <span class="visually-hidden">{{ 'general.social.x' | t }}</span>
+      </a>
+    {%- endif -%}
+  </div>
+{%- endif -%}

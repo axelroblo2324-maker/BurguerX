@@ -1,0 +1,390 @@
+{{ 'home.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading = section.settings.heading | default: shop.name
+  assign text_color = section.settings.text_color
+  assign align_y = 'center'
+  case section.settings.content_position_y
+    when 'top'
+      assign align_y = 'flex-start'
+    when 'bottom'
+      assign align_y = 'flex-end'
+  endcase
+
+  assign align_x = 'center'
+  assign text_align = 'center'
+  case section.settings.content_position_x
+    when 'left'
+      assign align_x = 'flex-start'
+      assign text_align = 'left'
+    when 'right'
+      assign align_x = 'flex-end'
+      assign text_align = 'right'
+  endcase
+
+  assign has_desktop_video = false
+  if section.settings.video_desktop != blank
+    assign has_desktop_video = true
+  endif
+  assign has_mobile_video = false
+  if section.settings.video_mobile != blank
+    assign has_mobile_video = true
+  endif
+-%}
+
+<section
+  class="hero {% if section.settings.text_color_scheme == 'light' %}hero--light-text{% else %}hero--dark-text{% endif %}"
+  style="
+    min-height: {{ section.settings.height }}vh;
+    min-height: {{ section.settings.height }}svh;
+    --hero-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --hero-align-x: {{ align_x }};
+    --hero-align-y: {{ align_y }};
+    --hero-text-align: {{ text_align }};
+    --hero-focal: {{ section.settings.focal_point }};
+    color: {{ text_color }};
+  "
+  {% if section.settings.enable_transparent_header %}
+    data-header-transparent="true"
+    data-header-color="{{ text_color }}"
+  {% endif %}
+>
+  <div class="hero__media hero__media--desktop">
+    {%- if has_desktop_video -%}
+      {{
+        section.settings.video_desktop
+        | video_tag:
+          image_size: '1920x',
+          autoplay: true,
+          loop: true,
+          muted: true,
+          controls: false,
+          playsinline: true
+      }}
+    {%- elsif section.settings.image_desktop != blank -%}
+      {{
+        section.settings.image_desktop
+        | image_url: width: 3000
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '750, 1100, 1500, 1900, 2400, 3000',
+          sizes: '100vw',
+          alt: section.settings.image_desktop.alt
+      }}
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+
+  <div class="hero__media hero__media--mobile">
+    {%- if has_mobile_video -%}
+      {{
+        section.settings.video_mobile
+        | video_tag:
+          image_size: '1000x',
+          autoplay: true,
+          loop: true,
+          muted: true,
+          controls: false,
+          playsinline: true
+      }}
+    {%- elsif section.settings.image_mobile != blank -%}
+      {{
+        section.settings.image_mobile
+        | image_url: width: 1400
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '500, 750, 1000, 1400',
+          sizes: '100vw',
+          alt: section.settings.image_mobile.alt
+      }}
+    {%- elsif has_desktop_video -%}
+      {{
+        section.settings.video_desktop
+        | video_tag:
+          image_size: '1000x',
+          autoplay: true,
+          loop: true,
+          muted: true,
+          controls: false,
+          playsinline: true
+      }}
+    {%- elsif section.settings.image_desktop != blank -%}
+      {{
+        section.settings.image_desktop
+        | image_url: width: 1400
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '500, 750, 1000, 1400',
+          sizes: '100vw',
+          alt: section.settings.image_desktop.alt
+      }}
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.overlay_opacity > 0 -%}
+    <div class="hero__overlay"></div>
+  {%- endif -%}
+
+  <div class="hero__inner">
+    <div class="hero__wordmark">
+      <div>
+        {%- if section.settings.stretch_heading -%}
+          <p
+            class="hero__title hero__title--stretch"
+            data-wordmark
+            style="font-size: calc((100vw - (var(--gutter) * 2)) / {{ heading | size | at_least: 1 | times: 0.58 }});"
+          >
+            <span data-wordmark-inner>{{ heading | escape }}</span>
+          </p>
+        {%- else -%}
+          <p class="hero__title" data-reveal>{{ heading | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          <p class="hero__subtitle" data-reveal style="--reveal-delay: 120ms;">
+            {{ section.settings.subheading | escape }}
+          </p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="hero__footer">
+      <div class="hero__meta" data-reveal style="--reveal-delay: 200ms;">
+        {%- if section.settings.drop_label != blank -%}
+          <p class="eyebrow eyebrow--contrast">{{ section.settings.drop_label | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.drop_description != blank -%}
+          <p class="text-small">{{ section.settings.drop_description | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.button_label != blank -%}
+        <div class="hero__actions" data-reveal style="--reveal-delay: 260ms;">
+          <a
+            href="{{ section.settings.button_link | default: routes.all_products_collection_url }}"
+            class="button button--compact"
+          >
+            {{ section.settings.button_label | escape }}
+          </a>
+          {%- if section.settings.button_label_2 != blank -%}
+            <a
+              href="{{ section.settings.button_link_2 | default: routes.all_products_collection_url }}"
+              class="button button--compact button--outline"
+              style="color: currentColor; border-color: currentColor;"
+            >
+              {{ section.settings.button_label_2 | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.show_scroll_hint -%}
+    <div class="hero__scroll" aria-hidden="true">
+      <span>{{ section.settings.scroll_hint_text | escape }}</span>
+      {% render 'icon', icon: 'chevron-down', size: 12 %}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Portada principal",
+  "tag": "section",
+  "class": "section-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contenido visual"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Imagen para escritorio"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Imagen para celular",
+      "info": "Si la dejas vacía se reutiliza la de escritorio."
+    },
+    {
+      "type": "video",
+      "id": "video_desktop",
+      "label": "Video para escritorio",
+      "info": "El video tiene prioridad sobre la imagen. Se reproduce en silencio y en bucle."
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Video para celular"
+    },
+    {
+      "type": "select",
+      "id": "focal_point",
+      "label": "Punto focal de la imagen",
+      "options": [
+        { "value": "center", "label": "Centro" },
+        { "value": "top", "label": "Arriba" },
+        { "value": "bottom", "label": "Abajo" },
+        { "value": "left", "label": "Izquierda" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Alto de la portada",
+      "min": 60,
+      "max": 100,
+      "step": 5,
+      "unit": "svh",
+      "default": 95
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Oscurecer la imagen",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "Texto"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Nombre de la marca",
+      "info": "Si lo dejas vacío se usa el nombre de la tienda."
+    },
+    {
+      "type": "checkbox",
+      "id": "stretch_heading",
+      "label": "Estirar el nombre de lado a lado",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Texto de apoyo"
+    },
+    {
+      "type": "text",
+      "id": "drop_label",
+      "label": "Nombre del lanzamiento",
+      "default": "Drop 01 — Temporada actual"
+    },
+    {
+      "type": "text",
+      "id": "drop_description",
+      "label": "Descripción corta del lanzamiento"
+    },
+    {
+      "type": "select",
+      "id": "text_color_scheme",
+      "label": "Estilo del texto",
+      "options": [
+        { "value": "light", "label": "Claro (sobre imagen oscura)" },
+        { "value": "dark", "label": "Oscuro (sobre imagen clara)" }
+      ],
+      "default": "light"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Posición del contenido"
+    },
+    {
+      "type": "select",
+      "id": "content_position_x",
+      "label": "Horizontal",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "content_position_y",
+      "label": "Vertical",
+      "options": [
+        { "value": "top", "label": "Arriba" },
+        { "value": "center", "label": "Centro" },
+        { "value": "bottom", "label": "Abajo" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Botones"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón principal",
+      "default": "Comprar ahora"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón principal"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Texto del botón secundario"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Enlace del botón secundario"
+    },
+    {
+      "type": "header",
+      "content": "Extras"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_transparent_header",
+      "label": "Encabezado transparente sobre esta portada",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll_hint",
+      "label": "Mostrar indicador de desplazamiento",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "scroll_hint_text",
+      "label": "Texto del indicador",
+      "default": "Desliza"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Portada principal"
+    }
+  ]
+}
+{% endschema %}

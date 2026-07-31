@@ -1,0 +1,114 @@
+{%- comment -%}
+  Formulario de compra.
+  Parámetros: product, section_id, product_form_id, show_dynamic, show_quantity
+{%- endcomment -%}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign is_available = false
+  if current_variant and current_variant.available
+    assign is_available = true
+  endif
+-%}
+
+<div class="product__buy" data-buy-buttons="{{ section_id }}">
+  <product-form data-cart-type="{{ settings.cart_type }}">
+    {%- form 'product',
+      product,
+      id: product_form_id,
+      class: 'product__form',
+      novalidate: 'novalidate',
+      data-type: 'add-to-cart-form'
+    -%}
+      <input
+        type="hidden"
+        name="id"
+        value="{{ current_variant.id }}"
+        data-variant-input="{{ section_id }}"
+      >
+
+      <noscript>
+        <label class="field__label" for="NoScriptVariants-{{ section_id }}">
+          {{ 'products.product.choose_options' | t }}
+        </label>
+        <select
+          class="variant-option__select"
+          id="NoScriptVariants-{{ section_id }}"
+          name="id"
+        >
+          {%- for variant in product.variants -%}
+            <option
+              value="{{ variant.id }}"
+              {% if variant == current_variant %}selected{% endif %}
+              {% unless variant.available %}disabled{% endunless %}
+            >
+              {{ variant.title }} — {{ variant.price | money }}
+            </option>
+          {%- endfor -%}
+        </select>
+      </noscript>
+
+      {%- if show_quantity -%}
+        <div class="product__quantity-row" style="margin-bottom: 0.85rem;">
+          <span class="variant-option__label">{{ 'products.product.quantity.label' | t }}</span>
+          <quantity-input class="quantity">
+            <button
+              type="button"
+              name="minus"
+              class="quantity__button"
+              aria-label="{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}"
+            >
+              {% render 'icon', icon: 'minus', size: 13 %}
+            </button>
+            <input
+              class="quantity__input"
+              type="number"
+              name="quantity"
+              id="Quantity-{{ section_id }}"
+              min="1"
+              step="1"
+              value="1"
+              aria-label="{{ 'products.product.quantity.input_label' | t: product: product.title | escape }}"
+            >
+            <button
+              type="button"
+              name="plus"
+              class="quantity__button"
+              aria-label="{{ 'products.product.quantity.increase' | t: product: product.title | escape }}"
+            >
+              {% render 'icon', icon: 'plus', size: 13 %}
+            </button>
+          </quantity-input>
+        </div>
+      {%- endif -%}
+
+      <button
+        type="submit"
+        name="add"
+        class="button button--full product__add-button"
+        data-add-button="{{ section_id }}"
+        {% unless is_available %}
+          disabled
+          aria-disabled="true"
+        {% endunless %}
+      >
+        <span data-add-label>
+          {%- if is_available -%}
+            {{ 'products.product.add_to_cart' | t }}
+          {%- elsif current_variant -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- else -%}
+            {{ 'products.product.unavailable' | t }}
+          {%- endif -%}
+        </span>
+        <span class="spinner" data-add-spinner hidden></span>
+      </button>
+
+      {%- if show_dynamic -%}
+        {{ form | payment_button }}
+      {%- endif -%}
+
+      <p class="product__error" data-product-form-error role="alert"></p>
+    {%- endform -%}
+  </product-form>
+</div>

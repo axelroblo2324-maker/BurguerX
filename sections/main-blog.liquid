@@ -1,0 +1,117 @@
+{{ 'collection.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="section"
+  style="--section-padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;"
+>
+  <div class="page-width">
+    <div class="content-header">
+      <h1 class="h1" data-reveal>{{ blog.title | escape }}</h1>
+    </div>
+
+    {%- if blog.articles.size > 0 -%}
+      {% paginate blog.articles by section.settings.posts_per_page %}
+        <div class="blog-grid">
+          {%- for article in blog.articles -%}
+            <article class="article-card" data-reveal style="--reveal-delay: {{ forloop.index0 | times: 50 }}ms;">
+              {%- if article.image -%}
+                <a
+                  href="{{ article.url }}"
+                  class="article-card__media {% if settings.animations_image_zoom %}media-zoom{% endif %}"
+                  tabindex="-1"
+                  aria-hidden="true"
+                >
+                  {{
+                    article.image
+                    | image_url: width: 1200
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '300, 500, 700, 900, 1200',
+                      sizes: '(min-width: 990px) 32vw, 90vw',
+                      alt: article.image.alt
+                  }}
+                </a>
+              {%- endif -%}
+
+              <p class="article-card__meta">
+                {{ article.published_at | date: '%d.%m.%Y' }}
+                {%- if section.settings.show_author and article.author != blank %}
+                  · {{ 'sections.article.by_author' | t: author: article.author }}
+                {%- endif -%}
+              </p>
+
+              <h2 class="article-card__title">
+                <a href="{{ article.url }}">{{ article.title | escape }}</a>
+              </h2>
+
+              {%- if section.settings.show_excerpt -%}
+                <p class="text-small text-muted">
+                  {{ article.excerpt_or_content | strip_html | truncatewords: 28 }}
+                </p>
+              {%- endif -%}
+
+              <a href="{{ article.url }}" class="link-underline">{{ 'sections.blog.read_more' | t }}</a>
+            </article>
+          {%- endfor -%}
+        </div>
+
+        {% render 'pagination', paginate: paginate %}
+      {% endpaginate %}
+    {%- else -%}
+      <div class="empty-state">
+        <p class="h3">{{ 'sections.blog.empty' | t }}</p>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog",
+  "tag": "section",
+  "class": "section-main-blog",
+  "settings": [
+    {
+      "type": "range",
+      "id": "posts_per_page",
+      "label": "Entradas por página",
+      "min": 3,
+      "max": 24,
+      "step": 3,
+      "default": 9
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Mostrar resumen",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Mostrar autoría",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    }
+  ]
+}
+{% endschema %}

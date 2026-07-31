@@ -1,0 +1,53 @@
+{% layout none %}
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{ 'gift_cards.issued.title' | t: shop: shop.name }}</title>
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 48, height: 48 }}">
+    {%- endif -%}
+
+    {{ content_for_header }}
+
+    {%- liquid
+      assign body_font = settings.type_body_font
+      assign heading_font = settings.type_heading_font
+    -%}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {{ heading_font | font_face: font_display: 'swap' }}
+
+    {% render 'css-variables' %}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+  </head>
+
+  <body class="template-gift-card">
+    <main class="page-width" style="max-width: 620px; padding-block: clamp(3rem, 8vw, 6rem);">
+      <div style="display: grid; gap: 1.5rem; text-align: center; justify-items: center;">
+        <p class="eyebrow">{{ shop.name }}</p>
+        <h1 class="h1">{{ 'gift_cards.issued.subtext' | t }}</h1>
+
+        <p class="display" style="font-size: clamp(2.5rem, 12vw, 5rem);">
+          {{ gift_card.balance | money_with_currency }}
+        </p>
+
+        {%- if gift_card.enabled == false or gift_card.expired -%}
+          <p class="errors">{{ 'gift_cards.issued.expired' | t }}</p>
+        {%- elsif gift_card.expires_on -%}
+          {%- assign expiry = gift_card.expires_on | date: '%d.%m.%Y' -%}
+          <p class="text-small text-muted">{{ 'gift_cards.issued.expires_on_html' | t: expiry: expiry }}</p>
+        {%- endif -%}
+
+        <div style="border: 1px solid var(--color-border); padding: 1.25rem 1.5rem; width: 100%;">
+          <p class="eyebrow">{{ 'gift_cards.issued.gift_card_code' | t }}</p>
+          <p style="font-size: 1.15rem; letter-spacing: 0.12em; margin-top: 0.5rem;">
+            {{ gift_card.code | format_code }}
+          </p>
+        </div>
+
+        <a href="{{ shop.url }}" class="button button--compact">{{ 'gift_cards.issued.shop_link' | t }}</a>
+      </div>
+    </main>
+  </body>
+</html>

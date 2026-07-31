@@ -1,0 +1,77 @@
+{{ 'collection.css' | asset_url | stylesheet_tag }}
+{{ 'home.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="section"
+  style="--section-padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;"
+>
+  <div class="page-width">
+    <div class="content-header">
+      <h1 class="h1" data-reveal>
+        {%- if page_title != blank -%}
+          {{ page_title | escape }}
+        {%- else -%}
+          {{ 'sections.collection_list.title' | t }}
+        {%- endif -%}
+      </h1>
+    </div>
+
+    <div class="collections-index">
+      {%- for list_collection in collections -%}
+        <a
+          class="collection-list__card {% if settings.animations_image_zoom %}media-zoom{% endif %}"
+          href="{{ list_collection.url }}"
+          data-reveal
+          style="--reveal-delay: {{ forloop.index0 | times: 40 }}ms;"
+        >
+          <div class="collection-list__media">
+            {%- if list_collection.featured_image -%}
+              {{
+                list_collection.featured_image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '300, 500, 700, 900, 1200',
+                  sizes: '(min-width: 990px) 30vw, 90vw',
+                  alt: list_collection.featured_image.alt
+              }}
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+          <span class="collection-list__title h3">{{ list_collection.title | escape }}</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Lista de colecciones",
+  "tag": "section",
+  "class": "section-list-collections",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    }
+  ]
+}
+{% endschema %}

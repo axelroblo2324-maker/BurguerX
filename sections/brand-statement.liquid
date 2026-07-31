@@ -1,0 +1,152 @@
+{{ 'home.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign words = section.settings.text | strip | split: ' '
+  assign align = section.settings.alignment
+  assign margin = 'auto'
+  if align == 'left'
+    assign margin = '0 auto 0 0'
+  elsif align == 'right'
+    assign margin = '0 0 0 auto'
+  endif
+-%}
+
+<div
+  class="section {% if section.settings.background == 'warm' %}section--warm{% elsif section.settings.background == 'dark' %}section--dark{% endif %}"
+  style="--section-padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;"
+>
+  <div class="page-width">
+    <div
+      class="statement"
+      style="--statement-align: {{ align }}; --statement-width: {{ section.settings.max_width }}ch; --statement-margin: {{ margin }};"
+    >
+      <div class="statement__inner">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow" data-reveal style="margin-bottom: 1.5rem;">
+            {{ section.settings.eyebrow | escape }}
+          </p>
+        {%- endif -%}
+
+        <p class="statement__text" data-reveal-lines="words">
+          {%- for word in words -%}
+            <span class="reveal-line"><span style="--line-index: {{ forloop.index0 }};">{{ word | escape }}</span></span>{% unless forloop.last %} {% endunless %}
+          {%- endfor -%}
+        </p>
+
+        {%- if section.settings.attribution != blank -%}
+          <p class="eyebrow statement__attribution" data-reveal style="--reveal-delay: 240ms;">
+            {{ section.settings.attribution | escape }}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <div class="statement__attribution" data-reveal style="--reveal-delay: 300ms;">
+            <a
+              href="{{ section.settings.button_link | default: routes.all_products_collection_url }}"
+              class="button button--compact {% if section.settings.background == 'dark' %}button--inverse{% else %}button--outline{% endif %}"
+            >
+              {{ section.settings.button_label | escape }}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Frase de marca",
+  "tag": "section",
+  "class": "section-statement",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta pequeña"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Frase",
+      "default": "No todos pueden tener piezas limitadas."
+    },
+    {
+      "type": "text",
+      "id": "attribution",
+      "label": "Firma o pie de frase"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alineación",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Ancho máximo de la frase",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "ch",
+      "default": 22
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Fondo",
+      "options": [
+        { "value": "default", "label": "Blanco" },
+        { "value": "warm", "label": "Blanco cálido" },
+        { "value": "dark", "label": "Negro" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior",
+      "min": 0,
+      "max": 260,
+      "step": 4,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior",
+      "min": 0,
+      "max": 260,
+      "step": 4,
+      "unit": "px",
+      "default": 160
+    }
+  ],
+  "presets": [
+    {
+      "name": "Frase de marca"
+    }
+  ]
+}
+{% endschema %}

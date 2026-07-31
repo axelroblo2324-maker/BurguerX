@@ -1,0 +1,158 @@
+<cart-drawer
+  id="CartDrawer"
+  class="drawer drawer--right cart-drawer{% if cart == empty %} is-empty{% endif %}"
+  data-cart-count="{{ cart.item_count }}"
+  role="dialog"
+  aria-modal="true"
+  aria-label="{{ 'sections.cart.title' | t }}"
+  aria-hidden="true"
+  hidden
+>
+  <div class="drawer__header">
+    <span class="drawer__title">
+      {{ 'sections.cart.title' | t }}
+      <span aria-hidden="true">({{ cart.item_count }})</span>
+    </span>
+    <button type="button" class="icon-button" data-panel-close aria-label="{{ 'accessibility.close' | t }}">
+      {% render 'icon', icon: 'close', size: 20 %}
+    </button>
+  </div>
+
+  <div class="drawer__body" data-cart-drawer-body>
+    {%- if cart == empty -%}
+      <div class="cart-drawer__empty">
+        <p class="cart-drawer__empty-title h2">{{ 'sections.cart.empty' | t }}</p>
+        <p class="text-small text-muted">{{ 'sections.cart.empty_subtext' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="button button--compact">
+          {{ 'sections.cart.continue_shopping' | t }}
+        </a>
+      </div>
+    {%- else -%}
+      {%- if settings.cart_free_shipping_enabled -%}
+        {% render 'free-shipping-bar' %}
+      {%- endif -%}
+
+      {% render 'cart-items', context: 'drawer' %}
+
+      {%- assign upsell_blocks = section.blocks | where: 'type', 'upsell' -%}
+      {%- if upsell_blocks.size > 0 -%}
+        <div class="cart-upsell">
+          <p class="footer__block-title" style="margin: 0;">
+            {{ section.settings.upsell_heading | default: 'Completa el look' | escape }}
+          </p>
+          <div class="cart-upsell__list">
+            {%- for block in upsell_blocks -%}
+              {%- liquid
+                assign upsell_product = block.settings.product
+                assign in_cart = false
+                for item in cart.items
+                  if item.product_id == upsell_product.id
+                    assign in_cart = true
+                    break
+                  endif
+                endfor
+              -%}
+              {%- if upsell_product != blank and in_cart == false and upsell_product.available -%}
+                <div class="cart-upsell__item" {{ block.shopify_attributes }}>
+                  <a href="{{ upsell_product.url }}" class="cart-upsell__media">
+                    {%- if upsell_product.featured_media -%}
+                      {{
+                        upsell_product.featured_media
+                        | image_url: width: 160
+                        | image_tag: loading: 'lazy', widths: '60, 120, 160', sizes: '60px', alt: upsell_product.featured_media.alt
+                      }}
+                    {%- endif -%}
+                  </a>
+                  <div>
+                    <a href="{{ upsell_product.url }}" class="cart-upsell__title">
+                      {{ upsell_product.title | escape }}
+                    </a>
+                    <p class="cart-upsell__price">{{ upsell_product.price | money }}</p>
+                  </div>
+                  <button
+                    type="button"
+                    class="button button--compact button--outline"
+                    data-upsell-add
+                    data-variant-id="{{ upsell_product.selected_or_first_available_variant.id }}"
+                  >
+                    {{ 'sections.cart.add' | t }}
+                  </button>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+
+  <div class="drawer__footer" data-cart-drawer-footer>
+    {%- unless cart == empty -%}
+      {%- if settings.cart_show_note -%}
+        <details class="cart-drawer__note">
+          <summary>{{ 'sections.cart.note' | t }}</summary>
+          <label class="visually-hidden" for="CartDrawerNote">{{ 'sections.cart.note' | t }}</label>
+          <textarea
+            id="CartDrawerNote"
+            class="field__input"
+            name="note"
+            rows="2"
+            data-cart-note
+            placeholder="{{ 'sections.cart.note_placeholder' | t | escape }}"
+          >{{ cart.note }}</textarea>
+        </details>
+      {%- endif -%}
+
+      <div class="cart-drawer__totals">
+        <span class="cart-drawer__totals-label">{{ 'sections.cart.subtotal' | t }}</span>
+        <span class="cart-drawer__totals-value">{{ cart.total_price | money_with_currency }}</span>
+      </div>
+
+      {%- if cart.cart_level_discount_applications.size > 0 -%}
+        <ul class="cart-drawer__tax">
+          {%- for discount in cart.cart_level_discount_applications -%}
+            <li class="cart-item__discount">
+              {{ discount.title }} (&minus;{{ discount.total_allocated_amount | money }})
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      <p class="cart-drawer__tax">{{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}</p>
+
+      <form action="{{ routes.cart_url }}" method="post" id="CartDrawerCheckoutForm">
+        <button type="submit" name="checkout" class="button button--full">
+          {{ 'sections.cart.checkout' | t }}
+        </button>
+      </form>
+    {%- endunless -%}
+  </div>
+</cart-drawer>
+
+{% schema %}
+{
+  "name": "Carrito lateral",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "upsell_heading",
+      "label": "Título de ventas adicionales",
+      "default": "Completa el look"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "upsell",
+      "name": "Producto sugerido",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Producto"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

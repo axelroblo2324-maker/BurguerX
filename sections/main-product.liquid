@@ -1,0 +1,615 @@
+{{ 'product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign product_form_id = 'product-form-' | append: section.id
+  assign size_chart_id = ''
+  if section.settings.size_chart_page != blank
+    assign size_chart_id = 'SizeChart-' | append: section.id
+  endif
+-%}
+
+<div
+  class="section"
+  style="--section-padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;"
+>
+  <div class="page-width">
+    {%- if section.settings.show_breadcrumbs -%}
+      <nav class="breadcrumbs" aria-label="{{ 'general.breadcrumbs.label' | t }}" style="margin-bottom: 1.75rem;">
+        <a href="{{ routes.root_url }}">{{ 'general.breadcrumbs.home' | t }}</a>
+        <span aria-hidden="true">/</span>
+        {%- if collection -%}
+          <a href="{{ collection.url }}">{{ collection.title | escape }}</a>
+          <span aria-hidden="true">/</span>
+        {%- endif -%}
+        <span aria-current="page">{{ product.title | escape }}</span>
+      </nav>
+    {%- endif -%}
+
+    <div
+      class="product"
+      style="--product-col-media: {{ section.settings.media_width }}fr;"
+    >
+      {%- comment -%} Columna izquierda: información y acordeones {%- endcomment -%}
+      <div class="product__aside">
+        <div class="product__info">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.placement != 'info' -%}{% continue %}{%- endif -%}
+            {%- case block.type -%}
+              {%- when 'vendor' -%}
+                {%- if product.vendor != blank -%}
+                  <p class="product__vendor" {{ block.shopify_attributes }}>
+                    {{ product.vendor | escape }}
+                  </p>
+                {%- endif -%}
+
+              {%- when 'title' -%}
+                <h1 class="product__title" {{ block.shopify_attributes }}>{{ product.title | escape }}</h1>
+
+              {%- when 'text' -%}
+                <div class="product__text rte" {{ block.shopify_attributes }}>
+                  {%- if block.settings.text != blank -%}
+                    {{ block.settings.text }}
+                  {%- else -%}
+                    {{ product.description | strip_html | truncatewords: 42 }}
+                  {%- endif -%}
+                </div>
+
+              {%- when 'price' -%}
+                <div class="product__price" data-price-block="{{ section.id }}" {{ block.shopify_attributes }}>
+                  {% render 'price', product: product, use_variant: true %}
+                  {%- if block.settings.show_tax_note -%}
+                    <p class="product__tax">{{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}</p>
+                  {%- endif -%}
+                </div>
+
+              {%- when 'sku' -%}
+                <div class="product__sku" data-sku-block="{{ section.id }}" {{ block.shopify_attributes }}>
+                  {%- if current_variant.sku != blank -%}
+                    {{ 'products.product.sku' | t }}: {{ current_variant.sku }}
+                  {%- endif -%}
+                </div>
+
+              {%- when 'share' -%}
+                <div class="product__share" {{ block.shopify_attributes }}>
+                  <span>{{ 'products.product.share' | t }}</span>
+                  {% render 'social-links' %}
+                </div>
+
+              {%- when '@app' -%}
+                {% render block %}
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="product__extras">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.placement != 'extras' -%}{% continue %}{%- endif -%}
+            {%- case block.type -%}
+              {%- when 'description' -%}
+                {%- if product.description != blank -%}
+                  <details class="accordion" {% if block.settings.open_by_default %}open{% endif %} {{ block.shopify_attributes }}>
+                    <summary class="accordion__summary">
+                      <span>{{ block.settings.heading | default: 'Descripción' | escape }}</span>
+                      <span class="accordion__icon" aria-hidden="true"></span>
+                    </summary>
+                    <div class="accordion__content rte">{{ product.description }}</div>
+                  </details>
+                {%- endif -%}
+
+              {%- when 'accordion' -%}
+                {%- liquid
+                  assign accordion_content = block.settings.content
+                  if block.settings.page != blank
+                    assign accordion_content = block.settings.page.content
+                  endif
+                -%}
+                {%- if accordion_content != blank -%}
+                  <details class="accordion" {% if block.settings.open_by_default %}open{% endif %} {{ block.shopify_attributes }}>
+                    <summary class="accordion__summary">
+                      <span>{{ block.settings.heading | escape }}</span>
+                      <span class="accordion__icon" aria-hidden="true"></span>
+                    </summary>
+                    <div class="accordion__content rte">{{ accordion_content }}</div>
+                  </details>
+                {%- endif -%}
+
+              {%- when 'text' -%}
+                <div class="product__text rte" {{ block.shopify_attributes }}>
+                  {{ block.settings.text }}
+                </div>
+
+              {%- when '@app' -%}
+                {% render block %}
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- comment -%} Columna central: galería {%- endcomment -%}
+      <div class="product__media">
+        {% render 'product-gallery',
+          product: product,
+          gallery_style: section.settings.gallery_style,
+          section_id: section.id
+        %}
+      </div>
+
+      {%- comment -%} Columna derecha: precio, variantes y compra {%- endcomment -%}
+      <div class="product__purchase" id="ProductPurchase-{{ section.id }}">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.placement != 'purchase' and block.type != '@app' -%}{% continue %}{%- endif -%}
+          {%- if block.type == '@app' and block.settings.placement != blank -%}{% continue %}{%- endif -%}
+          {%- case block.type -%}
+            {%- when 'vendor' -%}
+              {%- if product.vendor != blank -%}
+                <p class="product__vendor" {{ block.shopify_attributes }}>{{ product.vendor | escape }}</p>
+              {%- endif -%}
+
+            {%- when 'title' -%}
+              <h1 class="product__title" {{ block.shopify_attributes }}>{{ product.title | escape }}</h1>
+
+            {%- when 'price' -%}
+              <div class="product__price" data-price-block="{{ section.id }}" {{ block.shopify_attributes }}>
+                {% render 'price', product: product, use_variant: true %}
+                {%- if block.settings.show_tax_note -%}
+                  <p class="product__tax">{{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}</p>
+                {%- endif -%}
+              </div>
+
+            {%- when 'variant_picker' -%}
+              <div {{ block.shopify_attributes }}>
+                {% render 'product-variant-picker',
+                  product: product,
+                  section_id: section.id,
+                  product_form_id: product_form_id,
+                  size_chart_id: size_chart_id,
+                  update_url: true
+                %}
+              </div>
+
+            {%- when 'inventory' -%}
+              <div data-inventory-block="{{ section.id }}" {{ block.shopify_attributes }}>
+                {% render 'product-inventory',
+                  variant: current_variant,
+                  threshold: block.settings.low_stock_threshold
+                %}
+              </div>
+
+            {%- when 'buy_buttons' -%}
+              <div {{ block.shopify_attributes }}>
+                {% render 'product-buy-buttons',
+                  product: product,
+                  section_id: section.id,
+                  product_form_id: product_form_id,
+                  show_dynamic: block.settings.show_dynamic_checkout,
+                  show_quantity: block.settings.show_quantity
+                %}
+              </div>
+
+            {%- when 'sku' -%}
+              <div class="product__sku" data-sku-block="{{ section.id }}" {{ block.shopify_attributes }}>
+                {%- if current_variant.sku != blank -%}
+                  {{ 'products.product.sku' | t }}: {{ current_variant.sku }}
+                {%- endif -%}
+              </div>
+
+            {%- when 'size_chart' -%}
+              {%- if size_chart_id != blank -%}
+                <button
+                  type="button"
+                  class="product__size-chart-trigger"
+                  data-modal-trigger="{{ size_chart_id }}"
+                  style="justify-self: start;"
+                  {{ block.shopify_attributes }}
+                >
+                  {{ 'products.product.size_chart' | t }}
+                </button>
+              {%- endif -%}
+
+            {%- when 'text' -%}
+              <div class="product__text rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+
+            {%- when 'share' -%}
+              <div class="product__share" {{ block.shopify_attributes }}>
+                <span>{{ 'products.product.share' | t }}</span>
+                {% render 'social-links' %}
+              </div>
+
+            {%- when '@app' -%}
+              {% render block %}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- if section.settings.enable_sticky_buy -%}
+  <sticky-buy data-anchor="#ProductPurchase-{{ section.id }}">
+    <div class="sticky-buy__inner">
+      <div class="sticky-buy__meta">
+        <span class="sticky-buy__title">{{ product.title | escape }}</span>
+        <span class="sticky-buy__price" data-sticky-price>
+          {% render 'price', product: product, use_variant: true %}
+        </span>
+      </div>
+      <button
+        type="button"
+        class="button button--compact sticky-buy__button"
+        data-sticky-buy-trigger
+      >
+        <span data-sticky-buy-label>
+          {%- if current_variant.available -%}
+            {{ 'products.product.add_to_cart' | t }}
+          {%- else -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- endif -%}
+        </span>
+      </button>
+    </div>
+  </sticky-buy>
+{%- endif -%}
+
+{%- if size_chart_id != blank -%}
+  <theme-modal id="{{ size_chart_id }}" class="modal" role="dialog" aria-modal="true" aria-label="{{ 'products.product.size_chart' | t }}" hidden>
+    <div class="modal__overlay"></div>
+    <div class="modal__content size-chart__content">
+      <button type="button" class="icon-button modal__close" data-modal-close aria-label="{{ 'accessibility.close' | t }}">
+        {% render 'icon', icon: 'close', size: 18 %}
+      </button>
+      <h2 class="h3" style="margin-bottom: 1.25rem;">
+        {%- if section.settings.size_chart_page.title != blank -%}
+          {{ section.settings.size_chart_page.title | escape }}
+        {%- else -%}
+          {{ 'products.product.size_chart' | t }}
+        {%- endif -%}
+      </h2>
+      <div class="rte">{{ section.settings.size_chart_page.content }}</div>
+    </div>
+  </theme-modal>
+{%- endif -%}
+
+{{ product | structured_data }}
+
+{% schema %}
+{
+  "name": "Producto",
+  "tag": "section",
+  "class": "section-main-product",
+  "settings": [
+    {
+      "type": "select",
+      "id": "gallery_style",
+      "label": "Estilo de la galería",
+      "options": [
+        { "value": "stacked", "label": "Apilada a ancho completo" },
+        { "value": "editorial", "label": "Editorial con anchos alternos" }
+      ],
+      "default": "editorial"
+    },
+    {
+      "type": "range",
+      "id": "media_width",
+      "label": "Ancho de la columna de fotografías",
+      "info": "Relativo a las columnas laterales.",
+      "min": 1.5,
+      "max": 4,
+      "step": 0.1,
+      "default": 2.4
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_buy",
+      "label": "Botón de compra fijo en celular",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Mostrar ruta de navegación",
+      "default": true
+    },
+    {
+      "type": "page",
+      "id": "size_chart_page",
+      "label": "Página de tabla de tallas",
+      "info": "Se abre en una ventana modal desde el selector de talla."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    }
+  ],
+  "blocks": [
+    {
+      "type": "vendor",
+      "name": "Marca",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Columna",
+          "options": [
+            { "value": "info", "label": "Izquierda" },
+            { "value": "purchase", "label": "Derecha" }
+          ],
+          "default": "info"
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "Título",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Columna",
+          "options": [
+            { "value": "info", "label": "Izquierda" },
+            { "value": "purchase", "label": "Derecha" }
+          ],
+          "default": "info"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Texto",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto",
+          "info": "Si lo dejas vacío se muestra un resumen de la descripción del producto."
+        },
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Columna",
+          "options": [
+            { "value": "info", "label": "Izquierda" },
+            { "value": "purchase", "label": "Derecha" },
+            { "value": "extras", "label": "Zona de acordeones" }
+          ],
+          "default": "info"
+        }
+      ]
+    },
+    {
+      "type": "price",
+      "name": "Precio",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_tax_note",
+          "label": "Mostrar aviso de impuestos y envío",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Columna",
+          "options": [
+            { "value": "info", "label": "Izquierda" },
+            { "value": "purchase", "label": "Derecha" }
+          ],
+          "default": "purchase"
+        }
+      ]
+    },
+    {
+      "type": "variant_picker",
+      "name": "Selector de variantes",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Columna",
+          "options": [
+            { "value": "purchase", "label": "Derecha" }
+          ],
+          "default": "purchase"
+        }
+      ]
+    },
+    {
+      "type": "inventory",
+      "name": "Disponibilidad",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "range",
+          "id": "low_stock_threshold",
+          "label": "Avisar cuando queden menos de",
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "default": 8
+        },
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Columna",
+          "options": [
+            { "value": "purchase", "label": "Derecha" }
+          ],
+          "default": "purchase"
+        }
+      ]
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Botones de compra",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_quantity",
+          "label": "Mostrar selector de cantidad",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "label": "Mostrar botón de compra rápida",
+          "info": "Usa los métodos de pago activos de tu tienda.",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Columna",
+          "options": [
+            { "value": "purchase", "label": "Derecha" }
+          ],
+          "default": "purchase"
+        }
+      ]
+    },
+    {
+      "type": "size_chart",
+      "name": "Enlace a tabla de tallas",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Columna",
+          "options": [
+            { "value": "purchase", "label": "Derecha" },
+            { "value": "info", "label": "Izquierda" }
+          ],
+          "default": "purchase"
+        }
+      ]
+    },
+    {
+      "type": "sku",
+      "name": "SKU",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Columna",
+          "options": [
+            { "value": "info", "label": "Izquierda" },
+            { "value": "purchase", "label": "Derecha" }
+          ],
+          "default": "purchase"
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Descripción en acordeón",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Título",
+          "default": "Descripción"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Abierto al cargar",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Columna",
+          "options": [
+            { "value": "extras", "label": "Zona de acordeones" }
+          ],
+          "default": "extras"
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Acordeón",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Título",
+          "default": "Materiales"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Contenido"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "O usa el contenido de una página",
+          "info": "Si eliges una página, su contenido reemplaza al texto de arriba."
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Abierto al cargar",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Columna",
+          "options": [
+            { "value": "extras", "label": "Zona de acordeones" }
+          ],
+          "default": "extras"
+        }
+      ]
+    },
+    {
+      "type": "share",
+      "name": "Compartir",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "placement",
+          "label": "Columna",
+          "options": [
+            { "value": "info", "label": "Izquierda" },
+            { "value": "purchase", "label": "Derecha" },
+            { "value": "extras", "label": "Zona de acordeones" }
+          ],
+          "default": "extras"
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

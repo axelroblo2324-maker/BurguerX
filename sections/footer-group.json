@@ -1,0 +1,56 @@
+{
+  "name": "Pie de página",
+  "type": "footer",
+  "sections": {
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Lista privada",
+        "heading": "Acceso anticipado",
+        "text": "<p>Suscríbete y entérate antes que nadie de cada lanzamiento limitado.</p>",
+        "layout": "split",
+        "background": "warm",
+        "padding_top": 110,
+        "padding_bottom": 110
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "menu": {
+          "type": "menu",
+          "settings": {
+            "heading": "Tienda",
+            "menu": "footer"
+          }
+        },
+        "policies": {
+          "type": "policies",
+          "settings": {
+            "heading": "Legal"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "heading": "Contacto",
+            "text": "<p>Escríbenos y te respondemos el mismo día hábil.</p>"
+          }
+        },
+        "social": {
+          "type": "social",
+          "settings": {
+            "heading": "Síguenos"
+          }
+        }
+      },
+      "block_order": ["menu", "policies", "text", "social"],
+      "settings": {
+        "show_wordmark": true,
+        "show_payment_icons": true,
+        "show_powered_by": false
+      }
+    }
+  },
+  "order": ["newsletter", "footer"]
+}

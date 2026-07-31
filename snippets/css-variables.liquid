@@ -1,0 +1,75 @@
+{%- comment -%}
+  Publica los ajustes del tema como variables CSS globales.
+  Se incluye en el <head> para que estén disponibles antes del primer pintado.
+{%- endcomment -%}
+
+{%- liquid
+  assign body_font = settings.type_body_font
+  assign heading_font = settings.type_heading_font
+  assign body_scale = settings.type_body_scale | divided_by: 100.0
+  assign body_size = 16 | times: body_scale
+  assign heading_scale = settings.type_heading_scale | divided_by: 100.0
+-%}
+
+<style data-theme-variables>
+  :root {
+    --font-body-family: {{ body_font.family }}, {{ body_font.fallback_families }};
+    --font-body-style: {{ body_font.style }};
+    --font-body-weight: {{ body_font.weight }};
+    --font-body-weight-bold: {{ body_font.weight | plus: 300 | at_most: 1000 }};
+
+    --font-heading-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --font-heading-style: {{ heading_font.style }};
+    --font-heading-weight: {{ heading_font.weight }};
+
+    --font-size-base: {{ body_size }}px;
+    --heading-scale: {{ heading_scale }};
+    --heading-transform: {{ settings.type_heading_transform }};
+    --heading-tracking: {{ settings.type_heading_tracking }}px;
+    --eyebrow-tracking: {{ settings.type_eyebrow_tracking | divided_by: 100.0 }}em;
+
+    --color-bg: {{ settings.color_background }};
+    --color-bg-rgb: {{ settings.color_background.rgb }};
+    --color-bg-warm: {{ settings.color_background_warm }};
+    --color-fg: {{ settings.color_text }};
+    --color-fg-rgb: {{ settings.color_text.rgb }};
+    --color-fg-muted: {{ settings.color_text_muted }};
+    --color-border: {{ settings.color_border }};
+    --color-button-bg: {{ settings.color_button_background }};
+    --color-button-fg: {{ settings.color_button_text }};
+    --color-sold-out: {{ settings.color_badge_sold_out }};
+    --color-sale: {{ settings.color_badge_sale }};
+
+    --page-width: {{ settings.layout_page_width }}px;
+    --gutter: {{ settings.layout_gutter_mobile }}px;
+    --gutter-desktop: {{ settings.layout_gutter }}px;
+    --section-spacing: {{ settings.layout_section_spacing | times: 0.55 | round }}px;
+    --section-spacing-desktop: {{ settings.layout_section_spacing }}px;
+
+    --logo-width: {{ settings.logo_width }}px;
+
+    --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --duration-fast: 180ms;
+    --duration-base: 300ms;
+    --duration-slow: 500ms;
+
+    --header-height: 68px;
+    --announcement-height: 30px;
+  }
+
+  @media screen and (min-width: 990px) {
+    :root {
+      --gutter: {{ settings.layout_gutter }}px;
+      --section-spacing: {{ settings.layout_section_spacing }}px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --duration-fast: 0ms;
+      --duration-base: 0ms;
+      --duration-slow: 0ms;
+    }
+  }
+</style>

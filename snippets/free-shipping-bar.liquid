@@ -1,0 +1,40 @@
+{%- comment -%}
+  Barra de progreso hacia el envío gratis.
+  El umbral se configura en los ajustes del tema, en la moneda de la tienda.
+{%- endcomment -%}
+
+{%- liquid
+  assign threshold_raw = settings.cart_free_shipping_threshold | replace: ',', '' | replace: '$', '' | strip
+  assign threshold = threshold_raw | times: 1
+  assign threshold_cents = threshold | times: 100
+-%}
+
+{%- if threshold_cents > 0 -%}
+  {%- liquid
+    assign remaining = threshold_cents | minus: cart.total_price
+    assign progress = cart.total_price | times: 100.0 | divided_by: threshold_cents
+    if progress > 100
+      assign progress = 100
+    endif
+    assign remaining_money = remaining | money
+  -%}
+
+  <div class="shipping-bar">
+    <p class="shipping-bar__text">
+      {%- if remaining > 0 -%}
+        {{ 'sections.cart.free_shipping_progress_html' | t: amount: remaining_money }}
+      {%- else -%}
+        {{ 'sections.cart.free_shipping_reached' | t }}
+      {%- endif -%}
+    </p>
+    <div
+      class="shipping-bar__track"
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="{{ progress | round }}"
+    >
+      <span class="shipping-bar__fill" style="--progress: {{ progress | round }}%;"></span>
+    </div>
+  </div>
+{%- endif -%}

@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "settings": {
+        "padding_top": 80,
+        "padding_bottom": 120
+      }
+    }
+  },
+  "order": ["main"]
+}

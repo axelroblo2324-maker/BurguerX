@@ -1,0 +1,247 @@
+{{ 'home.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign layout = section.settings.layout
+  assign banner_class = 'editorial-banner editorial-banner--' | append: layout
+  if section.settings.reverse
+    assign banner_class = banner_class | append: ' editorial-banner--reverse'
+  endif
+
+  assign parallax_strength = 0
+  if section.settings.enable_parallax
+    assign parallax_strength = section.settings.parallax_strength
+  endif
+-%}
+
+<div
+  class="section {% if section.settings.background == 'warm' %}section--warm{% endif %}"
+  style="--section-padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;"
+>
+  <div
+    class="{{ banner_class }}"
+    style="--banner-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"
+  >
+    <div
+      class="editorial-banner__media"
+      {% if parallax_strength > 0 %}data-parallax="{{ parallax_strength }}"{% endif %}
+    >
+      {%- if section.settings.image != blank -%}
+        {%- if layout == 'full' -%}
+          {{
+            section.settings.image
+            | image_url: width: 3000
+            | image_tag:
+              loading: 'lazy',
+              widths: '750, 1100, 1500, 1900, 2400, 3000',
+              sizes: '100vw',
+              alt: section.settings.image.alt
+          }}
+        {%- else -%}
+          {{
+            section.settings.image
+            | image_url: width: 1800
+            | image_tag:
+              loading: 'lazy',
+              widths: '500, 750, 1000, 1400, 1800',
+              sizes: '(min-width: 990px) 58vw, 100vw',
+              alt: section.settings.image.alt
+          }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+
+    {%- if layout == 'full' and section.settings.overlay_opacity > 0 -%}
+      <div class="editorial-banner__overlay"></div>
+    {%- endif -%}
+
+    <div
+      class="editorial-banner__content"
+      {% if layout == 'full' %}
+        style="color: {{ section.settings.text_color }}; align-content: {{ section.settings.vertical_position }};"
+      {% endif %}
+    >
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow {% if layout == 'full' %}eyebrow--contrast{% endif %}" data-reveal>
+          {{ section.settings.eyebrow | escape }}
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="editorial-banner__title" data-reveal style="--reveal-delay: 60ms;">
+          {{ section.settings.heading | escape }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.text != blank -%}
+        <div class="editorial-banner__text rte" data-reveal style="--reveal-delay: 120ms;">
+          {{ section.settings.text }}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank -%}
+        <div class="editorial-banner__actions" data-reveal style="--reveal-delay: 180ms;">
+          <a
+            href="{{ section.settings.button_link | default: routes.all_products_collection_url }}"
+            class="button button--compact {% if layout == 'full' %}button--inverse{% endif %}"
+          >
+            {{ section.settings.button_label | escape }}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Sección editorial",
+  "tag": "section",
+  "class": "section-editorial-banner",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Composición",
+      "options": [
+        { "value": "full", "label": "Imagen completa con texto encima" },
+        { "value": "split", "label": "Imagen y texto lado a lado" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse",
+      "label": "Invertir imagen y texto",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen de campaña"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Oscurecer la imagen",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 30
+    },
+    {
+      "type": "select",
+      "id": "vertical_position",
+      "label": "Posición vertical del texto",
+      "info": "Solo para la composición con imagen completa.",
+      "options": [
+        { "value": "start", "label": "Arriba" },
+        { "value": "center", "label": "Centro" },
+        { "value": "end", "label": "Abajo" }
+      ],
+      "default": "end"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto sobre la imagen",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Texto"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta pequeña",
+      "default": "Campaña"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título gigante",
+      "default": "Piezas limitadas"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "<p>Producción corta, patrones propios y acabados pensados para durar más de una temporada.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón",
+      "default": "Ver la campaña"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "header",
+      "content": "Movimiento"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Parallax sutil en escritorio",
+      "info": "Se desactiva automáticamente en celular y con movimiento reducido.",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "parallax_strength",
+      "label": "Intensidad del parallax",
+      "min": 10,
+      "max": 90,
+      "step": 5,
+      "unit": "px",
+      "default": 45
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Fondo",
+      "options": [
+        { "value": "default", "label": "Blanco" },
+        { "value": "warm", "label": "Blanco cálido" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sección editorial"
+    }
+  ]
+}
+{% endschema %}

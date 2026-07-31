@@ -1,0 +1,27 @@
+{%- comment -%}
+  Estado de disponibilidad de la variante seleccionada.
+  Parámetros: variant, threshold
+{%- endcomment -%}
+
+{%- liquid
+  assign state = 'in'
+  assign label = 'products.product.inventory.in_stock' | t
+
+  if variant == blank or variant.available == false
+    assign state = 'out'
+    assign label = 'products.product.inventory.out_of_stock' | t
+  elsif variant.inventory_management != blank and variant.inventory_policy == 'deny'
+    if variant.inventory_quantity <= 0
+      assign state = 'out'
+      assign label = 'products.product.inventory.out_of_stock' | t
+    elsif threshold > 0 and variant.inventory_quantity <= threshold
+      assign state = 'low'
+      assign label = 'products.product.inventory.in_stock_count' | t: count: variant.inventory_quantity
+    endif
+  endif
+-%}
+
+<p class="product__inventory product__inventory--{{ state }}">
+  <span class="product__inventory-dot" aria-hidden="true"></span>
+  <span>{{ label }}</span>
+</p>

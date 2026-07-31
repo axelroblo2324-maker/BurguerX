@@ -1,0 +1,55 @@
+<div class="page-width">
+  <div class="customer customer--wide">
+    <div class="content-header content-header--split">
+      <h1 class="h2">{{ 'customer.account.title' | t }}</h1>
+      <a href="{{ routes.account_logout_url }}" class="link-underline">{{ 'customer.log_out' | t }}</a>
+    </div>
+
+    <div style="display: grid; gap: clamp(2rem, 4vw, 3rem); grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr);">
+      <div>
+        <h2 class="h4" style="margin-bottom: 1.25rem;">{{ 'customer.orders.title' | t }}</h2>
+
+        {%- paginate customer.orders by 20 -%}
+          {%- if customer.orders.size > 0 -%}
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">{{ 'customer.orders.order_number' | t }}</th>
+                    <th scope="col">{{ 'customer.orders.date' | t }}</th>
+                    <th scope="col">{{ 'customer.orders.payment_status' | t }}</th>
+                    <th scope="col">{{ 'customer.orders.fulfillment_status' | t }}</th>
+                    <th scope="col">{{ 'customer.orders.total' | t }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {%- for order in customer.orders -%}
+                    <tr>
+                      <td><a href="{{ order.customer_url }}" class="link-underline">{{ order.name }}</a></td>
+                      <td>{{ order.created_at | date: '%d.%m.%Y' }}</td>
+                      <td>{{ order.financial_status_label }}</td>
+                      <td>{{ order.fulfillment_status_label }}</td>
+                      <td>{{ order.total_net_amount | money }}</td>
+                    </tr>
+                  {%- endfor -%}
+                </tbody>
+              </table>
+            </div>
+
+            {% render 'pagination', paginate: paginate %}
+          {%- else -%}
+            <p class="text-small text-muted">{{ 'customer.orders.none' | t }}</p>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+
+      <aside>
+        <h2 class="h4" style="margin-bottom: 1rem;">{{ 'customer.account.details' | t }}</h2>
+        <div class="text-small">{{ customer.default_address | format_address }}</div>
+        <a href="{{ routes.account_addresses_url }}" class="link-underline" style="margin-top: 1rem;">
+          {{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})
+        </a>
+      </aside>
+    </div>
+  </div>
+</div>

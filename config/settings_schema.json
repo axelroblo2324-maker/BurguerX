@@ -1,0 +1,434 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Atelier Editorial",
+    "theme_version": "1.0.0",
+    "theme_author": "Estudio de tema",
+    "theme_documentation_url": "https://shopify.dev/docs/themes",
+    "theme_support_url": "https://help.shopify.com/"
+  },
+  {
+    "name": "Colores",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Base"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Fondo principal",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_background_warm",
+        "label": "Fondo blanco cálido",
+        "info": "Se usa en secciones alternas para dar profundidad editorial.",
+        "default": "#f4f1ea"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Texto",
+        "default": "#0a0a0a"
+      },
+      {
+        "type": "color",
+        "id": "color_text_muted",
+        "label": "Texto secundario",
+        "default": "#6f6d69"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Líneas y bordes",
+        "default": "#e3dfd7"
+      },
+      {
+        "type": "header",
+        "content": "Botones"
+      },
+      {
+        "type": "color",
+        "id": "color_button_background",
+        "label": "Fondo de botón",
+        "default": "#0a0a0a"
+      },
+      {
+        "type": "color",
+        "id": "color_button_text",
+        "label": "Texto de botón",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Etiquetas de producto"
+      },
+      {
+        "type": "color",
+        "id": "color_badge_sold_out",
+        "label": "Texto de agotado",
+        "default": "#9a9791"
+      },
+      {
+        "type": "color",
+        "id": "color_badge_sale",
+        "label": "Texto de rebaja",
+        "default": "#8a2b1f"
+      }
+    ]
+  },
+  {
+    "name": "Tipografía",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Cuerpo de texto"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Fuente del cuerpo",
+        "default": "assets/helvetica_n4"
+      },
+      {
+        "type": "range",
+        "id": "type_body_scale",
+        "label": "Tamaño base del cuerpo",
+        "min": 90,
+        "max": 120,
+        "step": 1,
+        "unit": "%",
+        "default": 100
+      },
+      {
+        "type": "header",
+        "content": "Títulos y tipografía display"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "label": "Fuente de títulos",
+        "info": "Elige una sans serif pesada para lograr la estética editorial.",
+        "default": "assets/helvetica_n7"
+      },
+      {
+        "type": "range",
+        "id": "type_heading_scale",
+        "label": "Tamaño de títulos",
+        "min": 90,
+        "max": 140,
+        "step": 5,
+        "unit": "%",
+        "default": 100
+      },
+      {
+        "type": "select",
+        "id": "type_heading_transform",
+        "label": "Mayúsculas en títulos",
+        "options": [
+          { "value": "none", "label": "Como se escribe" },
+          { "value": "uppercase", "label": "MAYÚSCULAS" }
+        ],
+        "default": "uppercase"
+      },
+      {
+        "type": "range",
+        "id": "type_heading_tracking",
+        "label": "Espaciado entre letras de títulos",
+        "min": -6,
+        "max": 4,
+        "step": 1,
+        "unit": "px",
+        "default": -3,
+        "info": "Valores negativos aprietan la tipografía grande, como en editoriales de moda."
+      },
+      {
+        "type": "header",
+        "content": "Texto pequeño (etiquetas)"
+      },
+      {
+        "type": "range",
+        "id": "type_eyebrow_tracking",
+        "label": "Espaciado de etiquetas",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "default": 12
+      }
+    ]
+  },
+  {
+    "name": "Diseño",
+    "settings": [
+      {
+        "type": "range",
+        "id": "layout_page_width",
+        "label": "Ancho máximo de contenido",
+        "min": 1200,
+        "max": 2200,
+        "step": 20,
+        "unit": "px",
+        "default": 1800
+      },
+      {
+        "type": "range",
+        "id": "layout_gutter",
+        "label": "Margen lateral en escritorio",
+        "min": 16,
+        "max": 96,
+        "step": 4,
+        "unit": "px",
+        "default": 48
+      },
+      {
+        "type": "range",
+        "id": "layout_gutter_mobile",
+        "label": "Margen lateral en celular",
+        "min": 12,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "layout_section_spacing",
+        "label": "Espacio entre secciones",
+        "min": 0,
+        "max": 200,
+        "step": 4,
+        "unit": "px",
+        "default": 120
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logotipo",
+        "info": "Si lo dejas vacío se muestra el nombre de la tienda en tipografía del tema."
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_light",
+        "label": "Logotipo para fondo oscuro",
+        "info": "Se usa cuando el encabezado es transparente sobre una portada oscura."
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Ancho del logotipo",
+        "min": 60,
+        "max": 320,
+        "step": 5,
+        "unit": "px",
+        "default": 130
+      }
+    ]
+  },
+  {
+    "name": "Tarjetas de producto",
+    "settings": [
+      {
+        "type": "select",
+        "id": "card_image_ratio",
+        "label": "Proporción de imagen",
+        "options": [
+          { "value": "adapt", "label": "Adaptar a la imagen" },
+          { "value": "portrait", "label": "Vertical 3:4" },
+          { "value": "tall", "label": "Vertical alta 2:3" },
+          { "value": "square", "label": "Cuadrada 1:1" }
+        ],
+        "default": "tall"
+      },
+      {
+        "type": "checkbox",
+        "id": "card_hover_second_image",
+        "label": "Mostrar la segunda imagen al pasar el cursor",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_vendor",
+        "label": "Mostrar la marca",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_swatches",
+        "label": "Mostrar colores disponibles",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_badges",
+        "label": "Mostrar etiquetas de nuevo, rebaja y agotado",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "card_new_days",
+        "label": "Días para considerar un producto nuevo",
+        "min": 0,
+        "max": 90,
+        "step": 5,
+        "unit": "d",
+        "default": 30
+      },
+      {
+        "type": "text",
+        "id": "card_color_option_names",
+        "label": "Nombres de la opción de color",
+        "info": "Separa con comas. Se usa para detectar variantes de color y mostrar swatches.",
+        "default": "Color, Colour, Colores"
+      },
+      {
+        "type": "text",
+        "id": "card_size_option_names",
+        "label": "Nombres de la opción de talla",
+        "info": "Separa con comas.",
+        "default": "Talla, Tallas, Size, Tamaño"
+      }
+    ]
+  },
+  {
+    "name": "Carrito",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Tipo de carrito",
+        "options": [
+          { "value": "drawer", "label": "Carrito lateral" },
+          { "value": "page", "label": "Página de carrito" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_note",
+        "label": "Permitir nota del pedido",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Envío gratis"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_free_shipping_enabled",
+        "label": "Mostrar barra de envío gratis",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "cart_free_shipping_threshold",
+        "label": "Monto para envío gratis",
+        "info": "Escribe solo el número, sin símbolo de moneda. Ejemplo: 1500",
+        "default": "1500"
+      }
+    ]
+  },
+  {
+    "name": "Animaciones",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "animations_enabled",
+        "label": "Activar apariciones al desplazar",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "animations_image_zoom",
+        "label": "Ampliar imágenes suavemente al pasar el cursor",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "animations_parallax",
+        "label": "Permitir parallax sutil en escritorio",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "El tema respeta siempre la preferencia de movimiento reducido del sistema operativo."
+      }
+    ]
+  },
+  {
+    "name": "Redes sociales",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook"
+      },
+      {
+        "type": "url",
+        "id": "social_youtube",
+        "label": "YouTube"
+      },
+      {
+        "type": "url",
+        "id": "social_pinterest",
+        "label": "Pinterest"
+      },
+      {
+        "type": "url",
+        "id": "social_x",
+        "label": "X"
+      }
+    ]
+  },
+  {
+    "name": "Búsqueda",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "search_predictive_enabled",
+        "label": "Activar sugerencias mientras se escribe",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "search_show_collections",
+        "label": "Sugerir colecciones",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "search_show_pages",
+        "label": "Sugerir páginas",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Compartir en redes",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Imagen para compartir",
+        "info": "Se usa cuando la página no tiene una imagen propia. 1200 x 628 px recomendado."
+      }
+    ]
+  }
+]

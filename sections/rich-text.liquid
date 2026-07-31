@@ -1,0 +1,143 @@
+{{ 'home.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="section {% if section.settings.background == 'warm' %}section--warm{% elsif section.settings.background == 'dark' %}section--dark{% endif %}"
+  style="--section-padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;"
+>
+  <div class="page-width">
+    <div class="rich-text {% if section.settings.alignment == 'center' %}rich-text--center{% endif %}" data-reveal>
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'eyebrow' -%}
+            <p class="eyebrow" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</p>
+          {%- when 'heading' -%}
+            <h2 class="{{ block.settings.size }}" {{ block.shopify_attributes }}>
+              {{ block.settings.text | escape }}
+            </h2>
+          {%- when 'text' -%}
+            <div class="rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+          {%- when 'button' -%}
+            <div {{ block.shopify_attributes }}>
+              <a
+                href="{{ block.settings.link | default: routes.all_products_collection_url }}"
+                class="button button--compact {% if section.settings.background == 'dark' %}button--inverse{% else %}button--outline{% endif %}"
+              >
+                {{ block.settings.label | escape }}
+              </a>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Texto editorial",
+  "tag": "section",
+  "class": "section-rich-text",
+  "settings": [
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alineación",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Fondo",
+      "options": [
+        { "value": "default", "label": "Blanco" },
+        { "value": "warm", "label": "Blanco cálido" },
+        { "value": "dark", "label": "Negro" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior",
+      "min": 0,
+      "max": 220,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior",
+      "min": 0,
+      "max": 220,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    }
+  ],
+  "blocks": [
+    {
+      "type": "eyebrow",
+      "name": "Etiqueta pequeña",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Sobre la marca" }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Título",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Diseñado para durar" },
+        {
+          "type": "select",
+          "id": "size",
+          "label": "Tamaño",
+          "options": [
+            { "value": "h2", "label": "Mediano" },
+            { "value": "h1", "label": "Grande" },
+            { "value": "h0", "label": "Gigante" }
+          ],
+          "default": "h1"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Texto",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto",
+          "default": "<p>Cada prenda se produce en cantidades cortas para cuidar el detalle y evitar el exceso.</p>"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Botón",
+      "limit": 2,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Texto", "default": "Ver la tienda" },
+        { "type": "url", "id": "link", "label": "Enlace" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Texto editorial",
+      "blocks": [
+        { "type": "eyebrow" },
+        { "type": "heading" },
+        { "type": "text" }
+      ]
+    }
+  ]
+}
+{% endschema %}

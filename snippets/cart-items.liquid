@@ -1,0 +1,111 @@
+{%- comment -%}
+  Lista de artículos del carrito.
+  Parámetro: context ('drawer' | 'page')
+{%- endcomment -%}
+
+<cart-items class="cart-items" data-cart-context="{{ context | default: 'drawer' }}">
+  {%- for item in cart.items -%}
+    <div class="cart-item" data-cart-line="{{ forloop.index }}">
+      <a href="{{ item.url }}" class="cart-item__media" tabindex="-1" aria-hidden="true">
+        {%- if item.image -%}
+          {{
+            item.image
+            | image_url: width: 300
+            | image_tag:
+              loading: 'lazy',
+              widths: '84, 168, 252, 300',
+              sizes: '84px',
+              alt: item.image.alt
+          }}
+        {%- endif -%}
+      </a>
+
+      <div class="cart-item__details">
+        <div class="cart-item__row">
+          <div>
+            <a href="{{ item.url }}" class="cart-item__name">{{ item.product.title | escape }}</a>
+            {%- unless item.product.has_only_default_variant -%}
+              <p class="cart-item__variant">{{ item.variant.title | escape }}</p>
+            {%- endunless -%}
+
+            {%- if item.properties.size > 0 -%}
+              {%- for property in item.properties -%}
+                {%- assign first_character = property.first | slice: 0 -%}
+                {%- if property.last != blank and first_character != '_' -%}
+                  <p class="cart-item__variant">{{ property.first }}: {{ property.last }}</p>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- if item.selling_plan_allocation -%}
+              <p class="cart-item__variant">{{ item.selling_plan_allocation.selling_plan.name }}</p>
+            {%- endif -%}
+
+            {%- if item.line_level_discount_allocations.size > 0 -%}
+              {%- for allocation in item.line_level_discount_allocations -%}
+                <p class="cart-item__discount">
+                  {{ allocation.discount_application.title }}
+                  (&minus;{{ allocation.amount | money }})
+                </p>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+
+          <div class="cart-item__price">
+            {%- if item.original_line_price != item.final_line_price -%}
+              <s class="text-muted">{{ item.original_line_price | money }}</s>
+              <br>
+              {{ item.final_line_price | money }}
+            {%- else -%}
+              {{ item.original_line_price | money }}
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="cart-item__actions">
+          <quantity-input class="quantity">
+            <button
+              type="button"
+              name="minus"
+              class="quantity__button"
+              aria-label="{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}"
+            >
+              {% render 'icon', icon: 'minus', size: 12 %}
+            </button>
+            <input
+              class="quantity__input"
+              type="number"
+              name="updates[]"
+              value="{{ item.quantity }}"
+              min="0"
+              step="1"
+              data-quantity-input
+              data-index="{{ forloop.index }}"
+              aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+            >
+            <button
+              type="button"
+              name="plus"
+              class="quantity__button"
+              aria-label="{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}"
+            >
+              {% render 'icon', icon: 'plus', size: 12 %}
+            </button>
+          </quantity-input>
+
+          <button
+            type="button"
+            class="cart-item__remove"
+            data-cart-remove
+            data-index="{{ forloop.index }}"
+            aria-label="{{ 'sections.cart.remove_label' | t: title: item.title | escape }}"
+          >
+            {{ 'sections.cart.remove' | t }}
+          </button>
+        </div>
+
+        <p class="cart-item__error" data-cart-error="{{ forloop.index }}" role="alert"></p>
+      </div>
+    </div>
+  {%- endfor -%}
+</cart-items>

@@ -55,6 +55,27 @@
     transform: none;
   }
 
+  /* --- Galería en vertical también en celular ----------------------------
+     Horizon renderiza la galería dos veces: un carrusel y una rejilla, y
+     decide por CSS cuál se ve. En celular deja el carrusel, así que no hay
+     nada que recorrer — se desliza de lado y el efecto de scroll no existe.
+
+     Aquí se invierte. El tema oculta la rejilla con
+     `media-gallery:where(.media-gallery--grid) .media-gallery__grid`, y
+     :where() no suma especificidad, así que basta con nombrar la clase
+     directamente para ganar. */
+
+  @media screen and (max-width: 749px) {
+    media-gallery.media-gallery--grid slideshow-component {
+      display: none;
+    }
+
+    media-gallery.media-gallery--grid .media-gallery__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+  }
+
   /* --- Parallax dentro de cada foto --------------------------------------
      La imagen se escala un poco para tener margen por donde moverse; sin
      ese margen el desplazamiento dejaría franjas vacías arriba o abajo.

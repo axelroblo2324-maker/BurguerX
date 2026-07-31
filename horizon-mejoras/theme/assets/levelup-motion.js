@@ -77,12 +77,25 @@
   // Cada foto de la galería entra al aparecer, que es el movimiento que
   // define esta página: la columna de datos queda fija y las prendas van
   // pasando. Las tarjetas de recomendados usan la misma entrada.
+  // Sólo la rejilla: Horizon también renderiza un carrusel con las mismas
+  // fotos y la clase .product-media-container, oculto según el ancho. Si se
+  // animaran ambos se estarían animando duplicados invisibles.
+  var GALERIA = '.media-gallery__grid > .product-media-container';
   var ENTRADA = [
-    '.product-media-container',
+    GALERIA,
     'product-card',
     '.product-card',
     '.resource-list__item'
   ].join(',');
+
+  function esPrimeraFoto(el) {
+    var padre = el.parentElement;
+    return (
+      padre &&
+      padre.classList.contains('media-gallery__grid') &&
+      el === padre.firstElementChild
+    );
+  }
 
   function prepararEntrada(el, indice) {
     if (el.dataset.luRise) return;
@@ -107,7 +120,7 @@
 
   /* ------------------------------------------------------- 3. parallax */
 
-  var PARALLAX = '.product-media__image';
+  var PARALLAX = '.media-gallery__grid .product-media__image';
 
   var capas = [];
   var enCola = false;
@@ -156,11 +169,14 @@
 
     Array.prototype.forEach.call(ambito.querySelectorAll(ENTRADA), function (el, i) {
       if (!esContenido(el)) return;
-      // La primera foto es la imagen grande que carga con prioridad alta y
-      // marca el LCP. Arrancarla en opacidad cero retrasaría lo que el
-      // visitante percibe como "la página ya cargó".
-      if (el.matches('.product-media-container') && i === 0) return;
-      prepararEntrada(el, i);
+      // La primera foto es la que carga con prioridad alta y marca el LCP.
+      // Arrancarla en opacidad cero retrasaría lo que el visitante percibe
+      // como "la página ya cargó".
+      if (esPrimeraFoto(el)) return;
+      // Las fotos se recorren de una en una, así que escalonarlas sólo
+      // añade retraso; el escalonado es para las tarjetas, que entran en
+      // grupo.
+      prepararEntrada(el, el.matches(GALERIA) ? 0 : i);
     });
 
     recogerCapas(ambito === document ? null : ambito);

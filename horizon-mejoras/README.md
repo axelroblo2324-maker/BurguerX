@@ -95,7 +95,19 @@ editor. La portada quedó deliberadamente quieta.
 |---|---|
 | Texto revelado palabra por palabra tras una máscara | `h1`, `h2`, `h3` fuera de header, pie y diálogos |
 | Entrada con desplazamiento y zoom | Cada foto de la galería y las tarjetas de recomendados |
-| Parallax dentro de la foto | `.product-media__image` |
+| Parallax dentro de la foto | `.media-gallery__grid .product-media__image` |
+| Galería en vertical en celular | Se invierte el carrusel que Horizon impone en móvil |
+
+Ese último es el que hace visible todo lo demás. Horizon **renderiza la
+galería dos veces** —un carrusel y una rejilla— y decide por CSS cuál se ve:
+carrusel en celular, rejilla en escritorio. Con carrusel no hay nada que
+recorrer, se desliza de lado, así que ninguna animación de scroll aparecía en
+teléfono. El tema oculta la rejilla con `:where()`, que no suma especificidad,
+así que basta nombrar la clase directamente para invertirlo.
+
+Las animaciones apuntan sólo a `.media-gallery__grid > .product-media-container`
+y no a `.product-media-container` a secas: si no, se animarían también las
+copias del carrusel, que están ocultas.
 
 La primera foto de la galería se salta a propósito: es la imagen que carga
 con prioridad alta y marca el LCP, y arrancarla en opacidad cero retrasaría

@@ -15,12 +15,43 @@ OUT = os.path.join(os.path.dirname(__file__), "theme")
 UMBRAL = "1,050"  # coincide con la tarifa real de envío gratis de la tienda
 
 
+# --------------------------------------------------------------------------
+# Validación. Horizon acepta un conjunto cerrado de clases de botón y, si el
+# valor no coincide, no aplica ninguna: el botón queda como texto suelto. Ya
+# pasó dos veces ("button-primary" en el hero, "link" en los "Ver todos"),
+# así que el generador ahora lo revisa antes de escribir nada.
+# --------------------------------------------------------------------------
+
+STYLE_CLASSES = {"button", "button-secondary", "button-unstyled", "button-custom"}
+
+# Lo que la gente escribe por costumbre -> lo que Horizon entiende.
+STYLE_ALIAS = {"link": "button-unstyled", "button-primary": "button"}
+
+
+def normalizar_estilos(nodo, ruta=""):
+    """Corrige alias conocidos y revienta ante un valor que no existe."""
+    for bid, bloque in (nodo or {}).items():
+        settings = bloque.get("settings", {})
+        sc = settings.get("style_class")
+        if sc is not None:
+            if sc in STYLE_ALIAS:
+                settings["style_class"] = STYLE_ALIAS[sc]
+            elif sc not in STYLE_CLASSES:
+                raise SystemExit(
+                    f"style_class desconocido en {ruta}/{bid}: {sc!r}. "
+                    f"Válidos: {sorted(STYLE_CLASSES)}"
+                )
+        normalizar_estilos(bloque.get("blocks"), f"{ruta}/{bid}")
+
+
 def load(name):
     with open(os.path.join(SRC, name), encoding="utf-8") as fh:
         return json.load(fh)
 
 
 def save(relpath, data):
+    for sid, seccion in data.get("sections", {}).items():
+        normalizar_estilos(seccion.get("blocks"), sid)
     path = os.path.join(OUT, relpath)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as fh:

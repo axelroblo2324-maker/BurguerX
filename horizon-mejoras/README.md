@@ -78,39 +78,36 @@ hicieron por la API de Shopify y quedan registrados aquí:
 
 ## Animaciones
 
-Viven en `theme/assets/levelup-motion.css` y `.js`. La sección "Animaciones
-LevelUP" del pie sólo los carga, así que se pueden apagar desde el editor sin
-tocar código. Todo va dentro de `prefers-reduced-motion: no-preference`: quien
-pida menos movimiento ve la página estática y completa, nunca con contenido
-oculto esperando una animación que no va a correr.
+Viven en `theme/assets/levelup-motion.css` y `.js`, y **se cargan sólo en la
+plantilla de producto**. La sección "Animaciones LevelUP" del pie envuelve la
+carga así:
+
+```liquid
+{%- if template.name == 'product' -%}
+  ...
+{%- endif -%}
+```
+
+Para llevarlas a otra página se añade su plantilla a esa condición, desde el
+editor. La portada quedó deliberadamente quieta.
 
 | Efecto | Dónde |
 |---|---|
 | Texto revelado palabra por palabra tras una máscara | `h1`, `h2`, `h3` fuera de header, pie y diálogos |
-| Entrada con desplazamiento y zoom, en cascada | Tarjetas de producto y de colección |
-| Parallax | Imagen del hero y tarjetas de categoría |
-| Secciones apiladas | El hero se fija y la página sube encima; más abajo, la frase de marca hace lo mismo |
-| Desvanecido del hero | Su contenido sube y se desvanece al ritmo del scroll |
+| Entrada con desplazamiento y zoom | Cada foto de la galería y las tarjetas de recomendados |
+| Parallax dentro de la foto | `.product-media__image` |
 
-El logotipo gigante del cierre es un bloque `jumbo-text` en su propia sección
-del pie (`brand_wordmark`), colocada debajo de los enlaces legales. Ese bloque
-escala el texto hasta llenar el ancho y trae su propia animación de Horizon
-(`text_effect: "reveal"`), independiente de `levelup-motion`. El texto se
-edita desde el editor; es literal, no acepta `{{ shop.name }}` porque el
-ajuste es un textarea y no evalúa Liquid.
+La primera foto de la galería se salta a propósito: es la imagen que carga
+con prioridad alta y marca el LCP, y arrancarla en opacidad cero retrasaría
+lo que el visitante percibe como "ya cargó".
 
-**Cuidado con el apilado.** Se hace con selectores de ID en el CSS
-(`#shopify-section-hero_main`, `#shopify-section-statement_section` y los
-z-index de las secciones intermedias).
-Esos IDs salen de las claves de sección en `templates/index.json`. Si borras
-o recreas alguna de esas dos secciones desde el editor, Shopify le asigna un
-ID nuevo y el apilado deja de aplicarse en silencio — no rompe nada, sólo
-deja de verse. Habría que actualizar el CSS con los IDs nuevos.
+Todo va dentro de `prefers-reduced-motion: no-preference`, incluidos los
+estados iniciales, así que quien pida menos movimiento ve la página completa
+y estática en vez de contenido oculto esperando una animación que no corre.
 
-Dos detalles del texto: los títulos que llevan marcado dentro (un enlace, un
-`<strong>`) se saltan a propósito, porque reescribir su contenido lo
-destruiría; y los de más de 40 palabras también, porque el escalonado se
-volvería absurdo.
+El logotipo gigante del cierre es aparte: es un bloque `jumbo-text` en su
+propia sección del pie (`brand_wordmark`), con la animación `reveal` que trae
+Horizon. Esa sí se ve en todas las páginas, porque el pie es común.
 
 ## Qué falta verificar
 

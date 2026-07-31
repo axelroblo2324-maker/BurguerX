@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LevelUP — sistema de movimiento
+   LevelUP — sistema de movimiento (página de producto)
 
    Sin dependencias. Si el visitante pide menos movimiento, el script no
    hace absolutamente nada: no parte títulos, no observa nada y no engancha
@@ -32,7 +32,7 @@
     return !el.closest('header, footer, nav, dialog, .header, .footer, [role="dialog"]');
   }
 
-  /* ------------------------------------------- 1. revelado de texto */
+  /* ---------------------------------------------- 1. revelado de texto */
 
   var TITULOS = 'h1, h2, h3';
   var MAX_PALABRAS = 40;
@@ -72,17 +72,19 @@
     observer.observe(el);
   }
 
-  /* --------------------------------------------- 2. entrada de tarjetas */
+  /* --------------------------------- 2. entrada de fotos y de tarjetas */
 
-  var TARJETAS = [
+  // Cada foto de la galería entra al aparecer, que es el movimiento que
+  // define esta página: la columna de datos queda fija y las prendas van
+  // pasando. Las tarjetas de recomendados usan la misma entrada.
+  var ENTRADA = [
+    '.product-media-container',
     'product-card',
     '.product-card',
-    'collection-card',
-    '.collection-card',
     '.resource-list__item'
   ].join(',');
 
-  function prepararTarjeta(el, indice) {
+  function prepararEntrada(el, indice) {
     if (el.dataset.luRise) return;
     el.dataset.luRise = '1';
     el.classList.add('lu-rise');
@@ -105,12 +107,7 @@
 
   /* ------------------------------------------------------- 3. parallax */
 
-  // Sólo el hero y las tarjetas de categoría. Aplicarlo a cada foto de
-  // producto satura la vista y compite con la animación de entrada.
-  var PARALLAX = [
-    '#shopify-section-hero_main img',
-    '#shopify-section-categorias img'
-  ].join(',');
+  var PARALLAX = '.product-media__image';
 
   var capas = [];
   var enCola = false;
@@ -118,47 +115,12 @@
   function recogerCapas(raiz) {
     (raiz || document).querySelectorAll(PARALLAX).forEach(function (img) {
       if (img.dataset.luPar) return;
-      var caja = img.parentElement;
+      var caja = img.closest('.product-media') || img.parentElement;
       if (!caja) return;
       img.dataset.luPar = '1';
-      caja.classList.add('lu-par');
-      img.classList.add('lu-par-img');
+      caja.classList.add('lu-media');
       capas.push(img);
     });
-  }
-
-  /* ----------------------------------------------- 4. desvanecido del hero */
-
-  // El hero queda fijo por CSS y la página sube encima. Para que no se lea
-  // el título del hero a través del hueco mientras eso pasa, su contenido
-  // se desvanece y sube al mismo ritmo del scroll.
-  var heroContenido = null;
-
-  function prepararHero() {
-    if (heroContenido) return;
-    var hero = document.getElementById('shopify-section-hero_main');
-    if (!hero) return;
-    heroContenido =
-      hero.querySelector('.hero__content-wrapper') ||
-      hero.querySelector('.hero__content');
-    if (heroContenido) heroContenido.classList.add('lu-hero-content');
-  }
-
-  function pintarHero() {
-    if (!heroContenido) return;
-    var hero = document.getElementById('shopify-section-hero_main');
-    if (!hero) return;
-
-    var caja = hero.getBoundingClientRect();
-    // Termina de desvanecerse a media altura del hero: pasado ese punto ya
-    // está tapado por la sección siguiente y seguir animando no se ve.
-    var recorrido = caja.height * 0.5;
-    var avance = recorrido > 0 ? -caja.top / recorrido : 0;
-    avance = Math.min(1, Math.max(0, avance));
-
-    heroContenido.style.opacity = String(1 - avance);
-    heroContenido.style.transform =
-      'translate3d(0, ' + (-avance * 48).toFixed(1) + 'px, 0)';
   }
 
   function pintarParallax() {
@@ -173,10 +135,8 @@
       // por abajo, 0 justo al centro de la pantalla.
       var centro = caja.top + caja.height / 2;
       var desfase = (centro - alto / 2) / alto;
-      img.style.setProperty('--lu-py', (desfase * -16).toFixed(1) + 'px');
+      img.style.setProperty('--lu-py', (desfase * -18).toFixed(1) + 'px');
     });
-
-    pintarHero();
   }
 
   function alHacerScroll() {
@@ -194,12 +154,16 @@
       if (esContenido(el)) partirTitulo(el);
     });
 
-    Array.prototype.forEach.call(ambito.querySelectorAll(TARJETAS), function (el, i) {
-      if (esContenido(el)) prepararTarjeta(el, i);
+    Array.prototype.forEach.call(ambito.querySelectorAll(ENTRADA), function (el, i) {
+      if (!esContenido(el)) return;
+      // La primera foto es la imagen grande que carga con prioridad alta y
+      // marca el LCP. Arrancarla en opacidad cero retrasaría lo que el
+      // visitante percibe como "la página ya cargó".
+      if (el.matches('.product-media-container') && i === 0) return;
+      prepararEntrada(el, i);
     });
 
     recogerCapas(ambito === document ? null : ambito);
-    prepararHero();
     pintarParallax();
   }
 

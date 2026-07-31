@@ -478,9 +478,13 @@ def build_footer():
     # imposibles de leer y de mantener. Pasan a assets/ y esta sección sólo
     # los carga. Sigue siendo una sección del editor, así que se puede
     # desactivar sin tocar código.
+    # Las animaciones se cargan sólo en la plantilla de producto. Para
+    # llevarlas a otra página basta con añadirla a esta condición.
     d["sections"]["levelup_animations"]["settings"]["custom_liquid"] = (
-        "{{ 'levelup-motion.css' | asset_url | stylesheet_tag }}\n"
-        "<script src=\"{{ 'levelup-motion.js' | asset_url }}\" defer></script>"
+        "{%- if template.name == 'product' -%}\n"
+        "  {{ 'levelup-motion.css' | asset_url | stylesheet_tag }}\n"
+        "  <script src=\"{{ 'levelup-motion.js' | asset_url }}\" defer></script>\n"
+        "{%- endif -%}"
     )
     d["sections"]["levelup_animations"]["name"] = "Animaciones LevelUP"
 

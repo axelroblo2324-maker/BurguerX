@@ -1,17 +1,21 @@
 /* ==========================================================================
-   LevelUP — sistema de movimiento
+   LevelUP — sistema de movimiento (página de producto)
 
-   Cuatro efectos, todos dentro de prefers-reduced-motion: no-preference.
-   Quien pida menos movimiento en su sistema ve la página completamente
-   estática, sin nada oculto: los estados iniciales sólo existen dentro de
-   la media query, así que si no aplica, el contenido ya está visible.
+   Sólo se carga en la plantilla de producto: la sección "Animaciones
+   LevelUP" del pie envuelve la carga en un {% if template.name == 'product' %}.
+   Para llevarlo a otras páginas basta con añadir plantillas a esa condición
+   desde el editor.
+
+   Todo va dentro de prefers-reduced-motion: no-preference. Los estados
+   iniciales también, así que quien pida menos movimiento ve la página
+   completa y estática, nunca contenido oculto esperando una animación que
+   no va a correr.
    ========================================================================== */
 
 @media (prefers-reduced-motion: no-preference) {
-  /* --- 1. Revelado de texto tipo cortina ---------------------------------
+  /* --- Revelado de texto tipo cortina ------------------------------------
      Cada palabra va dentro de una máscara con overflow oculto y sube desde
-     abajo. El escalonado es por palabra, con tope para que un título largo
-     no tarde una eternidad en terminar. */
+     abajo. En producto le toca sobre todo al nombre de la prenda. */
 
   .lu-word {
     display: inline-block;
@@ -33,7 +37,9 @@
     transform: none;
   }
 
-  /* --- 2. Entrada de tarjetas con zoom ----------------------------------- */
+  /* --- Entrada con desplazamiento y zoom ---------------------------------
+     La usan las fotos de la galería conforme bajas y las tarjetas de
+     productos relacionados. */
 
   .lu-rise {
     opacity: 0;
@@ -49,65 +55,17 @@
     transform: none;
   }
 
-  /* --- 3. Parallax -------------------------------------------------------
+  /* --- Parallax dentro de cada foto --------------------------------------
      La imagen se escala un poco para tener margen por donde moverse; sin
-     ese margen el desplazamiento dejaría franjas vacías arriba o abajo. */
+     ese margen el desplazamiento dejaría franjas vacías arriba o abajo.
+     .product-media ya trae aspect-ratio, así que recortar sobra el resto. */
 
-  .lu-par {
+  .lu-media {
     overflow: hidden;
   }
 
-  .lu-par-img {
-    transform: translate3d(0, var(--lu-py, 0px), 0) scale(1.08);
+  .lu-media .product-media__image {
+    transform: translate3d(0, var(--lu-py, 0px), 0) scale(1.06);
     will-change: transform;
-  }
-
-  /* --- 4. Secciones que se apilan ----------------------------------------
-     El hero se queda fijo y el resto de la página sube por encima; más
-     abajo, la frase de marca hace lo mismo. Un elemento sticky es
-     posicionado y pinta sobre sus hermanos estáticos, así que a los de
-     abajo hay que darles z-index para que de verdad lo tapen.
-
-     El orden importa: cada tramo va por encima del anterior. Si dos
-     secciones apiladas comparten z-index, gana la última del documento, y
-     entonces el hero se vería por encima de todo. */
-
-  #shopify-section-hero_main {
-    position: sticky;
-    top: 0;
-    z-index: 0;
-  }
-
-  #shopify-section-trust_band,
-  #shopify-section-brand_marquee,
-  #shopify-section-featured_products,
-  #shopify-section-categorias,
-  #shopify-section-col_mujeres,
-  #shopify-section-col_hombres,
-  #shopify-section-benefits_section {
-    position: relative;
-    z-index: 1;
-  }
-
-  #shopify-section-statement_section {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-  }
-
-  #shopify-section-col_accesorios,
-  #shopify-section-mas_vendidos,
-  #shopify-section-faq_section {
-    position: relative;
-    z-index: 3;
-  }
-
-  /* El contenido del hero se va desvaneciendo y subiendo mientras la
-     sección queda clavada detrás. La opacidad la calcula el JS: aquí sólo
-     se declara que no debe transicionar, porque el valor cambia en cada
-     cuadro y una transición lo dejaría siempre por detrás del scroll. */
-  .lu-hero-content {
-    will-change: opacity, transform;
-    transition: none;
   }
 }

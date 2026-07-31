@@ -35,11 +35,13 @@
       assign heading_font_bolder = heading_font | font_modify: 'weight', 'bolder'
     -%}
 
-    {{ body_font | font_face: font_display: 'swap' }}
-    {{ body_font_bold | font_face: font_display: 'swap' }}
-    {{ body_font_italic | font_face: font_display: 'swap' }}
-    {{ heading_font | font_face: font_display: 'swap' }}
-    {{ heading_font_bolder | font_face: font_display: 'swap' }}
+    {%- style -%}
+      {{ body_font | font_face: font_display: 'swap' }}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+      {{ body_font_italic | font_face: font_display: 'swap' }}
+      {{ heading_font | font_face: font_display: 'swap' }}
+      {{ heading_font_bolder | font_face: font_display: 'swap' }}
+    {%- endstyle -%}
 
     {% render 'css-variables' %}
 

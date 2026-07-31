@@ -101,6 +101,7 @@
         "product-1": {
           "type": "product",
           "settings": {
+            "product": "autumnwinter-casual-minimalist-hooded-womens-trench-coat",
             "image_ratio": "tall",
             "width": 5,
             "start_column": 1,
@@ -133,6 +134,7 @@
         "product-2": {
           "type": "product",
           "settings": {
+            "product": "letter-print-denim-jeans-for-men",
             "image_ratio": "tall",
             "width": 4,
             "start_column": 2,
@@ -143,6 +145,7 @@
         "product-3": {
           "type": "product",
           "settings": {
+            "product": "womens-printed-high-capacity-shoulder-bag",
             "image_ratio": "tall",
             "width": 4,
             "start_column": 8,

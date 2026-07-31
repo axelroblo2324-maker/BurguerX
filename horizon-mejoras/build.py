@@ -430,6 +430,47 @@ def build_footer():
         "<script src=\"{{ 'levelup-motion.js' | asset_url }}\" defer></script>"
     )
     d["sections"]["levelup_animations"]["name"] = "Animaciones LevelUP"
+
+    # Logotipo gigante al cierre de la página. jumbo-text escala el texto
+    # hasta llenar el ancho del contenedor y trae su propia animación:
+    # text_effect "reveal" sube cada línea desde abajo tras una máscara.
+    #
+    # Va en su propia sección para quedar por debajo de los enlaces legales,
+    # que es donde lo pone la referencia. Con un solo bloque, footer.liquid
+    # colapsa la rejilla a una columna y lo centra.
+    d["sections"]["brand_wordmark"] = {
+        "type": "footer",
+        "blocks": {
+            "wordmark": {
+                "type": "jumbo-text",
+                "name": "Nombre de la marca",
+                "settings": {
+                    "text": "LevelUP",
+                    "font": "heading",
+                    "alignment": "center",
+                    "line_height": "0.8",
+                    "letter_spacing": "-0.03em",
+                    "case": "none",
+                    "text_effect": "reveal",
+                    "animation_repeat": False,
+                    "text_color": "",
+                },
+                "blocks": {},
+            }
+        },
+        "block_order": ["wordmark"],
+        "name": "Nombre de la marca",
+        "settings": {
+            "section_width": "page-width",
+            "gap": 0,
+            "background_color": "{{ settings.color_palette.background }}",
+            "padding-block-start": 24,
+            "padding-block-end": 8,
+        },
+    }
+
+    d["order"] = ["footer_m9NzUG", "footer_utilities_jLGE8U",
+                  "brand_wordmark", "levelup_animations"]
     return d
 
 

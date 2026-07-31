@@ -83,6 +83,13 @@ oculto esperando una animación que no va a correr.
 | Parallax | Imagen del hero y tarjetas de categoría |
 | Secciones apiladas | La frase de marca se fija y Accesorios sube encima |
 
+El logotipo gigante del cierre es un bloque `jumbo-text` en su propia sección
+del pie (`brand_wordmark`), colocada debajo de los enlaces legales. Ese bloque
+escala el texto hasta llenar el ancho y trae su propia animación de Horizon
+(`text_effect: "reveal"`), independiente de `levelup-motion`. El texto se
+edita desde el editor; es literal, no acepta `{{ shop.name }}` porque el
+ajuste es un textarea y no evalúa Liquid.
+
 **Cuidado con el apilado.** Se hace con selectores de ID en el CSS
 (`#shopify-section-statement_section` y `#shopify-section-col_accesorios`).
 Esos IDs salen de las claves de sección en `templates/index.json`. Si borras

@@ -13,6 +13,7 @@ tocó en ningún momento.
 | `build.py` | Genera `theme/` a partir de `actual/`. Idempotente: se puede volver a correr. Ojo: **no** regenera los archivos parcheados a mano (`snippets/`, `templates/404.json`, `list-collections.json`, `page.contact.json`); esos se editaron sobre la copia del tema. |
 | `index.json` | Portada base que usa `build.py` (paso previo, con los productos ya conectados). |
 | `settings_data.json` | Ajustes de tipografía ya aplicados al borrador. |
+| `politicas-borrador.md` | Borradores de envíos, devoluciones y términos. **No publicados**: llevan datos por verificar y son un compromiso legal que decide el dueño. |
 
 ```bash
 python3 build.py     # regenera theme/ desde actual/

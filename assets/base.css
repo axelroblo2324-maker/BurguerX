@@ -371,13 +371,20 @@ h5,
   transition: background-color var(--duration-fast) var(--ease-out),
     color var(--duration-fast) var(--ease-out),
     border-color var(--duration-fast) var(--ease-out),
-    opacity var(--duration-fast) var(--ease-out);
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
 }
 
 .button:hover,
 .shopify-challenge__button:hover {
   background-color: transparent;
   color: var(--button-bg);
+  transform: translateY(-2px);
+}
+
+.button:active,
+.shopify-challenge__button:active {
+  transform: translateY(0);
 }
 
 .button--outline {
@@ -575,6 +582,28 @@ textarea.field__input {
 
 .icon-button:hover {
   opacity: 0.6;
+}
+
+.icon-button.is-bumping {
+  animation: icon-bump 420ms var(--ease-out);
+}
+
+@keyframes icon-bump {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.16);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-button.is-bumping {
+    animation: none;
+  }
 }
 
 /* ------------------------------ Animaciones ------------------------------ */
@@ -1599,11 +1628,22 @@ body:has(#MainContent > .shopify-section:first-child [data-header-transparent='t
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: opacity var(--duration-fast) var(--ease-out);
+  transition: opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
 }
 
 .quantity__button:hover {
   opacity: 0.5;
+}
+
+.quantity__button:active {
+  transform: scale(0.85);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quantity__button:active {
+    transform: none;
+  }
 }
 
 .quantity__input {

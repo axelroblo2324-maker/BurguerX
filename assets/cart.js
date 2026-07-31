@@ -208,6 +208,7 @@
           applySections(data.sections);
           this.setLoading(false);
           this.flashAdded();
+          if (Theme.bumpCartIcon) Theme.bumpCartIcon();
           openDrawer();
         })
         .catch(() => {
@@ -258,7 +259,10 @@
     }))
       .then((response) => response.json())
       .then((data) => {
-        if (!data.status) applySections(data.sections);
+        if (!data.status) {
+          applySections(data.sections);
+          if (Theme.bumpCartIcon) Theme.bumpCartIcon();
+        }
         button.removeAttribute('aria-busy');
       })
       .catch(() => button.removeAttribute('aria-busy'));

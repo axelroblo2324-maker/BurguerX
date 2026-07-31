@@ -72,6 +72,15 @@
     return template.replace(placeholder, formatted);
   };
 
+  Theme.bumpCartIcon = function bumpCartIcon() {
+    if (prefersReducedMotion.matches) return;
+    const icon = document.querySelector('[data-cart-icon]');
+    if (!icon) return;
+    icon.classList.remove('is-bumping');
+    void icon.offsetWidth;
+    icon.classList.add('is-bumping');
+  };
+
   const FOCUSABLE =
     'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])';
 
@@ -709,6 +718,57 @@
   }
 
   if (!customElements.get('show-more')) customElements.define('show-more', ShowMore);
+
+  /* ------------------------ Acordeones con movimiento --------------------- */
+
+  function animateDetails(details, content, closing) {
+    if (details.dataset.animating === 'true') return;
+    details.dataset.animating = 'true';
+
+    if (!closing) details.setAttribute('open', '');
+
+    // Algunos paneles (los filtros) traen su propio max-height con scroll
+    // interno; se respeta ese límite para no saltar de golpe al terminar.
+    const computedMax = parseFloat(getComputedStyle(content).maxHeight);
+    const cap = Number.isFinite(computedMax) ? computedMax : Infinity;
+    const targetHeight = Math.min(content.scrollHeight, cap);
+
+    const startHeight = closing ? targetHeight : 0;
+    const endHeight = closing ? 0 : targetHeight;
+
+    content.style.overflow = 'hidden';
+    content.style.maxHeight = `${startHeight}px`;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        content.style.transition = 'max-height var(--duration-base) var(--ease-out)';
+        content.style.maxHeight = `${endHeight}px`;
+      });
+    });
+
+    const onEnd = (event) => {
+      if (event.target !== content || event.propertyName !== 'max-height') return;
+      content.removeEventListener('transitionend', onEnd);
+      content.style.transition = '';
+      content.style.maxHeight = '';
+      content.style.overflow = '';
+      if (closing) details.removeAttribute('open');
+      details.dataset.animating = 'false';
+    };
+    content.addEventListener('transitionend', onEnd);
+  }
+
+  document.addEventListener('click', (event) => {
+    const summary = event.target.closest('summary');
+    if (!summary) return;
+    const details = summary.parentElement;
+    if (!details || details.tagName !== 'DETAILS') return;
+    const content = summary.nextElementSibling;
+    if (!content || prefersReducedMotion.matches) return;
+
+    event.preventDefault();
+    animateDetails(details, content, details.hasAttribute('open'));
+  });
 
   /* --------------------------- Enlaces con confirmación ------------------- */
 

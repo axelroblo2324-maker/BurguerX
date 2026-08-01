@@ -273,6 +273,21 @@
   width: 100%;
 }
 
+/* --- Sitio para las fotos recortadas -------------------------------------
+   Ni .product-media ni .card-gallery pintan fondo, así que una foto sin
+   fondo cae directamente sobre el crema de la página, que es justo lo que
+   se busca. La excepción es la miniatura de la barra de compra fija:
+   product-information.liquid le pone
+   `background: var(--color-background-secondary)`, y con un PNG recortado
+   eso se ve como un cuadrito gris alrededor de la prenda.
+
+   El selector antepone el nombre del elemento para ganar por especificidad
+   sin depender del orden de carga. */
+
+sticky-add-to-cart .sticky-add-to-cart__image {
+  background: transparent;
+}
+
 /* ==========================================================================
    2. MOVIMIENTO
    ========================================================================== */

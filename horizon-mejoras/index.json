@@ -359,7 +359,7 @@
               "type": "text",
               "name": "Título",
               "settings": {
-                "text": "<h2>Por Qué Elegir LevelUP</h2>",
+                "text": "<h2>Por qué elegir LevelUP</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "center",

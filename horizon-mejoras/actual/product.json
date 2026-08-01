@@ -384,7 +384,7 @@
           "type": "text",
           "name": "Título",
           "settings": {
-            "text": "<h3>También Te Puede Gustar</h3>",
+            "text": "<h3>También te puede gustar</h3>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",

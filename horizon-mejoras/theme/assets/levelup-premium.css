@@ -143,3 +143,43 @@
     font-size: 0.8125rem;
   }
 }
+
+/* ==========================================================================
+   4. La caja de compra: quitar las decisiones que no lo son
+
+   Nueve de los veinte productos tienen una opción de un solo valor —"Color:
+   Blanco", "Color: Azul", "Color: Caqui"— y el Blazer se lleva el premio con
+   "Color: Color único (como en foto)".
+
+   Horizon ya las trata distinto: cuando una opción tiene un único valor no
+   dibuja botones, sino una fila de texto marcada con
+   data-testid="variant-option-single". Pero la pinta al mismo tamaño y peso
+   que todo lo demás, así que compite con la talla y con el botón de compra.
+
+   En la caja de compra cada elemento que no es una decisión ni una
+   tranquilidad es fricción. Esto no es una decisión: no hay nada que elegir.
+
+   No se esconde, se baja de rango. Pasa a caption pequeño y gris, con el
+   nombre de la opción en versalitas. El dato sigue ahí —el color es
+   información real de la prenda— pero deja de parecer un paso del proceso.
+
+   El valor se queda en el color del texto normal para que siga siendo lo
+   legible de la fila; lo que se apaga es la etiqueta "Color:".
+   ========================================================================== */
+
+.variant-picker [data-testid='variant-option-single'] {
+  display: flex;
+  gap: 0.5ch;
+  align-items: baseline;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-foreground) 55%, transparent);
+}
+
+.variant-picker [data-testid='variant-option-single-value'] {
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: color-mix(in srgb, var(--color-foreground) 80%, transparent);
+}

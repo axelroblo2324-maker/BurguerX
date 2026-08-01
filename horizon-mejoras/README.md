@@ -14,7 +14,8 @@ tocó en ningún momento.
 | `index.json` | Portada base que usa `build.py` (paso previo, con los productos ya conectados). |
 | `settings_data.json` | Ajustes de tipografía ya aplicados al borrador. |
 | `politicas-borrador.md` | Borradores de envíos, devoluciones y términos. **No publicados**: llevan datos por verificar y son un compromiso legal que decide el dueño. |
-| `recorte-de-fondos.md` | Cómo se borra el fondo blanco de las fotos de producto, y qué queda por hacer a mano desde el admin. |
+| `recorte-de-fondos.md` | Cómo se borra el fondo blanco de las fotos de producto: lo que ya hace el tema y cómo recortarlas de verdad. |
+| `quitar-fondos.py` | Recorta el fondo de las fotos de **todos** los productos y las reemplaza en Shopify. Se corre **en tu máquina**, no aquí: `cdn.shopify.com` está bloqueado por la política de red de este entorno. |
 
 ```bash
 python3 build.py     # regenera theme/ desde actual/

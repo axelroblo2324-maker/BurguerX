@@ -46,7 +46,82 @@ Los dos se arreglan recortando la foto de verdad. Y las dos cosas conviven
 sin pelearse: sobre una foto ya recortada, darken no tiene nada blanco que
 morder, y la parte transparente deja ver la página igual.
 
-## Recortar de verdad (opcional, mejora el resultado)
+## Recortarlo de verdad, en todos los productos de una pasada
+
+`quitar-fondos.py` hace el trabajo completo: baja cada foto, le recorta el
+fondo y —si se lo pides— sube la recortada a Shopify y retira la original.
+
+Hay que correrlo **en tu computadora**. Desde el entorno donde se genera este
+repositorio no se puede: la política de red devuelve 403 en
+`cdn.shopify.com`, así que las imágenes son inalcanzables desde ahí. Y
+Shopify no expone su quitafondos por API — se comprobó contra el esquema:
+no existen `imageRemoveBackground`, `fileRemoveBackground`,
+`mediaRemoveBackground`, `productImageRemoveBackground`, ni un campo
+`removeBackground` en `FileUpdateInput`.
+
+### 1. El token
+
+Admin de Shopify → **Configuración → Aplicaciones y canales de venta →
+Desarrollar aplicaciones → Crear una aplicación**. Ponle el nombre que
+quieras. En **Configurar ámbitos de Admin API** marca `read_products` y
+`write_products`. Guarda, **Instalar**, y copia el token de acceso: empieza
+con `shpat_`. Se muestra una sola vez.
+
+### 2. Correrlo
+
+```bash
+pip install pillow requests
+
+export SHOPIFY_TIENDA=levelupmx.myshopify.com
+export SHOPIFY_TOKEN=shpat_loquetehayadado
+
+python3 quitar-fondos.py                       # prueba, no toca la tienda
+python3 quitar-fondos.py --producto stretchy-loose-straight-pants
+python3 quitar-fondos.py --aplicar             # sube y reemplaza
+```
+
+Sin `--aplicar` **no escribe nada en Shopify**. Descarga, recorta, deja los
+archivos en `fondos/recortadas/` y escribe `fondos/informe.txt`. Ábrelos,
+míralos, y sólo entonces vuelve a correrlo con `--aplicar`. Con `--aplicar`
+pide que escribas `SI` antes de empezar.
+
+### Qué cuida
+
+- **Guarda las originales** en `fondos/originales/` antes de tocar nada.
+- **No borra la original hasta que la nueva está lista.** Sube el recorte,
+  espera a que Shopify termine de procesarlo (`status: READY`) y sólo
+  entonces retira la vieja. Si algo falla a medio camino, el producto se
+  queda con la foto que tenía, nunca sin ninguna.
+- **Respeta el blanco de dentro de la prenda.** No borra todo lo que se
+  parezca al fondo —eso se comería una suela, un logo o el hueco de un asa—
+  sino sólo lo que además esté pegado al borde, rellenando desde las cuatro
+  esquinas. Está probado con un caso a propósito: un aro oscuro con un hueco
+  blanco en medio; el hueco se queda.
+- **Se salta las fotos que no son de estudio.** Mide si el marco de la foto
+  es liso y claro; una foto de modelo en la calle no pasa el filtro y se
+  deja intacta, porque recortarle el fondo deja a la persona flotando.
+  `--forzar` lo salta si quieres decidir tú.
+- **Avisa cuando el resultado es sospechoso.** Si el recorte borró menos del
+  2% o más del 92% de la imagen, no la sube: eso pasa con las prendas
+  blancas sobre fondo blanco, donde no hay forma de distinguir una de otro.
+  Van al informe para que las hagas a mano.
+- **Aguanta el degradado** de un ciclorama y la sombra suave bajo la prenda
+  (tolerancia de 32 sobre 255, ajustable con `--tolerancia`).
+
+### Lo que no pude probar
+
+La parte de imagen está probada con seis casos sintéticos —fondo blanco
+puro, ciclorama con degradado, blanco encerrado, foto ruidosa, pared con
+textura y prenda blanca sobre blanco— y los seis dan lo esperado.
+
+Lo que **no** pude ejecutar es el camino contra Shopify: descargar, subir y
+reemplazar. Las consultas y mutaciones están validadas contra el esquema real
+de la Admin API (`productCreateMedia`, `productReorderMedia`,
+`productDeleteMedia`, `stagedUploadsCreate`), pero nunca corrieron. Por eso
+el modo de prueba es el que viene por omisión y por eso conviene empezar con
+`--producto` en uno solo. Si algo revienta, mándame el error y lo arreglo.
+
+## A mano, desde el admin (para las que el programa deje fuera)
 
 Shopify ya trae el quitafondos, gratis y sin instalar nada:
 

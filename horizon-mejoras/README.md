@@ -1,8 +1,19 @@
 # LevelUP — mejoras al tema Horizon
 
-Respaldo de los archivos que se subieron al tema **borrador** "LevelUP FINAL —
-mejorado" (`gid://shopify/OnlineStoreTheme/187613413671`). El tema activo no se
-tocó en ningún momento.
+Respaldo de los archivos del tema de LevelUP.
+
+⚠️ **Los identificadores cambiaron el 1 de agosto de 2026.** El borrador
+"LevelUP FINAL — mejorado" (`187613413671`) **se publicó**: ahora es el tema
+principal y se llama simplemente **"LevelUP"**. Todo lo de este repositorio
+está en vivo.
+
+Como consecuencia, ese ID ya **no se puede editar por API**: la política de
+seguridad bloquea escrituras sobre el tema publicado, y con razón. El trabajo
+en curso va sobre **"Copia de LevelUP"** (`187640709415`), que es un duplicado
+sin publicar; cuando algo se da por bueno, se publica a mano desde el admin.
+
+Si retomas esto más adelante, comprueba primero cuál es el tema vivo:
+`themes(first: 8) { nodes { id name role } }` — el que tenga `role: MAIN`.
 
 ## Carpetas
 

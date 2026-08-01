@@ -590,9 +590,38 @@ def build_footer():
         + "</feComponentTransfer></filter></defs></svg>"
     )
 
+    # Esa curva borra el fondo de estudio, pero no distingue el fondo de una
+    # prenda blanca: los dos ocupan el mismo rango (el ciclorama del proveedor
+    # va de 234 a 255; una prenda blanca, de 230 a 255). Medido sobre la
+    # tienda, se comía el 93% del Top Amelie y el 95% de la Chaqueta Margot.
+    #
+    # Así que en estos seis productos se apaga. levelup-fondos.css ya lo hace
+    # para las tarjetas, seleccionando por el nombre del archivo, pero ahí sólo
+    # están las tres primeras fotos de cada uno. En la ficha se ven todas, y
+    # aquí Liquid sí sabe qué producto es: se apaga para el producto entero.
+    claros = ",".join((
+        "fashionable-and-versatile-solid-color-double-breasted-blazer",
+        "feitong-women-ladies-blouses-and-tops-casual-ruffles-lace-polka-dot"
+        "-o-neck-shirt-long-sleeve-blouse-blusas-mujer-de-moda",
+        "korean-shoulder-bag-white-1-piece",
+        "casual-versatile-retro-chic-polka-dot-color-block-collar-jacket",
+        "solid-color-versatile-fitted-top-for-women",
+        "dress-sleeveless-bodycon-dresses-vestidos-ropa-mujer",
+    ))
+    prendas_claras = (
+        "{%- assign lu_claros = '" + claros + "' | split: ',' -%}\n"
+        "{%- if template.name == 'product'"
+        " and lu_claros contains product.handle -%}\n"
+        "  <style>.media-gallery__grid .product-media__image{"
+        "--lu-filtro:none;--lu-mezcla:normal;--lu-mascara:var(--lu-fundido)}"
+        "</style>\n"
+        "{%- endif -%}"
+    )
+
     d["sections"]["levelup_animations"]["settings"]["custom_liquid"] = (
         "{{ 'levelup-fondos.css' | asset_url | stylesheet_tag }}\n"
         + filtro + "\n"
+        + prendas_claras + "\n"
         "{%- if template.name == 'product' -%}\n"
         "  {{ 'levelup-motion.css' | asset_url | stylesheet_tag }}\n"
         "  <script src=\"{{ 'levelup-motion.js' | asset_url }}\" defer></script>\n"

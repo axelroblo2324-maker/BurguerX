@@ -14,70 +14,72 @@
    foto se lee como un recuadro pegado encima.
 
    ---------------------------------------------------------------------------
-   Cómo se borra: dos pasos, en este orden
+   POR QUÉ HAY DOS TRATAMIENTOS Y NO UNO
 
-   1. ESTIRAR EL PUNTO BLANCO  (filter: url(#lu-blanquear))
+   La versión anterior aplicaba lo mismo a todas las fotos: una curva que
+   empujaba a blanco puro todo lo que pasara de 0.90 (229) y encima
+   mix-blend-mode: darken. Con las prendas oscuras funciona perfecto. Con las
+   claras las borraba.
 
-      Una curva por canal que deja quieto todo lo que esté por debajo de 0.75
-      y empuja a blanco puro todo lo que pase de 0.90. Sirve para que un fondo
-      que NO era blanco —el crema o el gris claro de un ciclorama— llegue a
-      255 y el paso 2 pueda morderlo.
+   No es una exageración. Midiendo una captura de la tienda, píxel a píxel,
+   contra el color exacto de la página:
 
-      Esto es lo que arregla el caso que el darken solo no podía: un fondo
-      gris es más OSCURO que la página, así que darken se quedaba con el gris
-      y el recuadro sobrevivía.
+     Top Amelie (blanco)        93.0% de la ficha idéntico a la página
+     Chaqueta Margot (blanco)   94.7%
+     Vestido Noir (blanco)      75.8%
+     Blazer Verona (crema)      66.3%
+     Chaqueta Sahara (khaki)    44.4%   <- eso es su fondo real, está bien
+     Jeans (denim)               9.0%   <- idem, perfecto
 
-   2. MEZCLAR EN OSCURO  (mix-blend-mode: darken)
+   O sea: el Top Amelie y la Chaqueta Margot no se veían pálidos, estaban
+   literalmente borrados. La prenda entera valía lo mismo que el fondo.
 
-      Se queda, canal por canal, con el valor más oscuro entre la foto y lo
-      que hay detrás:
+   Y no se arregla moviendo el umbral. Las fichas de "Compra por categoría"
+   no llevan filtro (toggle_overlay = False), así que muestran el fondo crudo
+   del proveedor: mide entre 234 y 255, con viñeteo de ciclorama. Una prenda
+   blanca vive entre 230 y 255. LOS DOS RANGOS SON EL MISMO. Cualquier regla
+   que mire sólo el color de un píxel —curva, darken, croma— borra los dos o
+   deja los dos. No hay umbral que los separe.
 
-        · Fondo ya en blanco (255,255,255) contra el crema (247,244,239)
-          -> gana el crema en los tres canales. El fondo desaparece exacto.
-
-        · Cualquier píxel más oscuro que el crema -> gana la foto, intacta.
-
-   Se usa "darken" y no "multiply", que era la opción obvia: multiply oscurece
-   TODO un 4-6% y le mete un velo cálido a la prenda entera. Darken no toca
-   nada que ya sea más oscuro que la página, y eso es casi toda la prenda.
-
-   El orden importa y es el que manda la spec: el filtro se aplica al
-   elemento, y el resultado es lo que se mezcla con el telón de fondo.
+   Por eso: quien puede distinguirlos es el recorte de verdad (quitar-fondos.py
+   o Productos → imagen → Editar → Quitar fondo), que mira la FORMA. Mientras
+   tanto, el tema hace lo único razonable: tratar distinto lo que es distinto.
 
    ---------------------------------------------------------------------------
-   Comprobado con la curva real, simulada canal por canal:
+   TRATAMIENTO 1 — prendas oscuras y medias (todo por omisión)
+
+   Lo de siempre, sin tocar, porque funciona: curva que estira el punto blanco
+   + mix-blend-mode: darken. Borra el fondo de estudio exacto y no toca nada
+   más oscuro que la página, que es casi toda la prenda.
 
      fondo blanco puro   (255,255,255) -> borrado exacto
      fondo crema         (247,244,239) -> borrado exacto
-     fondo gris #EDEDED  (237,237,237) -> borrado exacto
      fondo gris #E5E5E5  (229,229,229) -> borrado exacto
      fondo gris #DCDCDC  (220,220,220) -> queda un resto de 15/255  <- el límite
      denim oscuro          (30,45,80)  -> intacto, bit a bit
      negro                 (18,18,20)  -> intacto, bit a bit
-     rojo                 (170,40,45)  -> intacto, bit a bit
-     gris medio         (128,128,128)  -> intacto, bit a bit
      khaki claro        (198,180,140)  -> +1/255, imperceptible
 
    ---------------------------------------------------------------------------
-   Dónde falla, para que quede dicho
+   TRATAMIENTO 2 — prendas claras (lista explícita, abajo)
 
-     · Fondos por debajo de #DCDCDC: ya son demasiado oscuros para separarlos
-       de la prenda sin comérsela. Queda un recuadro tenue.
+   Aquí NO se toca el color. Nada de curva, nada de mezcla: la foto se ve tal
+   cual es, así que la prenda se ve entera. El precio es que vuelve el
+   recuadro del fondo, y eso se ataja por otro lado: una máscara que disuelve
+   el borde del encuadre.
 
-     · Productos blancos o muy claros: por encima de 0.90 se recortan al color
-       de la página, o sea que un blanco puro se ve crema. Es el mismo
-       mecanismo que borra el fondo — no distingue fondo de prenda. Con el
-       darken solo esto ya pasaba por encima de 0.96; la curva baja ese techo
-       a 0.90, así que una prenda blanca pierde algo más de pliegue.
+   Lo que hace visible un recuadro no es tanto que el fondo sea más claro que
+   la página —son 8 niveles— como que el borde sea RECTO Y DURO. Al fundirlo
+   en un 6% de ancho, deja de leerse como una caja pegada y pasa por parte de
+   la foto. El fondo del centro sigue ahí; el marco, no.
 
-   Las dos se arreglan recortando la foto de verdad (quitar-fondos.py, o
-   Productos -> imagen -> Editar -> Quitar fondo en el admin). Y conviven sin
-   pelearse: sobre una foto ya recortada no queda nada blanco que morder, y la
-   parte transparente deja ver la página igual.
+   La máscara sólo se aplica aquí. En las prendas oscuras el encuadre suele ir
+   a sangre —los jeans casi tocan arriba y abajo— y fundirle el borde les
+   comería la pernera. Las seis prendas claras están holgadas en su encuadre,
+   así que la máscara sólo muerde fondo.
 
-   Para ablandar el efecto en prendas claras, sube el penúltimo tramo de la
-   curva en la sección "Animaciones LevelUP" del pie: cambiar el 0.88 por 0.95
-   sube el techo y respeta más el blanco, a cambio de dejar más gris de fondo.
+   Es un apaño, no la solución: la solución es recortar esas seis fotos. Están
+   listadas en recorte-de-fondos.md por orden de importancia.
    ========================================================================== */
 
 /* El fondo se pinta en el contenedor y no se deja al azar. Hace falta porque
@@ -86,6 +88,9 @@
    y la opacidad que le pone el JS del scroll— y dentro de un contexto así el
    telón de fondo del elemento es lo que se haya pintado ahí dentro, no la
    página. Sin esto, la mezcla no tendría contra qué mezclar y no haría nada.
+
+   En el tratamiento 2 no hay mezcla, pero sigue haciendo falta: es lo que se
+   ve por donde la máscara vuelve transparente la foto.
 
    Se usa var(--color-background) en vez de un hex para que, si la foto cae
    dentro de una sección con otro color, la mezcla siga cuadrando con esa
@@ -96,10 +101,25 @@
   background-color: var(--color-background);
 }
 
+/* --------------------------------------------------------------------------
+   Tratamiento 1: por omisión, todas las fotos.
+
+   Se declara con variables para que el tratamiento 2 y el diálogo puedan
+   apagarlo cambiando un valor, en vez de repetir el bloque entero.
+   -------------------------------------------------------------------------- */
+
 .media-gallery__grid .product-media__image,
 .card-gallery .product-media__image {
-  filter: url(#lu-blanquear);
-  mix-blend-mode: darken;
+  filter: var(--lu-filtro, url(#lu-blanquear));
+  mix-blend-mode: var(--lu-mezcla, darken);
+  -webkit-mask-image: var(--lu-mascara, none);
+          mask-image: var(--lu-mascara, none);
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+          mask-size: 100% 100%;
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
 }
 
 /* El <svg> que define el filtro no debe ocupar sitio ni leerse. No se usa
@@ -113,13 +133,84 @@
   overflow: hidden;
 }
 
-/* Dentro de un diálogo —el zoom de la foto, la compra rápida— el telón de
-   fondo puede ser oscuro, y ahí darken se comería la imagen entera. Se
-   desactivan los dos pasos por si alguno de esos paneles reutiliza el mismo
-   marcado: en el zoom interesa ver la foto tal cual es. */
+/* --------------------------------------------------------------------------
+   Tratamiento 2: las seis prendas claras.
 
-dialog .product-media__image,
-[role='dialog'] .product-media__image {
-  filter: none;
-  mix-blend-mode: normal;
+   Se seleccionan por el nombre del archivo dentro del src, no por una clase.
+   Es la única señal que existe en todos los sitios donde sale una foto de
+   producto —tarjeta, ficha, carrito, buscador, recomendados— sin depender del
+   marcado que Horizon genere en cada uno. Se mira también srcset porque
+   Horizon sirve las tarjetas con imágenes adaptables.
+
+   La ficha de producto se cubre aparte, desde la sección "Animaciones LevelUP"
+   del pie: ahí Liquid conoce product.handle y puede apagar el tratamiento para
+   TODAS las fotos del producto, no sólo las tres primeras que están listadas
+   aquí. Las tarjetas sólo enseñan la principal (y la segunda al pasar por
+   encima), así que con tres basta.
+
+   SI CAMBIAN LAS FOTOS DE ESTOS PRODUCTOS HAY QUE ACTUALIZAR ESTA LISTA.
+   Los identificadores salen de la API: products → media → image → url.
+   -------------------------------------------------------------------------- */
+
+:is(.media-gallery__grid, .card-gallery) .product-media__image:is(
+  /* Blazer Cruzado Verona · Corte Sastre */
+  [src*='7dbb73af-a244'],      [srcset*='7dbb73af-a244'],
+  [src*='9e86748e-9c38'],      [srcset*='9e86748e-9c38'],
+  [src*='08_26_29_p.m._2'],    [srcset*='08_26_29_p.m._2'],
+  /* Blusa París · Lunares con Olanes */
+  [src*='50dd2d11-1bc2'],      [srcset*='50dd2d11-1bc2'],
+  [src*='ba88e559-a56a'],      [srcset*='ba88e559-a56a'],
+  [src*='887f5a0c-b9dc'],      [srcset*='887f5a0c-b9dc'],
+  /* Bolso Seúl · Hombro Minimalista Blanco */
+  [src*='ac8c7207-c390'],      [srcset*='ac8c7207-c390'],
+  /* Chaqueta Margot · Lunares Retro */
+  [src*='cf375001-2cd1'],      [srcset*='cf375001-2cd1'],
+  [src*='c6e5a7f7-39e8'],      [srcset*='c6e5a7f7-39e8'],
+  [src*='fd54d21f-4064'],      [srcset*='fd54d21f-4064'],
+  /* Top Amelie · Encaje Entallado */
+  [src*='0143e840-daed'],      [srcset*='0143e840-daed'],
+  [src*='08_26_30_p.m._7'],    [srcset*='08_26_30_p.m._7'],
+  [src*='08_26_30_p.m._10'],   [srcset*='08_26_30_p.m._10'],
+  /* Vestido Noir · Bodycon Sin Mangas */
+  [src*='1616747282873'],      [srcset*='1616747282873'],
+  [src*='1616747282877'],      [srcset*='1616747282877'],
+  [src*='10_59_39_p.m._9'],    [srcset*='10_59_39_p.m._9']
+) {
+  --lu-filtro: none;
+  --lu-mezcla: normal;
+  --lu-mascara: var(--lu-fundido);
+}
+
+/* El fundido del borde. Dos degradados que se cruzan, uno por eje.
+
+   6% a los lados y 4% arriba y abajo: suficiente para que el borde deje de
+   ser una línea recta, poco para que no se note como viñeta. Si alguna prenda
+   queda mordida, baja los números; si todavía se ve la caja, súbelos. Son dos
+   valores y están aquí solos a propósito. */
+
+:root {
+  --lu-fundido-x: 6%;
+  --lu-fundido-y: 4%;
+  --lu-fundido:
+    linear-gradient(to right,
+      transparent 0, #000 var(--lu-fundido-x),
+      #000 calc(100% - var(--lu-fundido-x)), transparent 100%),
+    linear-gradient(to bottom,
+      transparent 0, #000 var(--lu-fundido-y),
+      #000 calc(100% - var(--lu-fundido-y)), transparent 100%);
+}
+
+/* Dentro de un diálogo —el zoom de la foto, la compra rápida— el telón de
+   fondo puede ser oscuro, y ahí darken se comería la imagen entera. Se apagan
+   los tres efectos por si alguno de esos paneles reutiliza el mismo marcado:
+   en el zoom interesa ver la foto tal cual es, entera y sin bordes fundidos.
+
+   Va al final y con la misma especificidad que el tratamiento 2 (0,3,0) para
+   ganarle por orden: si un día se mueve de sitio, deja de tener efecto sobre
+   las seis prendas claras. */
+
+:is(dialog, [role='dialog']) .product-media__image:is([src], [srcset]) {
+  --lu-filtro: none;
+  --lu-mezcla: normal;
+  --lu-mascara: none;
 }

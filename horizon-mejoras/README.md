@@ -189,11 +189,26 @@ Y, fuera de `prefers-reduced-motion` porque son composición y no movimiento:
 
 Aparte va `theme/assets/levelup-fondos.css`, que **se carga en todas las
 páginas** —lo demás es sólo producto— porque borra el fondo de estudio de las
-fotos y las tarjetas de producto están en todas partes. Trabaja en dos pasos:
-una curva que estira el punto blanco (así un fondo gris o crema llega a
-blanco puro) y encima `mix-blend-mode: darken`, que lo funde con la página.
-El filtro viaja como `<svg>` junto a la etiqueta del CSS, en la misma sección
-del pie. Está explicado en `recorte-de-fondos.md`.
+fotos y las tarjetas de producto están en todas partes. El filtro viaja como
+`<svg>` junto a la etiqueta del CSS, en la misma sección del pie.
+
+Hace **dos cosas distintas según la prenda**, y la distinción no es un
+capricho:
+
+- **Prendas oscuras y medias** (14 de 20): una curva que estira el punto
+  blanco y encima `mix-blend-mode: darken`. Borra el fondo exacto y no toca
+  nada más oscuro que la página. En los jeans y los bolsos negros queda
+  perfecto.
+- **Prendas claras** (6): no se toca el color. Esa misma receta las borraba
+  —medido sobre la tienda, el 93% del Top Amelie y el 95% de la Chaqueta
+  Margot quedaban idénticos al fondo de la página— porque el ciclorama del
+  proveedor (234-255) y una prenda blanca (230-255) ocupan **el mismo rango**
+  y ninguna regla por color los separa. En su lugar se funde el borde del
+  encuadre con una máscara, que quita el recuadro sin tocar la prenda.
+
+La lista de las seis va por nombre de archivo en el CSS (para las tarjetas) y
+por `product.handle` en el pie (para la ficha completa). **Si cambian esas
+fotos hay que actualizar las dos.** Está explicado en `recorte-de-fondos.md`.
 
 ⚠️ Ojo con dónde vive: el tema **activo** es "Copia de LevelUP FINAL — con
 animaciones" (`187200110887`) y **no tiene este archivo**. Todo esto está en

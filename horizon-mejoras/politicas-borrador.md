@@ -16,41 +16,34 @@ tarjeta ve un checkout incompleto.
 
 ---
 
-## ⚠️ Antes de publicar: tres cosas que hay que resolver
+## Estado actual
 
-### 1. Los tiempos de entrega no cuadran entre sí
+La tienda **ya no promete plazos de entrega ni devoluciones por
+arrepentimiento**. Se quitaron de la barra de anuncios, de las bandas de
+garantías de portada, colección y producto, de los acordeones, de la guía de
+tallas y de las preguntas frecuentes. En su lugar quedó sólo lo verificable:
+envío gratis desde $1,050, envíos a todo México y al extranjero, pago con el
+checkout de Shopify y guía de tallas en cada prenda.
 
-La tienda promete tres plazos distintos ahora mismo:
+También se quitó "Control de calidad pieza por pieza", que no se sostiene con
+un catálogo surtido por un proveedor.
 
-| Dónde | Qué dice |
-|---|---|
-| Banda de garantías de la portada | Entrega en 1–7 días |
-| Acordeón "Envíos y entregas" del producto | 1 a 7 días hábiles |
-| Sección de preguntas frecuentes | De 3 a 6 días hábiles |
+Lo que la tienda sí dice ahora sobre incidencias: *si tu pedido llega dañado,
+incompleto o distinto a lo que pediste, escríbenos con fotos dentro de las 48
+horas siguientes y lo resolvemos*. Eso es un mínimo que la ley te exige de
+todos modos y que sí puedes cumplir, porque son casos raros.
 
-Los escribí yo en distintos momentos y no los unifiqué. **Dime el rango real
-y los dejo iguales en los tres lugares.**
+### Todavía falta
 
-### 2. El rango real puede no ser ninguno de esos
-
-Tus productos se surten por **AliDrop**, y hay un perfil de envío llamado
-"AliDrop - Shop1105348328 Store". Los inventarios son de cientos de miles de
-unidades por producto, que es lo típico de un catálogo sincronizado con un
-proveedor, no de mercancía en bodega.
-
-Si las prendas salen del proveedor y no de tu ubicación en Aguascalientes, el
-plazo realista es de semanas, no de días. **Prometer 1–7 días en una política
-publicada cuando la entrega tarda tres semanas es justo lo que la PROFECO
-sanciona**, y además dispara las devoluciones y los contracargos.
-
-Necesito que me confirmes: ¿de dónde sale físicamente un pedido y en cuánto
-llega? Con ese dato ajusto la política y los tres textos de la tienda.
-
-### 3. Faltan los datos fiscales del negocio
-
-Una política de términos necesita saber quién es la contraparte del contrato.
-Están marcados abajo como `[VERIFICAR]`: nombre o razón social, domicilio y
-RFC si facturas.
+1. **El plazo real de entrega.** No prometer nada es mejor que mentir, pero
+   peor que decir la verdad: un comprador que no sabe si tarda una semana o
+   un mes muchas veces no compra. En cuanto midas dos o tres pedidos reales,
+   pon el rango con holgura ("de 2 a 4 semanas" convierte mejor que el
+   silencio) y lo pongo en la tienda.
+2. **Los datos fiscales**: nombre o razón social, domicilio y RFC si facturas.
+3. **Decidir si aceptas devoluciones por arrepentimiento.** Con dropshipping
+   normalmente no conviene, y por eso se quitó la promesa. Si decides
+   ofrecerlas más adelante, hay que reactivarlo en la tienda y en la política.
 
 ---
 
@@ -75,9 +68,12 @@ RFC si facturas.
 >
 > **Tiempos de entrega**
 >
-> [VERIFICAR: rango real]. El plazo empieza a correr cuando el pedido sale de
-> nuestras instalaciones, no cuando se realiza la compra. Los pedidos hechos
-> en fin de semana o día festivo se procesan el siguiente día hábil.
+> [VERIFICAR: rango real, con holgura]. El plazo empieza a correr cuando el
+> pedido sale, no cuando se realiza la compra. Los pedidos hechos en fin de
+> semana o día festivo se procesan el siguiente día hábil.
+>
+> Si necesitas una prenda para una fecha concreta, escríbenos antes de
+> comprar y te confirmamos si alcanza a llegar.
 >
 > **Seguimiento**
 >
@@ -103,51 +99,36 @@ RFC si facturas.
 
 ---
 
-## Política de cambios y devoluciones
+## Política de devoluciones
 
-> Tienes **30 días naturales** a partir de la fecha en que recibes tu pedido
-> para solicitar un cambio o una devolución.
+Redactada para que coincida con lo que la tienda dice hoy: se cubren las
+incidencias, no el arrepentimiento. Si decides ampliarla, avísame y actualizo
+también los textos de la tienda.
+
+> **Si tu pedido llega mal**
 >
-> **Condiciones**
+> Si recibes una prenda **dañada, incompleta o distinta a la que pediste**,
+> escríbenos a [VERIFICAR: correo] dentro de las **48 horas** siguientes a la
+> entrega, con tu número de pedido y fotos.
 >
-> La prenda debe estar sin uso, sin lavar, sin olores ni manchas, y conservar
-> sus etiquetas y empaque original.
+> En esos casos cubrimos todos los costos: puedes elegir entre el reemplazo
+> de la prenda o el reembolso completo. El reembolso se procesa al mismo
+> método de pago en [VERIFICAR: X] días hábiles; el tiempo que tarde en
+> reflejarse depende de tu banco.
 >
-> **Qué no se puede devolver**
+> **Si el pedido no llega**
 >
-> Por higiene, no aceptamos devoluciones de [VERIFICAR: ¿ropa interior?
-> ¿trajes de baño? ¿aretes? Define la lista]. Tampoco se devuelven artículos
-> comprados con descuento de liquidación final, si los hubiera.
+> Escríbenos y lo rastreamos contigo. Si se confirma extraviado, reponemos la
+> prenda o te devolvemos tu dinero.
 >
-> **Cómo solicitarlo**
+> **Cambios por talla o por arrepentimiento**
 >
-> Escríbenos a [VERIFICAR: correo de atención] con tu número de pedido y una
-> foto de la prenda. Te respondemos con las instrucciones en un plazo de
-> [VERIFICAR: X] días hábiles.
+> [VERIFICAR: hoy la tienda no los ofrece. Si decides aceptarlos, define quién
+> paga el envío de retorno y en qué plazo.]
 >
-> **Costo del retorno**
->
-> [VERIFICAR: decide una y sé consistente]
-> - Si el motivo es un defecto, un error nuestro o una prenda distinta a la
->   pedida, el envío de retorno corre por nuestra cuenta.
-> - Si el motivo es talla, gusto o arrepentimiento, el envío de retorno corre
->   por cuenta de quien compra.
->
-> **Reembolsos**
->
-> Una vez que recibimos y revisamos la prenda, el reembolso se procesa al
-> mismo método de pago en un plazo de [VERIFICAR: X] días hábiles. El tiempo
-> que tarde en reflejarse depende de tu banco.
->
-> **Cambios de talla**
->
-> Sujetos a disponibilidad. Si la talla que necesitas ya no está, puedes
-> elegir otra prenda del mismo valor o pedir el reembolso.
->
-> **Prenda dañada o incorrecta**
->
-> Avísanos dentro de las 48 horas siguientes a recibirla, con fotos. En ese
-> caso cubrimos todos los costos.
+> Para acertar a la primera, cada prenda tiene su guía de tallas. Nuestro
+> tallaje es de corte asiático y corre más pequeño que el mexicano. Si dudas,
+> escríbenos antes de comprar y te ayudamos a elegir.
 >
 > **Derechos que no se limitan**
 >
@@ -212,10 +193,9 @@ RFC si facturas.
 
 ## Qué hacer con esto
 
-1. Contéstame las tres preguntas de arriba (tiempo real de entrega, origen de
-   los envíos, datos fiscales).
-2. Rellena los `[VERIFICAR]` que dependen de decisiones tuyas: quién paga el
-   retorno, qué no se devuelve, plazos de reembolso.
-3. Pégalas en **Configuración → Políticas**.
-4. Avísame el rango de entrega definitivo y unifico los tres textos de la
-   tienda que hoy se contradicen.
+1. Rellena los `[VERIFICAR]`: datos fiscales, correo de atención y plazos de
+   reembolso.
+2. Pégalas en **Configuración → Políticas**.
+3. Cuando tengas medidos dos o tres pedidos reales, dime el plazo de entrega
+   con holgura y lo pongo en la tienda. Hoy no dice nada, que es honesto pero
+   deja al comprador a ciegas.

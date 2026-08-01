@@ -275,7 +275,7 @@ def build_product():
         "<li>Varias fotos del producto incluyen la tabla de medidas específica de esa prenda.</li>"
         "</ul>"
         "<p>¿Sigues con dudas? Escríbenos antes de comprar y te ayudamos a elegir. "
-        "Y si no queda, tienes 30 días para cambiarla.</p>"
+        "Nuestro tallaje es asiático, así que vale la pena revisarlo dos veces.</p>"
     )
     b["size_guide"] = {
         "type": "popup-link",
@@ -294,7 +294,7 @@ def build_product():
     b["trust_row"] = group(
         {
             "t1": trust_item("truck", f"Envío gratis<br>desde ${UMBRAL}"),
-            "t2": trust_item("return", "30 días para<br>cambios"),
+            "t2": trust_item("map_pin", "Envíos a todo<br>México"),
             "t3": trust_item("lock", "Pago 100%<br>seguro"),
         },
         ["t1", "t2", "t3"],
@@ -317,16 +317,18 @@ def build_product():
     envios = (
         "<p><strong>Envío gratis</strong> en pedidos desde $" + UMBRAL + " MXN. "
         "Por debajo de ese monto, el envío estándar cuesta $150 MXN.</p>"
-        "<p>Entrega estimada de <strong>1 a 7 días hábiles</strong> según tu "
-        "ubicación. Enviamos a todo México.</p>"
-        "<p>Recibirás tu número de guía por correo en cuanto salga tu pedido.</p>"
+        "<p>Enviamos a todo México y también al extranjero.</p>"
+        "<p>Los tiempos de entrega varían según la pieza y tu ubicación. Te "
+        "avisamos por correo en cuanto tu pedido salga.</p>"
+        "<p><strong>¿La necesitas para una fecha concreta?</strong> Escríbenos "
+        "antes de comprar y te confirmamos si llega a tiempo.</p>"
     )
     devoluciones = (
-        "<p><strong>30 días para cambios y devoluciones.</strong> Si la prenda "
-        "no te queda o no era lo que esperabas, escríbenos y lo resolvemos.</p>"
-        "<p>La prenda debe estar sin uso y con sus etiquetas.</p>"
-        "<p>Pago protegido con el checkout encriptado de Shopify. Nunca "
-        "almacenamos los datos de tu tarjeta.</p>"
+        "<p>El pago se procesa en el <strong>checkout encriptado de Shopify</strong>. "
+        "Nunca almacenamos los datos de tu tarjeta.</p>"
+        "<p>Si tu pedido llega <strong>dañado, incompleto o distinto</strong> a lo que "
+        "pediste, escríbenos con fotos dentro de las 48 horas siguientes y lo "
+        "resolvemos.</p>"
     )
 
     b["info_accordion"] = {
@@ -348,8 +350,8 @@ def build_product():
                 "Envíos y entregas",
                 {"d": txt(envios, width="100%")}, ["d"], icon_name="truck"),
             "row_ret": acc_row(
-                "Cambios, devoluciones y pago seguro",
-                {"d": txt(devoluciones, width="100%")}, ["d"], icon_name="return"),
+                "Pago seguro y garantía",
+                {"d": txt(devoluciones, width="100%")}, ["d"], icon_name="lock"),
         },
         "block_order": ["row_desc", "row_ship", "row_ret"],
     }
@@ -386,8 +388,8 @@ def build_header():
 
     ann["blocks"] = {
         "ann_ship": msg(f"Envío <strong>GRATIS</strong> en pedidos desde ${UMBRAL} MXN"),
-        "ann_ret": msg("30 días para cambios y devoluciones"),
-        "ann_pay": msg("Pago seguro · Envíos a todo México"),
+        "ann_ret": msg("Envíos a todo México y al extranjero"),
+        "ann_pay": msg("Pago seguro con el checkout de Shopify"),
     }
     ann["block_order"] = ["ann_ship", "ann_ret", "ann_pay"]
 
@@ -431,7 +433,7 @@ def build_collection():
         {"row": group(
             {
                 "t1": trust_item("truck", f"Envío gratis desde ${UMBRAL}"),
-                "t2": trust_item("return", "30 días para cambios"),
+                "t2": trust_item("map_pin", "Envíos a todo México"),
                 "t3": trust_item("lock", "Pago 100% seguro"),
             },
             ["t1", "t2", "t3"], direction="row", gap=16,
@@ -553,9 +555,9 @@ def build_index():
         {"row": group(
             {
                 "t1": trust_item("truck", f"Envío gratis desde ${UMBRAL}"),
-                "t2": trust_item("return", "30 días para cambios"),
+                "t2": trust_item("map_pin", "Envíos a todo México"),
                 "t3": trust_item("lock", "Pago 100% seguro"),
-                "t4": trust_item("stopwatch", "Entrega en 1–7 días"),
+                "t4": trust_item("ruler", "Guía de tallas incluida"),
             },
             ["t1", "t2", "t3", "t4"], direction="row", gap=16,
             halign="space-between", valign="flex-start",
@@ -576,6 +578,40 @@ def build_index():
             bg=vieja["settings"].get("background_color", ""),
             pt=pad, pb=pad,
         )
+
+    # Los textos de estas dos secciones prometían cosas que la tienda no
+    # puede sostener: plazos de entrega concretos, devoluciones por
+    # arrepentimiento y un control de calidad pieza por pieza que no existe
+    # cuando el catálogo se surte por un proveedor. Se reescriben con lo que
+    # sí es verificable.
+    beneficios = (
+        "<p><strong>Envío gratis desde $" + UMBRAL + "</strong><br>"
+        "Por debajo de ese monto el estándar cuesta $150.</p>"
+        "<p><strong>Envíos a todo México</strong><br>"
+        "Y también al extranjero.</p>"
+        "<p><strong>Pago 100% seguro</strong><br>"
+        "Checkout encriptado de Shopify.</p>"
+        "<p><strong>Guía de tallas en cada prenda</strong><br>"
+        "Nuestro tallaje es asiático; te explicamos cómo elegir.</p>"
+    )
+    faq = (
+        "<p><strong>¿Cuánto tarda el envío?</strong><br>"
+        "Depende de la pieza y de tu ubicación. Te avisamos en cuanto tu "
+        "pedido salga. Si la necesitas para una fecha concreta, escríbenos "
+        "antes de comprar y te confirmamos si llega a tiempo.</p>"
+        "<p><strong>¿Qué pasa si llega dañado o no es lo que pedí?</strong><br>"
+        "Escríbenos con fotos dentro de las 48 horas siguientes y lo "
+        "resolvemos.</p>"
+        "<p><strong>¿Cómo sé qué talla pedir?</strong><br>"
+        "Cada prenda tiene su guía de tallas. Nuestro tallaje es asiático y "
+        "corre más pequeño: si dudas entre dos, elige la mayor.</p>"
+        "<p><strong>¿Los pagos son seguros?</strong><br>"
+        "Sí, el pago se procesa en el checkout encriptado de Shopify.</p>"
+        "<p><strong>¿Tienen tienda física?</strong><br>"
+        "Por ahora somos 100% en línea.</p>"
+    )
+    d["sections"]["benefits_section"]["blocks"]["ben_b"]["settings"]["text"] = beneficios
+    d["sections"]["faq_section"]["blocks"]["faq_b"]["settings"]["text"] = faq
 
     # collection-list arma las tarjetas iterando el ajuste collection_list con
     # un bloque estático _collection-card; no lleva una tarjeta por colección.

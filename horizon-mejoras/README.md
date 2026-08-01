@@ -208,6 +208,43 @@ Lo correcto sería reordenar los valores en el producto, pero la API no
 expone posición en las opciones y la única vía —`productSet`— es declarativa
 sobre las variantes.
 
+Y `theme/assets/levelup-premium.css`, también global, que pone en cintura la
+rejilla de tarjetas: los precios caen todos a la misma altura (hoy suben o
+bajan según si el nombre ocupa una o dos líneas), las cifras van tabulares
+para que `$1,200.00` y `$450.00` compartan rejilla, y el nombre baja a 12px
+en mayúsculas espaciadas para que pese menos que la foto — el mismo
+tratamiento que ya tenía la ficha, que iba por libre.
+
+## El inventario dice una cosa y la portada dice otra
+
+La portada anuncia **"DROP 2025 — PIEZAS LIMITADAS"** y una sección remata con
+**"NO TODOS PUEDEN TENER PIEZAS LIMITADAS"**. El inventario real, consultado a
+la tienda:
+
+| Producto | Unidades |
+|---|---|
+| Pantalón Sastre Esencial | 442 794 |
+| Hoodie Boston | 422 878 |
+| Vestido Noir | 320 000 (40 000 exactos por variante) |
+| Chaqueta Ivy | 51 742 |
+| … | … |
+| **Pantalón Osaka** | **391** |
+| **Pantalón Milán** | **68** (una talla con 1 unidad, otra con 3) |
+
+Los números grandes son de relleno del importador, no cantidades reales — los
+40 000 clavados por variante lo delatan. Importa por tres razones:
+
+1. **La escasez que promete la portada no existe**, y eso es exactamente lo
+   contrario de premium: una marca seria no promete lo que no cumple. En
+   México además es terreno de PROFECO.
+2. **Rompe las alertas de stock bajo de Shopify**, que son la forma honesta
+   de crear urgencia. Con 422 878 unidades no salta ninguna.
+3. **Tapa la escasez de verdad**: el Pantalón Milán tiene 1 unidad en una
+   talla. Eso sí se puede decir, y vende.
+
+Arreglarlo es poner las cantidades reales (Productos → Inventario) o quitar la
+promesa. No lo toco yo: son datos del negocio.
+
 ⚠️ Ojo con dónde vive: el tema **activo** es "Copia de LevelUP FINAL — con
 animaciones" (`187200110887`) y **no tiene este archivo**. Todo esto está en
 el borrador `187613413671`, así que en la tienda publicada los fondos siguen

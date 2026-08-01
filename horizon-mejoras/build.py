@@ -586,6 +586,7 @@ def build_footer():
     d["sections"]["levelup_animations"]["settings"]["custom_liquid"] = (
         "{{ 'levelup-fondos.css' | asset_url | stylesheet_tag }}\n"
         "{{ 'levelup-tallas.css' | asset_url | stylesheet_tag }}\n"
+        "{{ 'levelup-premium.css' | asset_url | stylesheet_tag }}\n"
         "{%- if template.name == 'product' -%}\n"
         "  {{ 'levelup-motion.css' | asset_url | stylesheet_tag }}\n"
         "  <script src=\"{{ 'levelup-motion.js' | asset_url }}\" defer></script>\n"

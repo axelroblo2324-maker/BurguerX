@@ -1,0 +1,145 @@
+/* ==========================================================================
+   LevelUP — disciplina de rejilla en las tarjetas de producto
+
+   Se carga en todas las páginas: las tarjetas salen en portada, colección,
+   buscador, carrito y recomendados.
+
+   ---------------------------------------------------------------------------
+   Qué se arregla y por qué importa
+
+   Lo que separa una rejilla cara de una barata casi nunca es un adorno: es
+   que las cosas cuadren. Hoy no cuadran.
+
+   1. LOS PRECIOS ESTÁN A DISTINTA ALTURA. El título ocupa una o dos líneas
+      según lo largo que sea el nombre, y el precio va detrás. Así, en una
+      fila con "Top Amelie · Encaje Entallado" (una línea) al lado de "Blazer
+      Cruzado Verona · Corte Sastre" (dos), los dos precios quedan a alturas
+      distintas. El ojo lo lee como descuido aunque no sepa nombrarlo.
+
+   2. LAS CIFRAS NO ALINEAN. Sin cifras tabulares, el 1 es más estrecho que
+      el 4, así que $1,200.00 y $450.00 no comparten rejilla vertical.
+
+   3. EL NOMBRE PESA MÁS QUE LA PRENDA. El título va más grande que el
+      precio y en negro pleno. En una tienda de ropa la foto manda; la
+      etiqueta acompaña.
+
+   ---------------------------------------------------------------------------
+   Cómo
+
+   La tarjeta es <product-card> > .product-card__content, que ya es un flex en
+   columna (layout-panel-flex--column). Dentro van tres hijos: la galería, el
+   título y el precio.
+
+   El título viene envuelto en <a class="contents">, y contents hace que la
+   <a> no cree caja: el hijo que de verdad participa en el flex es su
+   .text-block. Por eso se le puede dar flex-grow y empujar el precio abajo.
+
+   Se usan dos mecanismos a la vez porque cubren casos distintos:
+
+     · min-height: 2lh en el título -> un nombre de una línea ocupa dos, así
+       que el precio cae a la misma altura que el de al lado. Funciona aunque
+       la tarjeta no tenga altura definida.
+     · flex-grow en el título + altura completa en la tarjeta -> el precio se
+       clava abajo del todo pase lo que pase, incluso si un nombre se va a
+       tres líneas.
+
+   Si alguno de los dos no aplica —porque la rejilla no estire las tarjetas, o
+   porque el navegador no conozca la unidad lh— el otro sigue mejorando la
+   fila, y en el peor caso queda como está ahora. Ninguno puede romper nada.
+
+   NO se recorta el nombre con ellipsis a propósito: cortar el nombre de una
+   prenda para cuadrar una rejilla es cambiar información por estética. Un
+   nombre largo se va a tres líneas y su precio baja; pasa poco y es
+   preferible.
+
+   ---------------------------------------------------------------------------
+   Ojo con el alcance
+
+   Todo cuelga de .product-card__content, que sólo existe en las tarjetas. La
+   ficha de producto usa .product-information y su título ya está resuelto en
+   levelup-motion.css (14px, mayúsculas, muy espaciado). Estos estilos no la
+   tocan, y de hecho la tarjeta ahora se le parece: era raro que el mismo
+   nombre se viera de dos maneras distintas según la página.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Que el precio caiga siempre a la misma altura
+   -------------------------------------------------------------------------- */
+
+/* La tarjeta llena su celda de la rejilla, para que haya altura que repartir.
+   Si la rejilla no la estira, esto no hace nada. */
+
+.product-card__content {
+  height: 100%;
+}
+
+/* El título absorbe el sobrante y empuja el precio abajo. Es el .text-block,
+   no la <a>: la <a> lleva display:contents y no participa en el flex. */
+
+.product-card__content a[ref='productTitleLink'] > .text-block {
+  flex: 1 1 auto;
+}
+
+/* Y, pase lo que pase, reserva dos líneas. Un nombre de una sola línea deja
+   de subir el precio por encima del de su vecino. */
+
+.product-card__content a[ref='productTitleLink'] p {
+  min-height: 2lh;
+}
+
+/* --------------------------------------------------------------------------
+   2. Que las cifras compartan rejilla
+
+   tabular-nums hace que todos los dígitos midan lo mismo, así que la coma de
+   los miles cae siempre en el mismo sitio y una columna de precios se lee
+   como una columna.
+   -------------------------------------------------------------------------- */
+
+.product-card__content product-price {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   3. Que la prenda pese más que su etiqueta
+
+   El nombre baja a 12px, en mayúsculas y espaciado, en un gris que se lee sin
+   competir. El precio se queda del mismo tamaño pero en negro pleno: es el
+   dato que se busca, y en una tienda seria se dice sin pedir perdón.
+
+   El espaciado de 0.07em es el mismo criterio que ya usa la ficha de
+   producto, para que el nombre no cambie de carácter al hacer clic.
+   -------------------------------------------------------------------------- */
+
+/* El gris sale de la propia paleta con color-mix, no de un hex escrito a
+   mano: si el fondo de una sección cambia, el nombre lo acompaña. Al 68%
+   sobre el crema da unos 5.7:1 de contraste, que pasa AA de sobra para texto
+   normal (hace falta 4.5:1). Bajarlo más se ve mejor y deja de ser legible
+   para bastante gente, así que 68 es el suelo.
+
+   Si un navegador no entiende color-mix, la declaración entera se descarta y
+   el nombre se queda en negro pleno. Se ve menos fino, se lee igual. */
+
+.product-card__content a[ref='productTitleLink'] p {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-foreground) 68%, transparent);
+}
+
+.product-card__content product-price {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: var(--color-foreground);
+}
+
+/* En pantallas anchas la tarjeta es más grande y aguanta un punto más de
+   tamaño sin volverse ruidosa. */
+
+@media screen and (min-width: 750px) {
+  .product-card__content a[ref='productTitleLink'] p,
+  .product-card__content product-price {
+    font-size: 0.8125rem;
+  }
+}

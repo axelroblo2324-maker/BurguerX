@@ -7,10 +7,12 @@ sube la versión recortada a Shopify y retira la original.
 Por qué existe este archivo en vez de estar hecho ya: el entorno donde se
 genera este repositorio no tiene salida a `cdn.shopify.com` (la política de
 red devuelve 403), así que desde ahí es imposible descargar las imágenes.
-Tu computadora sí llega. Shopify tampoco expone su quitafondos por API —se
-comprobó contra el esquema: no existen `imageRemoveBackground`,
-`fileRemoveBackground`, `mediaRemoveBackground`, `productImageRemoveBackground`
-ni un campo `removeBackground` en `FileUpdateInput`.
+Tu computadora sí llega. Shopify tampoco expone su quitafondos por API: se
+listaron **todas** las mutaciones del esquema en vivo de la tienda y no hay
+ninguna que quite fondos —ni `imageRemoveBackground`, ni `fileRemoveBackground`,
+ni `mediaRemoveBackground`, ni `productImageRemoveBackground`, ni un campo
+`removeBackground` en `FileUpdateInput`—. El quitafondos del admin es de la
+interfaz, no de la API, así que no se puede automatizar desde fuera.
 
     pip install pillow requests
 
@@ -207,11 +209,21 @@ mutation Staged($input: [StagedUploadInput!]!) {
 }
 """
 
-CREAR = """
-mutation Crear($productId: ID!, $media: [CreateMediaInput!]!) {
-  productCreateMedia(productId: $productId, media: $media) {
-    media { id status }
-    mediaUserErrors { field message }
+# Adjuntar y borrar se hacen con las mutaciones vigentes. Las de toda la vida
+# —productCreateMedia y productDeleteMedia— siguen respondiendo, pero están
+# deprecadas y el propio esquema dice con qué sustituirlas:
+#
+#   productCreateMedia -> "Use `productUpdate` or `productSet` instead."
+#   productDeleteMedia -> "Use `fileUpdate` instead."   (para borrar, fileDelete)
+#
+# productUpdate no devuelve cuál de los medios acaba de crear, así que se pide
+# la lista entera y se saca por diferencia contra los que ya había.
+
+ADJUNTAR = """
+mutation Adjuntar($product: ProductUpdateInput!, $media: [CreateMediaInput!]) {
+  productUpdate(product: $product, media: $media) {
+    product { media(first: 250) { nodes { id status } } }
+    userErrors { field message }
   }
 }
 """
@@ -226,10 +238,10 @@ mutation Reordenar($id: ID!, $moves: [MoveInput!]!) {
 """
 
 BORRAR = """
-mutation Borrar($productId: ID!, $mediaIds: [ID!]!) {
-  productDeleteMedia(productId: $productId, mediaIds: $mediaIds) {
-    deletedMediaIds
-    mediaUserErrors { field message }
+mutation Borrar($fileIds: [ID!]!) {
+  fileDelete(fileIds: $fileIds) {
+    deletedFileIds
+    userErrors { field message }
   }
 }
 """
@@ -278,27 +290,40 @@ def esperar_listo(media_id, intentos=40):
     return False
 
 
-def reemplazar(producto_id, media_vieja, posicion, nombre, datos):
+def reemplazar(producto_id, media_vieja, posicion, nombre, datos, ya_estaban):
+    """Sube el recorte, lo deja en el sitio de la original y retira la vieja.
+
+    `ya_estaban` es el conjunto de ids de medios que el producto tenía antes:
+    productUpdate no dice cuál acaba de crear, así que el nuevo es el que
+    aparece de más.
+    """
     fuente = subir_a_shopify(nombre, datos)
 
-    creado = api(CREAR, {
-        "productId": producto_id,
+    creado = api(ADJUNTAR, {
+        "product": {"id": producto_id},
         "media": [{"originalSource": fuente, "mediaContentType": "IMAGE"}],
-    })["productCreateMedia"]
-    if creado["mediaUserErrors"]:
-        raise RuntimeError(creado["mediaUserErrors"])
+    })["productUpdate"]
+    if creado["userErrors"]:
+        raise RuntimeError(creado["userErrors"])
 
-    nueva = creado["media"][0]["id"]
+    ahora = [m["id"] for m in creado["product"]["media"]["nodes"]]
+    nuevas = [i for i in ahora if i not in ya_estaban]
+    if len(nuevas) != 1:
+        raise RuntimeError(
+            f"esperaba una foto nueva y aparecieron {len(nuevas)}; "
+            "no borro nada para no dejar el producto peor de como estaba"
+        )
+    nueva = nuevas[0]
+
     if not esperar_listo(nueva):
         raise RuntimeError("Shopify no terminó de procesar la imagen nueva")
 
     api(REORDENAR, {"id": producto_id,
                     "moves": [{"id": nueva, "newPosition": str(posicion)}]})
 
-    borrado = api(BORRAR, {"productId": producto_id,
-                           "mediaIds": [media_vieja]})["productDeleteMedia"]
-    if borrado["mediaUserErrors"]:
-        raise RuntimeError(borrado["mediaUserErrors"])
+    borrado = api(BORRAR, {"fileIds": [media_vieja]})["fileDelete"]
+    if borrado["userErrors"]:
+        raise RuntimeError(borrado["userErrors"])
 
     return nueva
 
@@ -342,6 +367,11 @@ def main():
                   if m["mediaContentType"] == "IMAGE" and m.get("image")]
         print(f"\n{prod['title']}  ({len(medios)} fotos)")
 
+        # Qué medios tiene el producto ahora mismo. Se va actualizando con
+        # cada reemplazo, porque es lo que permite reconocer la foto recién
+        # subida entre todas las del producto.
+        presentes = {m["id"] for m in prod["media"]["nodes"]}
+
         for i, medio in enumerate(medios):
             etiqueta = f"{prod['handle']}-{i + 1}"
             try:
@@ -384,7 +414,10 @@ def main():
 
             if args.aplicar:
                 try:
-                    reemplazar(prod["id"], medio["id"], i + 1, etiqueta + ".png", datos)
+                    nueva = reemplazar(prod["id"], medio["id"], i + 1,
+                                       etiqueta + ".png", datos, presentes)
+                    presentes.discard(medio["id"])
+                    presentes.add(nueva)
                     print(f"  {i + 1}. reemplazada  (fondo {borrado:.0%})")
                 except Exception as e:
                     print(f"  {i + 1}. falló al subir: {e}")

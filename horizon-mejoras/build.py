@@ -565,10 +565,34 @@ def build_footer():
     # llevarlas a otra página basta con añadirla a esta condición.
     #
     # levelup-fondos.css va fuera de la condición: las tarjetas de producto
-    # están en todas las páginas, así que el fondo blanco de las fotos hay
+    # están en todas las páginas, así que el fondo de estudio de las fotos hay
     # que borrarlo en todas.
+    #
+    # Con el CSS viaja el filtro que usa: una curva por canal que deja quieto
+    # todo lo que esté por debajo de 0.75 y empuja a blanco puro lo que pase de
+    # 0.90. Es lo que permite borrar un fondo gris o crema, que al ser más
+    # OSCURO que la página sobrevivía al mix-blend-mode: darken. El detalle
+    # está en la cabecera de levelup-fondos.css.
+    #
+    # Tiene que ser un <svg> de verdad en el documento: Safari no resuelve
+    # filter: url() contra un data: URI. Y va aquí, pegado a la etiqueta del
+    # CSS, para que nunca se cargue el uno sin el otro.
+    curva = "0 .05 .1 .15 .2 .25 .3 .35 .4 .45 .5 .55 .6 .65 .7 .75 .81 .88 1 1 1"
+    filtro = (
+        '<svg class="lu-filtros" width="0" height="0" aria-hidden="true"'
+        ' focusable="false"><defs>'
+        '<filter id="lu-blanquear" x="0%" y="0%" width="100%" height="100%"'
+        ' color-interpolation-filters="sRGB"><feComponentTransfer>'
+        + "".join(
+            f'<feFunc{canal} type="table" tableValues="{curva}"/>'
+            for canal in "RGB"
+        )
+        + "</feComponentTransfer></filter></defs></svg>"
+    )
+
     d["sections"]["levelup_animations"]["settings"]["custom_liquid"] = (
         "{{ 'levelup-fondos.css' | asset_url | stylesheet_tag }}\n"
+        + filtro + "\n"
         "{%- if template.name == 'product' -%}\n"
         "  {{ 'levelup-motion.css' | asset_url | stylesheet_tag }}\n"
         "  <script src=\"{{ 'levelup-motion.js' | asset_url }}\" defer></script>\n"

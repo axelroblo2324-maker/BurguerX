@@ -15,7 +15,7 @@ tocó en ningún momento.
 | `settings_data.json` | Ajustes de tipografía ya aplicados al borrador. |
 | `politicas-borrador.md` | Borradores de envíos, devoluciones y términos. **No publicados**: llevan datos por verificar y son un compromiso legal que decide el dueño. |
 | `recorte-de-fondos.md` | Cómo se borra el fondo blanco de las fotos de producto: lo que ya hace el tema y cómo recortarlas de verdad. |
-| `quitar-fondos.py` | Recorta el fondo de las fotos de **todos** los productos y las reemplaza en Shopify. Se corre **en tu máquina**, no aquí: `cdn.shopify.com` está bloqueado por la política de red de este entorno. |
+| `quitar-fondos.py` | Recorta el fondo de las fotos de **todos** los productos y las reemplaza en Shopify. Se corre **en tu máquina**, no aquí: `cdn.shopify.com` está bloqueado por la política de red de este entorno (403 en el CONNECT, comprobado). Necesita un token con `read_products`, `write_products`, `read_files` y `write_files`. |
 
 ```bash
 python3 build.py     # regenera theme/ desde actual/
@@ -188,9 +188,17 @@ Y, fuera de `prefers-reduced-motion` porque son composición y no movimiento:
 | Galería en vertical en celular | Se invierte el carrusel que Horizon impone en móvil |
 
 Aparte va `theme/assets/levelup-fondos.css`, que **se carga en todas las
-páginas** —lo demás es sólo producto— porque borra el fondo blanco de las
-fotos y las tarjetas de producto están en todas partes. Está explicado en
-`recorte-de-fondos.md`.
+páginas** —lo demás es sólo producto— porque borra el fondo de estudio de las
+fotos y las tarjetas de producto están en todas partes. Trabaja en dos pasos:
+una curva que estira el punto blanco (así un fondo gris o crema llega a
+blanco puro) y encima `mix-blend-mode: darken`, que lo funde con la página.
+El filtro viaja como `<svg>` junto a la etiqueta del CSS, en la misma sección
+del pie. Está explicado en `recorte-de-fondos.md`.
+
+⚠️ Ojo con dónde vive: el tema **activo** es "Copia de LevelUP FINAL — con
+animaciones" (`187200110887`) y **no tiene este archivo**. Todo esto está en
+el borrador `187613413671`, así que en la tienda publicada los fondos siguen
+como estaban hasta que se publique el borrador.
 
 Ese último es el que hace visible todo lo demás. Horizon **renderiza la
 galería dos veces** —un carrusel y una rejilla— y decide por CSS cuál se ve:

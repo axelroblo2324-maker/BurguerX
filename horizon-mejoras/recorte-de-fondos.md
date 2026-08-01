@@ -1,5 +1,22 @@
 # Quitar el fondo de las fotos de producto
 
+## Antes que nada: esto vive en un borrador, no en tu tienda
+
+El tema que ve el público es **"Copia de LevelUP FINAL — con animaciones"**
+(`gid://shopify/OnlineStoreTheme/187200110887`), y **no tiene
+`levelup-fondos.css`**. Se comprobó pidiéndole sus archivos a Shopify: el
+asset no existe ahí.
+
+O sea que en la tienda publicada **no hay ningún borrado de fondos**, ni el
+de antes ni el de ahora. Todo esto está en el borrador **"LevelUP FINAL —
+mejorado"** (`187613413671`), que sólo se ve por vista previa.
+
+Si abres levelupmx.com y los fondos siguen igual, no es que el borrado no
+funcione: es que esa página no lo lleva. Para que llegue al público hay que
+**publicar el borrador** desde Tienda online → Temas → Acciones → Publicar.
+Eso cambia la tienda entera de golpe, así que conviene mirarlo antes en la
+vista previa. No lo publico yo: es una decisión tuya.
+
 ## Por qué
 
 Las fotos vienen del proveedor sobre fondo blanco de estudio. Mientras la
@@ -14,37 +31,71 @@ Recortarlo aquí no se puede: `cdn.shopify.com` está bloqueado por la política
 de red del entorno donde se produce este repositorio, así que no hay forma de
 descargar las imágenes, procesarlas y volver a subirlas.
 
-## Ya está borrado desde el tema
+## Ya está borrado desde el tema (en el borrador)
 
-`theme/assets/levelup-fondos.css` lo resuelve sin tocar ni una imagen, con
-`mix-blend-mode: darken`. El modo se queda, canal por canal, con el valor más
-oscuro entre la foto y lo que hay detrás:
+`theme/assets/levelup-fondos.css` lo resuelve sin tocar ni una imagen, en dos
+pasos que van en este orden.
 
-- Fondo blanco (255,255,255) contra el crema (247,244,239) → gana el crema en
-  los tres canales. **El fondo desaparece exacto.**
-- Cualquier píxel más oscuro que el crema → gana la foto, intacta. Un denim
-  sale idéntico, sin tinte ni pérdida.
+**1. Estirar el punto blanco** (`filter: url(#lu-blanquear)`). Una curva por
+canal que deja quieto todo lo que esté por debajo de 0.75 y empuja a blanco
+puro lo que pase de 0.90. Sirve para que un fondo que **no** era blanco —el
+crema o el gris claro de un ciclorama— llegue a 255.
+
+**2. Mezclar en oscuro** (`mix-blend-mode: darken`). Se queda, canal por
+canal, con el valor más oscuro entre la foto y lo que hay detrás. Un fondo ya
+en blanco contra el crema (247,244,239) pierde en los tres canales: **el fondo
+desaparece exacto**. Cualquier píxel más oscuro que el crema gana, intacto.
 
 Se eligió `darken` y no `multiply`, que era la opción obvia: multiply oscurece
 todo un 4-6% y le mete un velo cálido a la prenda entera. Darken no toca nada
 que ya sea más oscuro que la página, que es prácticamente toda la prenda.
 
-El archivo se carga en **todas** las páginas, no sólo en producto, porque las
-tarjetas de producto están en todas partes. Va fuera de la condición
-`template.name == 'product'` de la sección "Animaciones LevelUP" del pie.
+El paso 1 es nuevo y es el que arregla tu queja del **fondo gris**. Con darken
+solo no había forma: un gris es más *oscuro* que la página, así que darken se
+quedaba con el gris y el recuadro sobrevivía. Estirando el punto blanco antes,
+ese gris llega a 255 y entonces sí se puede morder.
 
-### Los dos casos donde darken no alcanza
+El filtro tiene que ser un `<svg>` de verdad dentro de la página —Safari no
+resuelve `filter: url()` contra un `data:` URI—, así que viaja pegado a la
+etiqueta del CSS en la sección "Animaciones LevelUP" del pie. Los dos se
+cargan en **todas** las páginas, no sólo en producto, porque las tarjetas de
+producto están en todas partes.
 
-1. **Fondos grises en vez de blancos** (por debajo de `#F7F4EF` en algún
-   canal): el recuadro se atenúa mucho pero no desaparece del todo.
-2. **Productos blancos o muy claros**: se recortan al color de la página, o
-   sea que un blanco puro se vería crema. Es el mismo mecanismo que borra el
-   fondo — no distingue fondo de prenda. El candidato obvio es el Bolso Seúl,
-   que además ya es PNG y puede que venga recortado de origen.
+### Comprobado, canal por canal
+
+Simulando la curva y la mezcla sobre colores concretos:
+
+| Color | Resultado |
+|---|---|
+| Fondo blanco puro `(255,255,255)` | borrado exacto |
+| Fondo crema `(247,244,239)` | borrado exacto |
+| Fondo gris `#EDEDED` | borrado exacto |
+| Fondo gris `#E5E5E5` | borrado exacto |
+| Fondo gris `#DCDCDC` | queda un resto de 15/255 ← **el límite** |
+| Denim oscuro `(30,45,80)` | intacto, bit a bit |
+| Negro `(18,18,20)` | intacto, bit a bit |
+| Rojo `(170,40,45)` | intacto, bit a bit |
+| Gris medio `(128,128,128)` | intacto, bit a bit |
+| Khaki claro `(198,180,140)` | +1/255, imperceptible |
+
+### Los dos casos donde esto no alcanza
+
+1. **Fondos por debajo de `#DCDCDC`**: ya son demasiado oscuros para
+   separarlos de la prenda sin comérsela. Queda un recuadro tenue.
+2. **Productos blancos o muy claros**: por encima de 0.90 se recortan al color
+   de la página, o sea que un blanco puro se ve crema. Es el mismo mecanismo
+   que borra el fondo — no distingue fondo de prenda. Con el darken solo esto
+   ya pasaba por encima de 0.96; la curva baja ese techo a 0.90, así que una
+   prenda blanca pierde algo más de pliegue. El candidato obvio es el **Bolso
+   Seúl**, que ya es PNG y puede que venga recortado de origen.
+
+   Si se nota, en la sección "Animaciones LevelUP" del pie cambia el `0.88`
+   de los tres `tableValues` por `0.95`: sube el techo y respeta más el
+   blanco, a cambio de dejar más gris de fondo.
 
 Los dos se arreglan recortando la foto de verdad. Y las dos cosas conviven
-sin pelearse: sobre una foto ya recortada, darken no tiene nada blanco que
-morder, y la parte transparente deja ver la página igual.
+sin pelearse: sobre una foto ya recortada no queda nada blanco que morder, y
+la parte transparente deja ver la página igual.
 
 ## Recortarlo de verdad, en todos los productos de una pasada
 
@@ -63,9 +114,19 @@ no existen `imageRemoveBackground`, `fileRemoveBackground`,
 
 Admin de Shopify → **Configuración → Aplicaciones y canales de venta →
 Desarrollar aplicaciones → Crear una aplicación**. Ponle el nombre que
-quieras. En **Configurar ámbitos de Admin API** marca `read_products` y
-`write_products`. Guarda, **Instalar**, y copia el token de acceso: empieza
-con `shpat_`. Se muestra una sola vez.
+quieras. En **Configurar ámbitos de Admin API** marca los cuatro:
+
+- `read_products`
+- `write_products`
+- `read_files`
+- `write_files`
+
+Los dos de archivos hacen falta para borrar la foto vieja: se hace con
+`fileDelete`, que pide `write_files`. Sin ellos el script sube el recorte
+pero no puede retirar la original, y el producto acaba con las dos.
+
+Guarda, **Instalar**, y copia el token de acceso: empieza con `shpat_`. Se
+muestra una sola vez.
 
 ### 2. Correrlo
 
@@ -115,11 +176,18 @@ puro, ciclorama con degradado, blanco encerrado, foto ruidosa, pared con
 textura y prenda blanca sobre blanco— y los seis dan lo esperado.
 
 Lo que **no** pude ejecutar es el camino contra Shopify: descargar, subir y
-reemplazar. Las consultas y mutaciones están validadas contra el esquema real
-de la Admin API (`productCreateMedia`, `productReorderMedia`,
-`productDeleteMedia`, `stagedUploadsCreate`), pero nunca corrieron. Por eso
-el modo de prueba es el que viene por omisión y por eso conviene empezar con
+reemplazar. Las cuatro mutaciones están validadas contra el esquema real de
+la tienda —`productUpdate`, `productReorderMedia`, `fileDelete` y
+`stagedUploadsCreate`, todas ✅— pero nunca corrieron de verdad. Por eso el
+modo de prueba es el que viene por omisión y por eso conviene empezar con
 `--producto` en uno solo. Si algo revienta, mándame el error y lo arreglo.
+
+El script usaba `productCreateMedia` y `productDeleteMedia`, que **siguen
+funcionando pero están deprecadas**. Se cambiaron por lo que dice el propio
+esquema: `productUpdate` para adjuntar y `fileDelete` para retirar. Como
+`productUpdate` no devuelve cuál de los medios acaba de crear, el script pide
+la lista entera y saca el nuevo por diferencia; si aparece más de uno, se
+planta y no borra nada, para no dejar el producto peor de como estaba.
 
 ## A mano, desde el admin (para las que el programa deje fuera)
 
@@ -133,43 +201,47 @@ desde la misma pantalla.
 
 ## Por dónde empezar
 
-Son 22 productos y 147 imágenes en total. Hacerlas todas es mucho y, ahora
-que el tema ya borra el blanco, **ya no es urgente**: sólo vale la pena en
-las fotos donde se note que el fondo no era blanco del todo, y en los
-productos claros.
+Son **20 productos y 128 imágenes** (consultado a la tienda el 1 de agosto de
+2026; antes decía 22 y 147, pero se borraron Jeans Brooklyn y Jeans Runway y
+cambiaron varias cuentas). Hacerlas todas es mucho y, ahora que el tema borra
+también el gris, **ya no es urgente**: sólo vale la pena en las fotos con
+fondo por debajo de `#DCDCDC` y en los productos claros.
 
 Si aun así quieres hacerlo bien de una vez, este es el orden que rinde:
 
-1. **Las 22 fotos principales.** Son las que salen en portada, colecciones,
+1. **Las 20 fotos principales.** Son las que salen en portada, colecciones,
    buscador, carrito y recomendados: el 90% del efecto por el 15% del trabajo.
 2. **Las 2 o 3 primeras de cada ficha**, que son las que se ven antes de que
    el visitante decida seguir bajando.
 3. El resto, si queda ánimo.
 
-| Producto | Fotos |
-|---|---|
-| Blazer Cruzado Verona · Corte Sastre | 5 |
-| Blusa París · Lunares con Olanes | 4 |
-| Bolso Firenze · Estructurado de Mano | 11 |
-| Bolso Praga · Tote Estampado XL | 10 |
-| Bolso Seúl · Hombro Minimalista Blanco | 1 |
-| Chaqueta Ivy · Denim Cropped | 6 |
-| Chaqueta Margot · Lunares Retro | 6 |
-| Chaqueta Sahara · Cropped Khaki | 3 |
-| Gabardina Capri · Con Capucha | 6 |
-| Hoodie Boston · Zipper Oversize | 11 |
-| Jeans Brooklyn · Recto Holgado | 6 |
-| Jeans Flare 70 · Corte Retro Hombre | 7 |
-| Jeans Graff · Estampado Urbano Hombre | 3 |
-| Jeans Nashville · Bootcut Vintage Rasgado | 6 |
-| Jeans Runway · Largo Total con Cadena | 6 |
-| Jeans Star · Wide-Leg Lavado Vintage | 6 |
-| Pantalón Milán · Recto Stretch | 6 |
-| Pantalón Osaka · Slim Stretch | 6 |
-| Pantalón Sastre Esencial · 12 Colores | 16 |
-| Pulsera Éterna · Zircón Engarzado Hombre | 7 |
-| Top Amelie · Encaje Entallado | 5 |
-| Vestido Noir · Bodycon Sin Mangas | 10 |
+| Producto | Fotos | Portada |
+|---|---|---|
+| Blazer Cruzado Verona · Corte Sastre | 5 | JPG |
+| Blusa París · Lunares con Olanes | 5 | PNG |
+| Bolso Firenze · Estructurado de Mano | 11 | JPG |
+| Bolso Praga · Tote Estampado XL | 10 | JPG |
+| Bolso Seúl · Hombro Minimalista Blanco | 1 | PNG |
+| Chaqueta Ivy · Denim Cropped | 6 | JPG |
+| Chaqueta Margot · Lunares Retro | 6 | JPG |
+| Chaqueta Sahara · Cropped Khaki | 3 | JPG |
+| Gabardina Capri · Con Capucha | 6 | JPG |
+| Hoodie Boston · Zipper Oversize | 11 | JPG |
+| Jeans Flare 70 · Corte Retro Hombre | 5 | PNG |
+| Jeans Graff · Estampado Urbano Hombre | 3 | JPG |
+| Jeans Nashville · Bootcut Vintage Rasgado | 6 | JPG |
+| Jeans Star · Wide-Leg Lavado Vintage | 6 | JPG |
+| Pantalón Milán · Recto Stretch | 6 | PNG |
+| Pantalón Osaka · Slim Stretch | 6 | PNG |
+| Pantalón Sastre Esencial · 12 Colores | 16 | JPG |
+| Pulsera Éterna · Zircón Engarzado Hombre | 2 | JPG |
+| Top Amelie · Encaje Entallado | 4 | JPG |
+| Vestido Noir · Bodycon Sin Mangas | 10 | JPG |
+
+Las cinco portadas en PNG **pueden venir ya sin fondo** —no lo pude
+comprobar, las imágenes no se descargan desde aquí—. Si es así, esas cinco no
+hay que tocarlas: el CSS las respeta, porque lo transparente sigue
+transparente.
 
 ## Cuáles NO recortar
 

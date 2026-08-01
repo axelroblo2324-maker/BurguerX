@@ -694,6 +694,14 @@ def build_index():
     d["sections"]["benefits_section"]["blocks"]["ben_b"]["settings"]["text"] = beneficios
     d["sections"]["faq_section"]["blocks"]["faq_b"]["settings"]["text"] = faq
 
+    # Dos grises fríos que quedaron de antes del blanco cálido. El de la frase
+    # de marca iba escrito a mano (#FAFAFA, el fondo viejo); ahora lee la
+    # paleta, así que si el fondo vuelve a cambiar no hay que tocarlo.
+    d["sections"]["benefits_section"]["settings"]["background_color"] = "#EFEAE2"
+    d["sections"]["statement_section"]["blocks"]["st_t"]["settings"]["text_color"] = (
+        "{{ settings.color_palette.background }}"
+    )
+
     # collection-list arma las tarjetas iterando el ajuste collection_list con
     # un bloque estático _collection-card; no lleva una tarjeta por colección.
     d["sections"]["categorias"] = {

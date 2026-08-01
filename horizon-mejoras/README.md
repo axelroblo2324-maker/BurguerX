@@ -222,8 +222,19 @@ El logotipo gigante del cierre es aparte: es un bloque `jumbo-text` en su
 propia sección del pie (`brand_wordmark`), con la animación `reveal` que trae
 Horizon. Esa sí se ve en todas las páginas, porque el pie es común.
 
-## Qué falta verificar
+## Qué se verificó y qué no
 
-La revisión visual en 390×844, 768×1024 y 1440×900 no se pudo hacer: el dominio
-`levelupmx.myshopify.com` está bloqueado por la política de red del entorno
-donde se generaron estos archivos.
+**Sí:** que lo que hay en `theme/` es byte por byte lo que hay en el borrador.
+Después de cada subida se compara el md5 local con el `checksumMd5` que
+devuelve Shopify. Y `validar.py` da 0 problemas contra los esquemas de
+`schemas/`, que ahora incluyen los seis bloques que toca la ficha de producto.
+
+**No:** cómo se ve. La revisión visual en 390×844, 768×1024 y 1440×900 sigue
+sin poder hacerse: el dominio `levelupmx.myshopify.com` está bloqueado por la
+política de red del entorno donde se generaron estos archivos. Que un ajuste
+sea válido y que el archivo llegue completo no demuestra que la página se vea
+bien — eso hay que mirarlo en la vista previa.
+
+Las tres columnas son lo que más conviene mirar, en escritorio ancho: que la
+prenda quede centrada, que el botón de compra caiga a la derecha a la altura
+del precio, y que el zoom de la foto siga respondiendo al clic en el centro.

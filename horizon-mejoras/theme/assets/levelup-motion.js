@@ -82,20 +82,10 @@
   // animaran ambos se estarían animando duplicados invisibles.
   var GALERIA = '.media-gallery__grid > .product-media-container';
   var ENTRADA = [
-    GALERIA,
     'product-card',
     '.product-card',
     '.resource-list__item'
   ].join(',');
-
-  function esPrimeraFoto(el) {
-    var padre = el.parentElement;
-    return (
-      padre &&
-      padre.classList.contains('media-gallery__grid') &&
-      el === padre.firstElementChild
-    );
-  }
 
   function prepararEntrada(el, indice) {
     if (el.dataset.luRise) return;
@@ -133,6 +123,46 @@
       img.dataset.luPar = '1';
       caja.classList.add('lu-media');
       capas.push(img);
+    });
+  }
+
+  /* ------------------------------------- 3b. recorrido de la galería */
+
+  // Cada prenda se atenúa y se desplaza según lo lejos que esté del centro
+  // de la pantalla. Con constrain_to_viewport y una separación amplia, cada
+  // foto ocupa casi una pantalla, así que se lee como si una reemplazara a
+  // la anterior en vez de simplemente aparecer.
+  var fotos = [];
+
+  function recogerFotos(raiz) {
+    (raiz || document).querySelectorAll(GALERIA).forEach(function (el) {
+      if (el.dataset.luSlide) return;
+      // La primera marca el LCP: atenuarla al cargar retrasaría la
+      // sensación de que la página ya está lista.
+      if (el.parentElement && el === el.parentElement.firstElementChild) return;
+      el.dataset.luSlide = '1';
+      el.classList.add('lu-slide');
+      fotos.push(el);
+    });
+  }
+
+  function pintarFotos() {
+    var alto = window.innerHeight;
+
+    fotos.forEach(function (el) {
+      var caja = el.getBoundingClientRect();
+      if (caja.bottom < -alto || caja.top > alto * 2) return;
+
+      // 0 en el centro de la pantalla, 1 cuando está a una pantalla de
+      // distancia por arriba o por abajo.
+      var centro = caja.top + caja.height / 2;
+      var desfase = (centro - alto / 2) / alto;
+      var lejania = Math.min(1, Math.abs(desfase) * 1.35);
+
+      el.style.opacity = String(1 - lejania * 0.9);
+      el.style.transform =
+        'translate3d(0, ' + (desfase * -34).toFixed(1) + 'px, 0) scale(' +
+        (1 - lejania * 0.04).toFixed(3) + ')';
     });
   }
 
@@ -185,6 +215,7 @@
       img.style.setProperty('--lu-py', (desfase * -18).toFixed(1) + 'px');
     });
 
+    pintarFotos();
     pintarBarra();
   }
 
@@ -204,17 +235,10 @@
     });
 
     Array.prototype.forEach.call(ambito.querySelectorAll(ENTRADA), function (el, i) {
-      if (!esContenido(el)) return;
-      // La primera foto es la que carga con prioridad alta y marca el LCP.
-      // Arrancarla en opacidad cero retrasaría lo que el visitante percibe
-      // como "la página ya cargó".
-      if (esPrimeraFoto(el)) return;
-      // Las fotos se recorren de una en una, así que escalonarlas sólo
-      // añade retraso; el escalonado es para las tarjetas, que entran en
-      // grupo.
-      prepararEntrada(el, el.matches(GALERIA) ? 0 : i);
+      if (esContenido(el)) prepararEntrada(el, i);
     });
 
+    recogerFotos(ambito === document ? null : ambito);
     recogerCapas(ambito === document ? null : ambito);
     prepararBarra();
     pintarParallax();

@@ -238,6 +238,9 @@ def build_product():
     g["aspect_ratio"] = "1/1.25"
     # Igual con "none", que no está entre los iconos de carrusel.
     g["icons_style"] = "arrow"
+    # Separación amplia: con constrain_to_viewport cada prenda ocupa casi
+    # toda la altura, y este hueco hace que se vea una sola a la vez.
+    g["image_gap"] = 64
 
     # Muestras de color visuales en lugar de botones de texto.
     b["variant_picker"]["settings"]["show_swatches"] = True
@@ -289,9 +292,10 @@ def build_product():
         "block_order": ["guia_txt"],
     }
 
-    # Fila de confianza justo debajo del botón de compra: es donde aparece la
-    # duda de "¿y si no me queda / es seguro pagar aquí?".
-    b["trust_row"] = group(
+    # La referencia deja el buy box con lo mínimo: nombre, precio, talla y
+    # botón. Las garantías y los iconos de pago se quitan de aquí; siguen en
+    # portada, colección y pie, donde no compiten con la decisión de compra.
+    _trust_row_sin_usar = group(
         {
             "t1": trust_item("truck", f"Envío gratis<br>desde ${UMBRAL}"),
             "t2": trust_item("map_pin", "Envíos a todo<br>México"),
@@ -302,7 +306,7 @@ def build_product():
         valign="flex-start", vertical_on_mobile=False, pt=8, pb=8,
     )
 
-    b["payment"] = {
+    _payment_sin_usar = {
         "type": "payment-icons",
         "settings": {
             "horizontal_alignment": "flex-start", "gap": 8,
@@ -362,8 +366,7 @@ def build_product():
 
     details["block_order"] = [
         "prod_header", "divider1", "variant_picker", "inventory",
-        "size_guide", "buy_buttons", "trust_row", "payment",
-        "divider2", "info_accordion",
+        "size_guide", "buy_buttons", "divider2", "info_accordion",
     ]
 
     # Más recomendaciones = más oportunidades de segunda pieza (y de cruzar el

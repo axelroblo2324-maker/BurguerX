@@ -95,7 +95,9 @@ editor. La portada quedó deliberadamente quieta.
 | Efecto | Dónde |
 |---|---|
 | Texto revelado palabra por palabra tras una máscara | `h1`, `h2`, `h3` fuera de header, pie y diálogos |
-| Entrada con desplazamiento y zoom | Cada foto de la galería y las tarjetas de recomendados |
+| Recorrido de la galería | Cada foto se atenúa y desplaza según su distancia al centro de la pantalla |
+| Entrada con desplazamiento y zoom | Tarjetas de recomendados |
+| Tres columnas en escritorio | Datos a la izquierda, prenda al centro, aire a la derecha |
 | Parallax dentro de la foto | `.media-gallery__grid .product-media__image` |
 | Galería en vertical en celular | Se invierte el carrusel que Horizon impone en móvil |
 
@@ -118,6 +120,20 @@ muestra sólo cuando el botón real sale de pantalla, que aquí es demasiado
 tarde. El JS la adelanta con `.lu-bar-on`: aparece al pasar la primera foto
 y se retira al llegar al bloque de datos, para no duplicar un botón que ya
 está a la vista. Sólo por debajo de 750px.
+
+**Las tres columnas son CSS sobre la rejilla de Horizon.** El tema sólo
+ofrece media-izquierda o media-derecha; el CSS reescribe
+`grid-template-columns` a `1fr 2fr 0.8fr` y coloca los datos en la columna 1
+y la galería en la 2, dejando la 3 vacía. El selector repite la forma del
+tema y le antepone `.product-information` para ganar por especificidad sin
+depender del orden de carga. Sólo a partir de 1000px.
+
+Lo que **no** se pudo replicar de la referencia: ahí el botón de comprar va
+en una tercera columna, separado de los datos. En Horizon el título, el
+precio, la talla y el botón viven todos dentro de `.product-details`, que es
+un único hijo de la rejilla; separarlos exigiría partir ese contenedor y eso
+rompe el `sticky` de la columna, que es justo lo que hace que la info
+acompañe a las fotos. El botón se queda con los datos, a la izquierda.
 
 La primera foto de la galería se salta a propósito: es la imagen que carga
 con prioridad alta y marca el LCP, y arrancarla en opacidad cero retrasaría

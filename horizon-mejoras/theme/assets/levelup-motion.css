@@ -37,9 +37,22 @@
     transform: none;
   }
 
+  /* --- Recorrido de la galería -------------------------------------------
+     Cada foto se atenúa y se desplaza según lo lejos que esté del centro de
+     la pantalla, así que entra y sale en vez de sólo aparecer. Los valores
+     los calcula el JS en cada cuadro; aquí sólo se declara que no hay
+     transición, porque una transición iría siempre por detrás del scroll.
+
+     La primera foto queda fuera: marca el LCP y atenuarla al cargar
+     retrasaría la sensación de que la página ya está lista. */
+
+  .lu-slide {
+    will-change: opacity, transform;
+    transition: none;
+  }
+
   /* --- Entrada con desplazamiento y zoom ---------------------------------
-     La usan las fotos de la galería conforme bajas y las tarjetas de
-     productos relacionados. */
+     La usan las tarjetas de productos relacionados. */
 
   .lu-rise {
     opacity: 0;
@@ -73,6 +86,48 @@
     media-gallery.media-gallery--grid .media-gallery__grid {
       display: grid;
       grid-template-columns: 1fr;
+    }
+  }
+
+  /* --- Composición de tres columnas en escritorio ------------------------
+     La referencia pone los datos a la izquierda, la prenda al centro y aire
+     a la derecha. Horizon sólo ofrece media-izquierda o media-derecha, así
+     que se reescribe su rejilla: los datos van a la columna 1, la galería a
+     la 2, y la 3 queda vacía para centrar la prenda.
+
+     El selector repite la forma del tema y le antepone .product-information
+     para ganar por especificidad sin depender del orden de carga. */
+
+  @media screen and (min-width: 1000px) {
+    .product-information
+      .product-information__grid:not(
+        .product-information__grid--half,
+        .product-information--media-none
+      ).product-information--media-left {
+      grid-template-columns: 1fr 2fr 0.8fr;
+    }
+
+    .product-information
+      .product-information__grid:not(
+        .product-information__grid--half,
+        .product-information--media-none
+      ).product-information--media-left
+      .product-details {
+      grid-column: 1;
+      order: 0;
+      padding-left: 0;
+      padding-right: var(--gap, 0);
+    }
+
+    .product-information
+      .product-information__grid:not(
+        .product-information__grid--half,
+        .product-information--media-none
+      ).product-information--media-left
+      .product-information__media {
+      grid-column: 2;
+      order: 1;
+      padding-right: 0;
     }
   }
 

@@ -1,0 +1,149 @@
+{
+ "name": "Announcement",
+ "settings": [
+  {
+   "type": "inline_richtext",
+   "id": "text"
+  },
+  {
+   "type": "url",
+   "id": "link"
+  },
+  {
+   "type": "select",
+   "id": "font",
+   "options": [
+    {
+     "value": "var(--font-body--family)"
+    },
+    {
+     "value": "var(--font-subheading--family)"
+    },
+    {
+     "value": "var(--font-heading--family)"
+    },
+    {
+     "value": "var(--font-accent--family)"
+    }
+   ]
+  },
+  {
+   "type": "select",
+   "id": "font_size",
+   "options": [
+    {
+     "value": ""
+    },
+    {
+     "value": "0.625rem"
+    },
+    {
+     "value": "0.75rem"
+    },
+    {
+     "value": "0.875rem"
+    },
+    {
+     "value": "1rem"
+    },
+    {
+     "value": "1.125rem"
+    },
+    {
+     "value": "1.25rem"
+    },
+    {
+     "value": "1.5rem"
+    },
+    {
+     "value": "2rem"
+    },
+    {
+     "value": "2.5rem"
+    },
+    {
+     "value": "3rem"
+    },
+    {
+     "value": "3.5rem"
+    },
+    {
+     "value": "4.5rem"
+    },
+    {
+     "value": "5.5rem"
+    },
+    {
+     "value": "7.5rem"
+    },
+    {
+     "value": "9.5rem"
+    },
+    {
+     "value": "11.5rem"
+    }
+   ]
+  },
+  {
+   "type": "select",
+   "id": "weight",
+   "options": [
+    {
+     "value": ""
+    },
+    {
+     "value": "100"
+    },
+    {
+     "value": "300"
+    },
+    {
+     "value": "400"
+    },
+    {
+     "value": "500"
+    },
+    {
+     "value": "600"
+    },
+    {
+     "value": "700"
+    },
+    {
+     "value": "900"
+    }
+   ]
+  },
+  {
+   "type": "select",
+   "id": "letter_spacing",
+   "options": [
+    {
+     "value": "tight"
+    },
+    {
+     "value": "normal"
+    },
+    {
+     "value": "loose"
+    }
+   ]
+  },
+  {
+   "type": "select",
+   "id": "case",
+   "options": [
+    {
+     "value": "none"
+    },
+    {
+     "value": "uppercase"
+    }
+   ]
+  },
+  {
+   "type": "color",
+   "id": "text_color"
+  }
+ ]
+}

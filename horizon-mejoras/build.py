@@ -242,8 +242,63 @@ def build_product():
     # toda la altura, y este hueco hace que se vea una sola a la vez.
     g["image_gap"] = 64
 
-    # Muestras de color visuales en lugar de botones de texto.
-    b["variant_picker"]["settings"]["show_swatches"] = True
+    # ---------------------------------------------------------------- datos
+    # La columna de datos deja de ser una lista vertical y pasa a repartirse
+    # en dos: nombre, precio y ficha a la izquierda; talla, existencias,
+    # compra y guía a la derecha. El reparto lo hace levelup-motion.css a
+    # partir de las clases de cada bloque; aquí sólo se ordenan para que en
+    # celular, donde todo se apila, la secuencia siga siendo la correcta.
+    ds = details["settings"]
+    ds["gap"] = 20
+    ds["padding-block-start"] = 8
+    ds["padding-block-end"] = 40
+    ds["sticky_details_desktop"] = True
+
+    # Nombre y precio: etiqueta pequeña en mayúsculas, centrada en su
+    # columna. El titular de la página es la prenda, no el texto.
+    cab = b["prod_header"]
+    cab["settings"]["gap"] = 10
+    cab["settings"]["horizontal_alignment"] = "center"
+    cab["settings"]["horizontal_alignment_flex_direction_column"] = "center"
+    cab["blocks"]["prod_title"]["settings"].update({
+        "type_preset": "custom",
+        "font": "var(--font-heading--family)",
+        "font_size": "0.875rem",
+        "case": "uppercase",
+        "letter_spacing": "loose",
+        "line_height": "normal",
+        "alignment": "center",
+        "width": "100%",
+        "max_width": "none",
+        "wrap": "balance",
+    })
+    cab["blocks"]["prod_price"]["settings"].update({
+        "type_preset": "custom",
+        "font": "var(--font-body--family)",
+        "font_size": "0.875rem",
+        "case": "none",
+        "letter_spacing": "normal",
+        "line_height": "normal",
+        "alignment": "center",
+        "width": "100%",
+    })
+
+    # Talla en texto suelto, sin recuadros. Horizon no tiene un ajuste para
+    # "sin caja", pero sí colores personalizados: con fondo y borde
+    # transparentes el botón se queda en su etiqueta. El gris de la no
+    # seleccionada y el subrayado de la elegida hacen el resto.
+    b["variant_picker"]["settings"].update({
+        "show_swatches": True,
+        "alignment": "center",
+        "variant_style_class": "custom",
+        "custom_variant_background": "rgba(0,0,0,0)",
+        "custom_variant_text": "#8A8A8A",
+        "custom_variant_border": "rgba(0,0,0,0)",
+        "selected_variant_style_class": "custom",
+        "custom_selected_variant_background": "rgba(0,0,0,0)",
+        "custom_selected_variant_text": "{{ settings.color_palette.foreground }}",
+        "custom_selected_variant_border": "rgba(0,0,0,0)",
+    })
 
     # Disponibilidad real: Horizon sólo marca "quedan pocas" cuando el
     # inventario está por debajo del umbral, así que no inventa urgencia.
@@ -335,15 +390,19 @@ def build_product():
         "resolvemos.</p>"
     )
 
+    # La ficha va en una caja con borde fino, como en la referencia: es lo
+    # que separa el detalle técnico del nombre y el precio sin necesidad de
+    # divisores sueltos por toda la columna.
     b["info_accordion"] = {
         "type": "accordion",
         "settings": {
             "icon": "plus", "dividers": True, "divider_color": "",
             "type_preset": "h6", "background_color": "", "text_color": "",
-            "border": "none", "border_width": 1, "border_opacity": 100,
-            "border_color": "", "border_radius": 0,
-            "padding-block-start": 0, "padding-block-end": 0,
-            "padding-inline-start": 0, "padding-inline-end": 0,
+            "border": "solid", "border_width": 1, "border_opacity": 100,
+            "border_color": "{{ settings.color_palette.color2 }}",
+            "border_radius": 0,
+            "padding-block-start": 4, "padding-block-end": 4,
+            "padding-inline-start": 20, "padding-inline-end": 20,
         },
         "blocks": {
             "row_desc": acc_row(
@@ -360,13 +419,19 @@ def build_product():
         "block_order": ["row_desc", "row_ship", "row_ret"],
     }
 
-    # Bloques que el acordeón reemplaza.
-    for dead in ("prod_desc", "shipping_info", "guarantee_info", "divider3"):
+    # Bloques que el acordeón reemplaza, y los tres divisores: con el
+    # contenido repartido en dos columnas ya no separan nada, sólo cruzan la
+    # página de lado a lado por encima de la prenda.
+    for dead in ("prod_desc", "shipping_info", "guarantee_info",
+                 "divider1", "divider2", "divider3"):
         b.pop(dead, None)
 
+    # Este orden es el que se ve en celular, donde las dos columnas se
+    # apilan: nombre, precio, talla, existencias, botón, guía y ficha. En
+    # escritorio el CSS los reparte por clase, así que el orden no manda.
     details["block_order"] = [
-        "prod_header", "divider1", "variant_picker", "inventory",
-        "size_guide", "buy_buttons", "divider2", "info_accordion",
+        "prod_header", "variant_picker", "inventory",
+        "buy_buttons", "size_guide", "info_accordion",
     ]
 
     # Más recomendaciones = más oportunidades de segunda pieza (y de cruzar el
@@ -395,6 +460,19 @@ def build_header():
         "ann_pay": msg("Pago seguro con el checkout de Shopify"),
     }
     ann["block_order"] = ["ann_ship", "ann_ret", "ann_pay"]
+
+    # La barra era una franja negra sobre el encabezado y era lo primero que
+    # pesaba al abrir la tienda. La referencia no tiene ninguna. Se conserva
+    # —el envío gratis es el mejor argumento que hay antes de entrar— pero
+    # pasa a fondo de página con una línea fina debajo: sigue leyéndose y
+    # deja de partir la parte de arriba en dos bloques.
+    ann["settings"].update({
+        "background_color": "{{ settings.color_palette.background }}",
+        "divider_width": 1,
+        "divider_color": "{{ settings.color_palette.color2 }}",
+        "padding-block-start": 9,
+        "padding-block-end": 9,
+    })
 
     # El header apuntaba a 'main-menu' (Inicio / Catálogo / Contacto), que no
     # deja llegar a ninguna categoría. 'main-menu-1' tiene las cinco reales.
@@ -443,7 +521,7 @@ def build_collection():
             halign="space-between", valign="flex-start",
             vertical_on_mobile=False,
         )},
-        ["row"], bg="#F1F1F1", pt=20, pb=20, gap=0,
+        ["row"], bg="#EFEAE2", pt=20, pb=20, gap=0,
     )
     d["order"] = ["collection_hero", "trust_strip", "main"]
     return d
@@ -566,7 +644,7 @@ def build_index():
             halign="space-between", valign="flex-start",
             vertical_on_mobile=False,
         )},
-        ["row"], bg="#F1F1F1", pt=20, pb=20, gap=0,
+        ["row"], bg="#EFEAE2", pt=20, pb=20, gap=0,
     )
 
     # Beneficios, frase de marca y FAQ también usaban media-with-content sin

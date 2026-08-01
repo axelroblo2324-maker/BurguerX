@@ -1,0 +1,135 @@
+{
+ "name": "Buy buttons",
+ "settings": [
+  {
+   "type": "checkbox",
+   "id": "stacking"
+  },
+  {
+   "type": "color",
+   "id": "text_color"
+  },
+  {
+   "type": "checkbox",
+   "id": "show_pickup_availability"
+  },
+  {
+   "type": "checkbox",
+   "id": "gift_card_form"
+  },
+  {
+   "type": "select",
+   "id": "recipient_button_style",
+   "options": [
+    {
+     "value": "default"
+    },
+    {
+     "value": "custom"
+    }
+   ]
+  },
+  {
+   "type": "color",
+   "id": "recipient_button_background"
+  },
+  {
+   "type": "color",
+   "id": "recipient_button_text"
+  },
+  {
+   "type": "color",
+   "id": "recipient_button_border"
+  },
+  {
+   "type": "select",
+   "id": "selected_recipient_button_style",
+   "options": [
+    {
+     "value": "default"
+    },
+    {
+     "value": "custom"
+    }
+   ]
+  },
+  {
+   "type": "color",
+   "id": "selected_recipient_button_background"
+  },
+  {
+   "type": "color",
+   "id": "selected_recipient_button_text"
+  },
+  {
+   "type": "color",
+   "id": "selected_recipient_button_border"
+  },
+  {
+   "type": "select",
+   "id": "input_style",
+   "options": [
+    {
+     "value": "default"
+    },
+    {
+     "value": "custom"
+    }
+   ]
+  },
+  {
+   "type": "color",
+   "id": "input_background_color"
+  },
+  {
+   "type": "color",
+   "id": "input_text_color"
+  },
+  {
+   "type": "color",
+   "id": "input_border_color"
+  },
+  {
+   "type": "range",
+   "id": "border_width",
+   "min": 0,
+   "max": 4,
+   "step": 0.5
+  },
+  {
+   "type": "range",
+   "id": "border_radius",
+   "min": 0,
+   "max": 50,
+   "step": 1
+  },
+  {
+   "type": "range",
+   "id": "padding-block-start",
+   "min": 0,
+   "max": 100,
+   "step": 1
+  },
+  {
+   "type": "range",
+   "id": "padding-block-end",
+   "min": 0,
+   "max": 100,
+   "step": 1
+  },
+  {
+   "type": "range",
+   "id": "padding-inline-start",
+   "min": 0,
+   "max": 100,
+   "step": 1
+  },
+  {
+   "type": "range",
+   "id": "padding-inline-end",
+   "min": 0,
+   "max": 100,
+   "step": 1
+  }
+ ]
+}

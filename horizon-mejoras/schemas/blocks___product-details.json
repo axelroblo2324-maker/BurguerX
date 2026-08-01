@@ -1,0 +1,203 @@
+{
+ "name": "Details",
+ "settings": [
+  {
+   "type": "select",
+   "id": "width",
+   "options": [
+    {
+     "value": "fit-content"
+    },
+    {
+     "value": "fill"
+    },
+    {
+     "value": "custom"
+    }
+   ]
+  },
+  {
+   "type": "range",
+   "id": "custom_width",
+   "min": 0,
+   "max": 100,
+   "step": 1
+  },
+  {
+   "type": "select",
+   "id": "width_mobile",
+   "options": [
+    {
+     "value": "fit-content"
+    },
+    {
+     "value": "fill"
+    },
+    {
+     "value": "custom"
+    }
+   ]
+  },
+  {
+   "type": "range",
+   "id": "custom_width_mobile",
+   "min": 0,
+   "max": 100,
+   "step": 1
+  },
+  {
+   "type": "select",
+   "id": "height",
+   "options": [
+    {
+     "value": "fit"
+    },
+    {
+     "value": "fill"
+    }
+   ]
+  },
+  {
+   "type": "select",
+   "id": "details_position",
+   "options": [
+    {
+     "value": "flex-start"
+    },
+    {
+     "value": "center"
+    },
+    {
+     "value": "flex-end"
+    }
+   ]
+  },
+  {
+   "type": "range",
+   "id": "gap",
+   "min": 0,
+   "max": 100,
+   "step": 1
+  },
+  {
+   "type": "checkbox",
+   "id": "sticky_details_desktop"
+  },
+  {
+   "type": "select",
+   "id": "background_media",
+   "options": [
+    {
+     "value": "none"
+    },
+    {
+     "value": "image"
+    },
+    {
+     "value": "video"
+    }
+   ]
+  },
+  {
+   "type": "color",
+   "id": "background_color"
+  },
+  {
+   "type": "video",
+   "id": "video"
+  },
+  {
+   "type": "select",
+   "id": "video_position",
+   "options": [
+    {
+     "value": "cover"
+    },
+    {
+     "value": "contain"
+    }
+   ]
+  },
+  {
+   "type": "image_picker",
+   "id": "background_image"
+  },
+  {
+   "type": "select",
+   "id": "background_image_position",
+   "options": [
+    {
+     "value": "cover"
+    },
+    {
+     "value": "fit"
+    }
+   ]
+  },
+  {
+   "type": "select",
+   "id": "border",
+   "options": [
+    {
+     "value": "none"
+    },
+    {
+     "value": "solid"
+    }
+   ]
+  },
+  {
+   "type": "range",
+   "id": "border_width",
+   "min": 0,
+   "max": 100,
+   "step": 1
+  },
+  {
+   "type": "range",
+   "id": "border_opacity",
+   "min": 0,
+   "max": 100,
+   "step": 1
+  },
+  {
+   "type": "color",
+   "id": "border_color"
+  },
+  {
+   "type": "range",
+   "id": "border_radius",
+   "min": 0,
+   "max": 100,
+   "step": 1
+  },
+  {
+   "type": "range",
+   "id": "padding-block-start",
+   "min": 0,
+   "max": 100,
+   "step": 1
+  },
+  {
+   "type": "range",
+   "id": "padding-block-end",
+   "min": 0,
+   "max": 100,
+   "step": 1
+  },
+  {
+   "type": "range",
+   "id": "padding-inline-start",
+   "min": 0,
+   "max": 100,
+   "step": 1
+  },
+  {
+   "type": "range",
+   "id": "padding-inline-end",
+   "min": 0,
+   "max": 100,
+   "step": 1
+  }
+ ]
+}

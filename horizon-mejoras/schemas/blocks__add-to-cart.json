@@ -1,0 +1,32 @@
+{
+ "name": "Add to cart",
+ "settings": [
+  {
+   "type": "select",
+   "id": "style_class",
+   "options": [
+    {
+     "value": "button"
+    },
+    {
+     "value": "button-secondary"
+    },
+    {
+     "value": "button-custom"
+    }
+   ]
+  },
+  {
+   "type": "color",
+   "id": "custom_button_background"
+  },
+  {
+   "type": "color",
+   "id": "custom_button_text"
+  },
+  {
+   "type": "color",
+   "id": "custom_button_border"
+  }
+ ]
+}

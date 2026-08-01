@@ -1,15 +1,280 @@
 /* ==========================================================================
-   LevelUP — sistema de movimiento (página de producto)
+   LevelUP — composición y movimiento de la página de producto
 
    Sólo se carga en la plantilla de producto: la sección "Animaciones
    LevelUP" del pie envuelve la carga en un {% if template.name == 'product' %}.
    Para llevarlo a otras páginas basta con añadir plantillas a esa condición
    desde el editor.
 
-   Todo va dentro de prefers-reduced-motion: no-preference. Los estados
-   iniciales también, así que quien pida menos movimiento ve la página
-   completa y estática, nunca contenido oculto esperando una animación que
-   no va a correr.
+   El archivo tiene dos mitades y la separación importa:
+
+     1. COMPOSICIÓN — la forma de la página. Va fuera de
+        prefers-reduced-motion a propósito: quien pide menos movimiento debe
+        ver la misma página, sólo que quieta, no una distinta.
+
+     2. MOVIMIENTO — lo que se mueve al recorrer. Eso sí va dentro, estados
+        iniciales incluidos, para que nadie se quede mirando contenido
+        oculto esperando una animación que no va a correr.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. COMPOSICIÓN
+   ========================================================================== */
+
+/* --- Galería en vertical también en celular ------------------------------
+   Horizon renderiza la galería dos veces: un carrusel y una rejilla, y
+   decide por CSS cuál se ve. En celular deja el carrusel, así que no hay
+   nada que recorrer — se desliza de lado y el efecto de scroll no existe.
+
+   Aquí se invierte. El tema oculta la rejilla con
+   `media-gallery:where(.media-gallery--grid) .media-gallery__grid`, y
+   :where() no suma especificidad, así que basta con nombrar la clase
+   directamente para ganar. */
+
+@media screen and (max-width: 749px) {
+  media-gallery.media-gallery--grid slideshow-component {
+    display: none;
+  }
+
+  media-gallery.media-gallery--grid .media-gallery__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Tres columnas de verdad en escritorio -------------------------------
+   La referencia reparte la página en tres: a la izquierda el nombre, el
+   precio y la ficha; al centro la prenda sola, sin tarjeta ni borde; a la
+   derecha la talla y el botón de compra.
+
+   Horizon no puede hacer eso por ajustes. Su rejilla tiene exactamente dos
+   celdas —galería y datos— y todo lo que se ve a la izquierda y a la
+   derecha vive dentro de la misma celda de datos.
+
+   La salida es no pelearse con esa estructura: la celda de datos se
+   extiende por encima de las tres columnas y reparte su propio contenido
+   entre la primera y la tercera. La segunda queda vacía y por debajo se ve
+   la prenda. Las dos celdas comparten fila, así que se superponen; para que
+   la de datos no tape los clics del centro va con pointer-events: none y
+   son sus hijos los que lo recuperan.
+
+   Así la columna de datos sigue siendo un único hijo de la rejilla, que es
+   lo que hace funcionar el `position: sticky` — la información acompaña a
+   las fotos mientras pasan. Partirla en dos lo habría roto. */
+
+@media screen and (min-width: 1000px) {
+  .product-information
+    .product-information__grid:not(
+      .product-information__grid--half,
+      .product-information--media-none
+    ).product-information--media-left {
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+
+  /* La prenda, centrada. Fila 1 explícita: si se dejara automática, el
+     colocado buscaría hueco libre y la empujaría a una segunda fila, porque
+     los datos ya ocupan las tres columnas de la primera. */
+  .product-information
+    .product-information__grid:not(
+      .product-information__grid--half,
+      .product-information--media-none
+    ).product-information--media-left
+    .product-information__media {
+    grid-column: 2;
+    grid-row: 1;
+    order: 0;
+    padding-inline: calc(var(--gap, 0px) / 2);
+  }
+
+  .product-information
+    .product-information__grid:not(
+      .product-information__grid--half,
+      .product-information--media-none
+    ).product-information--media-left
+    .product-details {
+    /* --lu-canal es el aire entre cada columna de datos y la prenda. */
+    --lu-canal: calc(var(--gap, 0px) / 2 + 24px);
+
+    grid-column: 1 / -1;
+    grid-row: 1;
+    order: 1; /* pinta después de la galería, así que queda encima */
+    display: block;
+    padding-inline: 0;
+    pointer-events: none;
+  }
+
+  .product-details > .group-block {
+    width: 100%;
+    max-width: none;
+  }
+
+  /* La rejilla interior repite la exterior columna por columna, sin
+     separación, para que lo de la izquierda y lo de la derecha caigan
+     exactamente sobre las columnas 1 y 3.
+
+     La última fila es 1fr: absorbe lo que sobre cuando la ficha de la
+     izquierda es más alta que la pila de la derecha, en vez de repartir ese
+     sobrante entre la talla, el botón y la guía y separarlos. */
+  .product-details > .group-block > .group-block-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: auto auto auto 1fr;
+    column-gap: 0;
+    row-gap: 14px;
+    align-items: start;
+  }
+
+  .product-details > .group-block > .group-block-content > * {
+    pointer-events: auto;
+  }
+
+  /* Columna 1 — nombre, precio y ficha.
+     El reparto va por clase y no por posición: cada bloque de Horizon trae
+     una clase propia, así que reordenarlos desde el editor no descoloca
+     nada. */
+  .product-details > .group-block > .group-block-content > .group-block {
+    grid-column: 1;
+    grid-row: 1;
+    padding-inline-end: var(--lu-canal);
+  }
+
+  .product-details > .group-block > .group-block-content > .accordion {
+    grid-column: 1;
+    grid-row: 2 / -1;
+    margin-block-start: 22px;
+    padding-inline-end: var(--lu-canal);
+  }
+
+  /* Columna 3 — talla, existencias, compra y guía. */
+  .product-details > .group-block > .group-block-content > .variant-picker {
+    grid-column: 3;
+    grid-row: 1;
+    padding-inline-start: var(--lu-canal);
+  }
+
+  .product-details > .group-block > .group-block-content > product-inventory {
+    grid-column: 3;
+    grid-row: 2;
+    padding-inline-start: var(--lu-canal);
+  }
+
+  .product-details > .group-block > .group-block-content > .buy-buttons-block {
+    grid-column: 3;
+    grid-row: 3;
+    margin-block-start: 6px;
+    padding-inline-start: var(--lu-canal);
+  }
+
+  .product-details > .group-block > .group-block-content > .popup-link {
+    grid-column: 3;
+    grid-row: 4;
+    padding-inline-start: var(--lu-canal);
+  }
+}
+
+/* --- Tipografía y limpieza del bloque de datos ---------------------------
+   En la referencia el nombre de la prenda no es un titular: es una etiqueta
+   pequeña, en mayúsculas y muy espaciada. El peso visual lo lleva la foto.
+
+   El tamaño se fija aquí y también en los ajustes del bloque. Suena
+   redundante, pero el selector de tamaño del editor sólo ofrece una lista
+   cerrada de medidas y el valor exacto que pide esta composición no está en
+   ella; los ajustes dejan el editor coherente y el CSS pone la cifra. */
+
+.product-details h1,
+.product-details .text-block h1 {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-block: 0;
+}
+
+/* Talla: texto suelto en fila, no botones con caja. Los colores ya vienen
+   transparentes desde los ajustes del bloque; aquí se quita la anchura
+   uniforme que impone el tema y se marca la seleccionada con un subrayado
+   en vez de un recuadro negro. */
+
+.product-details .variant-picker {
+  width: 100%;
+}
+
+.product-details .variant-option--equal-width-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+}
+
+.product-details .variant-option--equal-width-buttons .variant-option__button-label {
+  min-width: 0;
+  width: auto;
+  padding-inline: 6px;
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.product-details
+  .variant-option__button-label:has(input:checked)
+  .variant-option__button-label__text {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+
+.product-details .variant-option legend {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+/* Compra: un solo botón, ancho completo. El selector de cantidad se retira
+   de la ficha —la referencia no lo tiene y en ropa casi nadie compra dos de
+   la misma talla— pero sigue en el DOM, así que el formulario manda la
+   cantidad de siempre y en el carrito se puede cambiar como antes. */
+
+.product-details .product-form-buttons > .quantity-selector-wrapper {
+  display: none;
+}
+
+.product-details .buy-buttons-block {
+  display: block;
+  width: 100%;
+}
+
+.product-details .add-to-cart-button {
+  width: 100%;
+  min-height: 52px;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.product-details product-inventory .product-inventory__status {
+  justify-content: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.product-details .popup-link__button {
+  width: 100%;
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.product-details .accordion {
+  width: 100%;
+}
+
+/* ==========================================================================
+   2. MOVIMIENTO
    ========================================================================== */
 
 @media (prefers-reduced-motion: no-preference) {
@@ -66,69 +331,6 @@
   .lu-rise.lu-in {
     opacity: 1;
     transform: none;
-  }
-
-  /* --- Galería en vertical también en celular ----------------------------
-     Horizon renderiza la galería dos veces: un carrusel y una rejilla, y
-     decide por CSS cuál se ve. En celular deja el carrusel, así que no hay
-     nada que recorrer — se desliza de lado y el efecto de scroll no existe.
-
-     Aquí se invierte. El tema oculta la rejilla con
-     `media-gallery:where(.media-gallery--grid) .media-gallery__grid`, y
-     :where() no suma especificidad, así que basta con nombrar la clase
-     directamente para ganar. */
-
-  @media screen and (max-width: 749px) {
-    media-gallery.media-gallery--grid slideshow-component {
-      display: none;
-    }
-
-    media-gallery.media-gallery--grid .media-gallery__grid {
-      display: grid;
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* --- Composición de tres columnas en escritorio ------------------------
-     La referencia pone los datos a la izquierda, la prenda al centro y aire
-     a la derecha. Horizon sólo ofrece media-izquierda o media-derecha, así
-     que se reescribe su rejilla: los datos van a la columna 1, la galería a
-     la 2, y la 3 queda vacía para centrar la prenda.
-
-     El selector repite la forma del tema y le antepone .product-information
-     para ganar por especificidad sin depender del orden de carga. */
-
-  @media screen and (min-width: 1000px) {
-    .product-information
-      .product-information__grid:not(
-        .product-information__grid--half,
-        .product-information--media-none
-      ).product-information--media-left {
-      grid-template-columns: 1fr 2fr 0.8fr;
-    }
-
-    .product-information
-      .product-information__grid:not(
-        .product-information__grid--half,
-        .product-information--media-none
-      ).product-information--media-left
-      .product-details {
-      grid-column: 1;
-      order: 0;
-      padding-left: 0;
-      padding-right: var(--gap, 0);
-    }
-
-    .product-information
-      .product-information__grid:not(
-        .product-information__grid--half,
-        .product-information--media-none
-      ).product-information--media-left
-      .product-information__media {
-      grid-column: 2;
-      order: 1;
-      padding-right: 0;
-    }
   }
 
   /* --- Barra de compra adelantada en celular -----------------------------

@@ -14,7 +14,7 @@ tocó en ningún momento.
 | `index.json` | Portada base que usa `build.py` (paso previo, con los productos ya conectados). |
 | `settings_data.json` | Ajustes de tipografía ya aplicados al borrador. |
 | `politicas-borrador.md` | Borradores de envíos, devoluciones y términos. **No publicados**: llevan datos por verificar y son un compromiso legal que decide el dueño. |
-| `recorte-de-fondos.md` | Cómo quitar el fondo blanco de las fotos de producto desde el admin, y por cuáles empezar. Es trabajo de imagen, no de tema. |
+| `recorte-de-fondos.md` | Cómo se borra el fondo blanco de las fotos de producto, y qué queda por hacer a mano desde el admin. |
 
 ```bash
 python3 build.py     # regenera theme/ desde actual/
@@ -185,6 +185,11 @@ Y, fuera de `prefers-reduced-motion` porque son composición y no movimiento:
 |---|---|
 | Tres columnas en escritorio | Datos a la izquierda, prenda al centro, compra a la derecha |
 | Galería en vertical en celular | Se invierte el carrusel que Horizon impone en móvil |
+
+Aparte va `theme/assets/levelup-fondos.css`, que **se carga en todas las
+páginas** —lo demás es sólo producto— porque borra el fondo blanco de las
+fotos y las tarjetas de producto están en todas partes. Está explicado en
+`recorte-de-fondos.md`.
 
 Ese último es el que hace visible todo lo demás. Horizon **renderiza la
 galería dos veces** —un carrusel y una rejilla— y decide por CSS cuál se ve:

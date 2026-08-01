@@ -563,7 +563,12 @@ def build_footer():
     # desactivar sin tocar código.
     # Las animaciones se cargan sólo en la plantilla de producto. Para
     # llevarlas a otra página basta con añadirla a esta condición.
+    #
+    # levelup-fondos.css va fuera de la condición: las tarjetas de producto
+    # están en todas las páginas, así que el fondo blanco de las fotos hay
+    # que borrarlo en todas.
     d["sections"]["levelup_animations"]["settings"]["custom_liquid"] = (
+        "{{ 'levelup-fondos.css' | asset_url | stylesheet_tag }}\n"
         "{%- if template.name == 'product' -%}\n"
         "  {{ 'levelup-motion.css' | asset_url | stylesheet_tag }}\n"
         "  <script src=\"{{ 'levelup-motion.js' | asset_url }}\" defer></script>\n"

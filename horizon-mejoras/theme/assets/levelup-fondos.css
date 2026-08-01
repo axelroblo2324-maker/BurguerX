@@ -1,0 +1,76 @@
+/* ==========================================================================
+   LevelUP — fondo blanco fuera de las fotos de producto
+
+   Se carga en TODAS las páginas (portada, colección, producto, carrito),
+   no sólo en producto: las tarjetas de producto están en todas partes.
+
+   ---------------------------------------------------------------------------
+   El problema
+
+   Las fotos vienen del proveedor sobre fondo blanco de estudio. El tema no
+   pinta ninguna caja —se revisó: ni .product-media ni .card-gallery declaran
+   background-color— así que el rectángulo está dentro del JPG. Mientras la
+   tienda tuvo fondo casi blanco no se notaba; sobre el crema, cada foto se
+   lee como un recuadro pegado encima.
+
+   ---------------------------------------------------------------------------
+   La solución
+
+   mix-blend-mode: darken. El modo "darken" se queda, canal por canal, con el
+   valor más oscuro entre la foto y lo que hay detrás:
+
+     · Fondo blanco (255,255,255) contra el crema (247,244,239)
+       -> gana el crema en los tres canales. El fondo desaparece exacto.
+
+     · Cualquier píxel más oscuro que el crema -> gana la foto, intacta.
+       Un denim (20,30,60) sale (20,30,60). Sin tinte, sin pérdida.
+
+   Por eso se usa "darken" y no "multiply", que era la opción obvia:
+   multiply oscurece TODO un 4-6% y le mete un velo cálido a la prenda
+   entera. Darken no toca nada que ya sea más oscuro que la página, y eso es
+   prácticamente toda la prenda.
+
+   ---------------------------------------------------------------------------
+   Dónde falla, para que quede dicho
+
+     · Fondos que no son blancos sino grises (por debajo de #F7F4EF en algún
+       canal): el recuadro se atenúa mucho pero no desaparece del todo.
+     · Productos blancos o muy claros: se recortan al color de la página, o
+       sea que un blanco puro se vería crema. Es el mismo mecanismo que borra
+       el fondo — no distingue fondo de prenda.
+
+   Las dos se arreglan recortando la foto de verdad desde el admin
+   (Productos -> imagen -> Editar -> Quitar fondo). Esto y aquello conviven
+   sin pelearse: sobre una foto ya recortada, darken no tiene nada blanco que
+   morder y la parte transparente deja ver la página igual.
+   ========================================================================== */
+
+/* El fondo se pinta en el contenedor y no se deja al azar. Hace falta porque
+   varios ancestros crean contexto de apilamiento —.card-gallery por su
+   container-type, y en producto el contenedor de cada foto por el transform
+   y la opacidad que le pone el JS del scroll— y dentro de un contexto así el
+   telón de fondo del elemento es lo que se haya pintado ahí dentro, no la
+   página. Sin esto, la mezcla no tendría contra qué mezclar y no haría nada.
+
+   Se usa var(--color-background) en vez de un hex para que, si la foto cae
+   dentro de una sección con otro color, la mezcla siga cuadrando con esa
+   sección y no con la página. */
+
+.media-gallery__grid .product-media,
+.card-gallery .product-media {
+  background-color: var(--color-background);
+}
+
+.media-gallery__grid .product-media__image,
+.card-gallery .product-media__image {
+  mix-blend-mode: darken;
+}
+
+/* Dentro de un diálogo —el zoom de la foto, la compra rápida— el telón de
+   fondo puede ser oscuro, y ahí darken se comería la imagen entera. Se
+   desactiva por si alguno de esos paneles reutiliza el mismo marcado. */
+
+dialog .product-media__image,
+[role='dialog'] .product-media__image {
+  mix-blend-mode: normal;
+}

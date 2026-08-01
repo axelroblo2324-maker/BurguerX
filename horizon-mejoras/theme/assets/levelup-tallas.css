@@ -1,0 +1,87 @@
+/* ==========================================================================
+   LevelUP — las tallas, en orden de talla y no alfabético
+
+   Shopify guarda los valores de una opción en el orden en que se crearon, y
+   la importación los dejó alfabéticos. En la tienda se leía así:
+
+     Blazer Verona     L  M  S  XS
+     Jeans Graff       2XL  3XL  L  M  S  XL
+     Hoodie Boston     L  M  S  XL  XXL  XXXL
+
+   Son 15 de los 17 productos con talla. Quien compra escanea la fila
+   esperando XS S M L: encontrarla al revés obliga a leerla entera.
+
+   ---------------------------------------------------------------------------
+   Por qué se arregla aquí y no en los datos
+
+   Lo correcto sería reordenar los valores en el producto. La API no lo deja:
+   ni OptionUpdateInput ni OptionValueUpdateInput tienen posición, y la única
+   vía es productSet, que es declarativa sobre las variantes — un error ahí se
+   lleva por delante precios e inventario de una tienda que ya vende.
+
+   Así que esto es un arreglo de presentación: reordena lo que se ve, sin
+   tocar ni un dato. Cuando alguien reordene los valores a mano desde el admin
+   (Productos -> Variantes -> arrastrar), este archivo deja de hacer falta y
+   tampoco estorba: pondría cada talla en el sitio en el que ya está.
+
+   ---------------------------------------------------------------------------
+   Cómo
+
+   Cada botón de talla es un <label class="variant-option__button-label"> con
+   un <input> dentro que trae data-option-name y value. Se ordena con la
+   propiedad order del contenedor flexible.
+
+   Va acotado a data-option-name="Talla" a propósito:
+
+     · Los colores (Negro, Gris, Azul claro...) no se tocan. Ahí el orden que
+       puso la tienda es el bueno.
+     · El "Tamaño" de la pulsera (18 cm, 20 cm, 23 cm) tampoco, y ya estaba
+       bien.
+
+   Las tallas que no estén en la lista caen al final (order 90) en vez de
+   colarse al principio, que es lo que pasaría si se quedaran en el 0 de por
+   omisión. Los empates conservan el orden original.
+
+   Si algún día se ve una fila sin ordenar, lo más probable es que Horizon
+   haya dejado de maquetar ese <fieldset> como flex o grid: order sólo tiene
+   efecto dentro de uno de los dos. No rompe nada — simplemente no se aplica.
+   ========================================================================== */
+
+.variant-option__button-label:has(input[data-option-name='Talla']) {
+  order: 90;
+}
+
+.variant-option__button-label:has(input[data-option-name='Talla'][value='XS' i]) {
+  order: 1;
+}
+
+.variant-option__button-label:has(input[data-option-name='Talla'][value='S' i]) {
+  order: 2;
+}
+
+.variant-option__button-label:has(input[data-option-name='Talla'][value='M' i]) {
+  order: 3;
+}
+
+.variant-option__button-label:has(input[data-option-name='Talla'][value='L' i]) {
+  order: 4;
+}
+
+.variant-option__button-label:has(input[data-option-name='Talla'][value='XL' i]) {
+  order: 5;
+}
+
+.variant-option__button-label:has(input[data-option-name='Talla'][value='XXL' i]),
+.variant-option__button-label:has(input[data-option-name='Talla'][value='2XL' i]) {
+  order: 6;
+}
+
+.variant-option__button-label:has(input[data-option-name='Talla'][value='XXXL' i]),
+.variant-option__button-label:has(input[data-option-name='Talla'][value='3XL' i]) {
+  order: 7;
+}
+
+.variant-option__button-label:has(input[data-option-name='Talla'][value='XXXXL' i]),
+.variant-option__button-label:has(input[data-option-name='Talla'][value='4XL' i]) {
+  order: 8;
+}

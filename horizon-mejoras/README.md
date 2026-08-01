@@ -189,26 +189,24 @@ Y, fuera de `prefers-reduced-motion` porque son composición y no movimiento:
 
 Aparte va `theme/assets/levelup-fondos.css`, que **se carga en todas las
 páginas** —lo demás es sólo producto— porque borra el fondo de estudio de las
-fotos y las tarjetas de producto están en todas partes. El filtro viaja como
-`<svg>` junto a la etiqueta del CSS, en la misma sección del pie.
+fotos y las tarjetas de producto están en todas partes. Es una sola línea:
+`mix-blend-mode: darken`, que se queda con lo más oscuro entre la foto y la
+página. El fondo blanco (255,253,255) pierde contra el crema y desaparece
+exacto; la prenda, que es más oscura, queda intacta.
 
-Hace **dos cosas distintas según la prenda**, y la distinción no es un
-capricho:
+Llevó encima una curva SVG que además empujaba a blanco los fondos grises.
+Se quitó porque **borraba las prendas blancas junto con el fondo** —el 93%
+del Top Amelie, el 95% de la Chaqueta Margot— y porque esos fondos grises
+nunca existieron: medidos sin filtro dan blanco puro. Los números y las dos
+vueltas que costó están en `recorte-de-fondos.md`.
 
-- **Prendas oscuras y medias** (14 de 20): una curva que estira el punto
-  blanco y encima `mix-blend-mode: darken`. Borra el fondo exacto y no toca
-  nada más oscuro que la página. En los jeans y los bolsos negros queda
-  perfecto.
-- **Prendas claras** (6): no se toca el color. Esa misma receta las borraba
-  —medido sobre la tienda, el 93% del Top Amelie y el 95% de la Chaqueta
-  Margot quedaban idénticos al fondo de la página— porque el ciclorama del
-  proveedor (234-255) y una prenda blanca (230-255) ocupan **el mismo rango**
-  y ninguna regla por color los separa. En su lugar se funde el borde del
-  encuadre con una máscara, que quita el recuadro sin tocar la prenda.
-
-La lista de las seis va por nombre de archivo en el CSS (para las tarjetas) y
-por `product.handle` en el pie (para la ficha completa). **Si cambian esas
-fotos hay que actualizar las dos.** Está explicado en `recorte-de-fondos.md`.
+Y `theme/assets/levelup-tallas.css`, también en todas las páginas, que
+reordena las tallas: la importación las dejó alfabéticas (`L M S XS`) en 15
+de los 17 productos con talla. Es un arreglo de presentación con la propiedad
+`order`, acotado a `data-option-name="Talla"` para no tocar los colores.
+Lo correcto sería reordenar los valores en el producto, pero la API no
+expone posición en las opciones y la única vía —`productSet`— es declarativa
+sobre las variantes.
 
 ⚠️ Ojo con dónde vive: el tema **activo** es "Copia de LevelUP FINAL — con
 animaciones" (`187200110887`) y **no tiene este archivo**. Todo esto está en

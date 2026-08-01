@@ -33,20 +33,26 @@ descargar las imágenes, procesarlas y volver a subirlas.
 
 ## Ya está borrado desde el tema (en el borrador)
 
-`theme/assets/levelup-fondos.css` lo resuelve sin tocar ni una imagen. Pero
-**no hace lo mismo con todas las prendas**, y conviene entender por qué.
+`theme/assets/levelup-fondos.css` lo resuelve sin tocar ni una imagen, y a
+estas alturas es **una sola línea**: `mix-blend-mode: darken`.
 
-### Lo que pasó con las prendas blancas
+Darken se queda, canal por canal, con el valor más oscuro entre la foto y lo
+que hay detrás. El fondo de estudio (255,253,255) pierde contra el crema
+(247,244,239) en los tres canales, así que **desaparece exacto**. Cualquier
+píxel más oscuro que el crema gana y queda intacto — y eso es casi toda la
+prenda, sea denim, negro o blanco roto.
 
-La primera versión aplicaba una sola receta a todas las fotos: una curva que
-empujaba a blanco puro todo lo que pasara de 0.90 (229) y encima
-`mix-blend-mode: darken`. Con lo oscuro funciona perfecto. Con lo blanco no:
-**se comía la prenda entera**.
+Se eligió darken y no multiply, que era la opción obvia: multiply oscurece
+todo un 4-6% y le mete un velo cálido a la prenda entera.
 
-Midiendo una captura de la tienda píxel a píxel, contra el color exacto de la
-página:
+### El rodeo que costó dos vueltas, por si sirve de aviso
 
-| Producto | Parte de la ficha idéntica a la página |
+Durante un tiempo esto llevaba encima una curva SVG que empujaba a blanco puro
+todo lo que pasara de 229, para borrar también fondos grises. **Borraba las
+prendas blancas junto con el fondo.** Midiendo una captura de la tienda, píxel
+a píxel contra el color exacto de la página:
+
+| Producto | Superficie idéntica al fondo de la página |
 |---|---|
 | Top Amelie (blanco) | **93.0%** |
 | Chaqueta Margot (blanco) | **94.7%** |
@@ -55,123 +61,53 @@ página:
 | Chaqueta Sahara (khaki) | 44.4% ← eso es su fondo, está bien |
 | Jeans (denim) | 9.0% ← idem, perfecto |
 
-No es que se vieran pálidos: estaban **borrados**. La prenda valía lo mismo
-que el fondo, así que se fue con él.
+No se veían pálidas: **no se veían**.
 
-### Y por qué no se arregla moviendo el umbral
+El primer intento de arreglo fue apagar la curva sólo en esos seis productos y
+disimular el recuadro fundiéndole el borde. Funcionó a medias: las prendas
+volvieron, pero cada una quedó dentro de una caja blanca.
 
-Las fichas de "Compra por categoría" no llevan filtro (`toggle_overlay` está
-en `false`), así que enseñan el fondo crudo del proveedor tal cual llega.
-Midiéndolo ahí: **va de 234 a 255**, con el viñeteo típico de un ciclorama.
-Una prenda blanca vive **de 230 a 255**.
+Lo que faltaba era una medición que no había hecho: **el fondo real**, ya sin
+filtro, en esas mismas fichas. Da **(255,253,255), plano, con el canal más
+bajo en 252**. Blanco puro. Los fondos grises que la curva venía a resolver
+**nunca existieron** — la queja original venía de la tienda publicada, que en
+ese momento no tenía este CSS cargado en absoluto.
 
-Son el mismo rango. Cualquier regla que mire sólo el color de un píxel —una
-curva, `darken`, un croma— borra los dos o deja los dos. No existe el número
-que los separe, y por eso subir o bajar el `0.88` no era la solución: sólo
-elegía a cuál de los dos problemas rendirse.
+Con el fondo en 252-255 y darken borrando desde 247 hay cinco niveles de
+margen. Simulando cada variante sobre los píxeles reales de las fichas:
 
-Lo que sí los distingue es la **forma**, y eso sólo lo hace un recorte de
-verdad (más abajo). Mientras tanto el tema hace lo razonable: tratar distinto
-lo que es distinto.
-
-### Tratamiento 1 — prendas oscuras y medias (14 de 20)
-
-Lo de siempre, intacto, porque funciona:
-
-**1. Estirar el punto blanco** (`filter: url(#lu-blanquear)`). Una curva por
-canal que deja quieto todo lo que esté por debajo de 0.75 y empuja a blanco
-puro lo que pase de 0.90. Sirve para que un fondo que **no** era blanco —el
-crema o el gris claro de un ciclorama— llegue a 255.
-
-**2. Mezclar en oscuro** (`mix-blend-mode: darken`). Se queda, canal por
-canal, con el valor más oscuro entre la foto y lo que hay detrás. Un fondo ya
-en blanco contra el crema (247,244,239) pierde en los tres canales: **el fondo
-desaparece exacto**. Cualquier píxel más oscuro que el crema gana, intacto.
-
-Se eligió `darken` y no `multiply`, que era la opción obvia: multiply oscurece
-todo un 4-6% y le mete un velo cálido a la prenda entera. Darken no toca nada
-que ya sea más oscuro que la página, que es prácticamente toda la prenda.
-
-Simulado canal por canal:
-
-| Color | Resultado |
+| Tratamiento | Prenda borrada (Margot / Amelie) |
 |---|---|
-| Fondo blanco puro `(255,255,255)` | borrado exacto |
-| Fondo crema `(247,244,239)` | borrado exacto |
-| Fondo gris `#EDEDED` | borrado exacto |
-| Fondo gris `#E5E5E5` | borrado exacto |
-| Fondo gris `#DCDCDC` | queda un resto de 15/255 ← **el límite** |
-| Denim oscuro `(30,45,80)` | intacto, bit a bit |
-| Negro `(18,18,20)` | intacto, bit a bit |
-| Gris medio `(128,128,128)` | intacto, bit a bit |
-| Khaki claro `(198,180,140)` | +1/255, imperceptible |
+| **darken solo** | **0.0% / 0.0%** ← lo que hay ahora |
+| rodilla en 245 | 0.3% / 0.2% |
+| rodilla en 240 | 4.2% / 1.3% |
+| rodilla en 235 | 25.5% / 27.5% |
+| rodilla en 229 | 43.2% / 55.6% ← la curva que se quitó |
 
-### Tratamiento 2 — las seis prendas claras
+La curva no compraba nada y podía destruir un producto entero. Fuera, junto
+con la lista de excepciones, la máscara de borde y el `<svg>` que había que
+inyectar en cada página. El CSS pasó de 10 231 bytes a 5 185, y ya no hay
+ninguna lista que mantener cuando cambien las fotos.
 
-Aquí **no se toca el color**: ni curva ni mezcla. La foto se ve tal cual es,
-así que la prenda se ve entera. A cambio vuelve el recuadro del fondo, y eso
-se ataja por otro lado: **una máscara que funde el borde del encuadre**, un 6%
-a los lados y un 4% arriba y abajo.
+De paso desaparece un modo de fallo desagradable: si el CSS se cargaba sin su
+`<svg>`, un navegador podía dejar de pintar la imagen entera.
 
-La idea es que lo que delata un recuadro no es tanto que el fondo sea más
-claro que la página —son 8 niveles— como que el borde sea recto y duro. Al
-fundirlo deja de leerse como una caja pegada. El fondo del centro sigue ahí;
-el marco, no.
+### Si algún día vuelve a asomar un recuadro
 
-La máscara va **sólo** en estas seis. En las oscuras el encuadre suele ir a
-sangre —los jeans casi tocan arriba y abajo— y fundirles el borde les comería
-la pernera. Las seis claras están holgadas, así que la máscara sólo muerde
-fondo.
+Sería un producto cuyo fondo esté por debajo de 247. Antes de tocar el CSS,
+mira si no sale más barato recortar esa foto. Si aun así hace falta, la
+rodilla de la tabla se reintroduce con un filtro SVG — empieza por 245, que
+casi no cuesta prenda.
 
-Las seis son: **Blazer Verona, Blusa París, Bolso Seúl, Chaqueta Margot, Top
-Amelie y Vestido Noir**.
+### Lo que el tema no puede resolver
 
-Se seleccionan de dos maneras a la vez, y hacen falta las dos:
-
-- **En las tarjetas**, por el nombre del archivo dentro de `src`/`srcset`
-  (en `levelup-fondos.css`). Es la única señal que existe igual en portada,
-  colección, carrito, buscador y recomendados. Están las tres primeras fotos
-  de cada producto, que es lo que llega a enseñar una tarjeta.
-- **En la ficha**, por `product.handle` desde la sección "Animaciones
-  LevelUP" del pie. Ahí Liquid sí sabe qué producto es, así que apaga el
-  tratamiento para **todas** las fotos, no sólo las tres listadas.
-
-Se comprobó contra las 128 imágenes de los 20 productos: cero falsos
-positivos (ninguna prenda oscura queda pescada por error) y las seis portadas
-claras cubiertas.
-
-⚠️ **Si cambian las fotos de esos seis productos hay que actualizar las dos
-listas.** Los identificadores salen de la API: `products → media → image →
-url`.
-
-### Si hay que ajustarlo
-
-- ¿Alguna prenda clara queda mordida por el borde? Baja `--lu-fundido-x` /
-  `--lu-fundido-y` en `levelup-fondos.css`. Están juntas y solas a propósito.
-- ¿Todavía se ve la caja? Súbelas.
-- ¿Alguna prenda que no está en la lista se ve lavada? Añádela a las dos
-  listas y listo.
-
-El filtro tiene que ser un `<svg>` de verdad dentro de la página —Safari no
-resuelve `filter: url()` contra un `data:` URI—, así que viaja pegado a la
-etiqueta del CSS en la sección "Animaciones LevelUP" del pie. Los dos se
-cargan en **todas** las páginas, no sólo en producto, porque las tarjetas de
-producto están en todas partes.
-
-### Lo que sigue sin resolverse desde el tema
-
-1. **Fondos por debajo de `#DCDCDC`** en las prendas oscuras: demasiado
-   oscuros para separarlos sin comerse la prenda. Queda un recuadro tenue.
-2. **Los bolsos Praga y Firenze**, que están fotografiados sobre un fondo
-   tostado, no blanco. Ese color no es más claro que la página, así que
-   `darken` no lo toca y el recuadro se ve entero. No es un fallo del filtro:
-   es un fondo de color, y sólo el recorte lo quita.
-3. **Las seis prendas claras** siguen enseñando su fondo, ahora con el borde
-   fundido en vez de recto. Mejor, pero no borrado.
-
-Los tres se arreglan recortando la foto de verdad. Y conviven sin pelearse:
-sobre una foto ya recortada no queda nada blanco que morder, y la parte
-transparente deja ver la página igual.
+1. **Los bolsos Praga y Firenze**, fotografiados sobre fondo tostado. Ese
+   color no es más claro que la página, así que darken no lo toca y el
+   recuadro se ve entero. No es un fallo del filtro: es un fondo de color, y
+   sólo el recorte lo quita.
+2. **Fotos de modelo en la calle o en un interior**, donde el fondo es parte
+   de la imagen. Ahí no hay nada que borrar, y darken las deja en paz porque
+   casi todo es más oscuro que la página.
 
 ## Recortarlo de verdad, en todos los productos de una pasada
 
@@ -280,21 +216,20 @@ desde la misma pantalla.
 Son **20 productos y 128 imágenes** (consultado a la tienda el 1 de agosto de
 2026; antes decía 22 y 147, pero se borraron Jeans Brooklyn y Jeans Runway y
 cambiaron varias cuentas). Hacerlas todas es mucho, y la mayoría **no hace
-falta**: en las 14 prendas oscuras el tema ya borra el fondo exacto.
+falta**: sobre fondo blanco de estudio el tema ya lo borra exacto, y eso son
+18 de los 20.
 
-Lo que sí rinde, por orden:
+Lo que sí rinde:
 
-1. **Las 8 portadas que el tema no puede resolver.** Las seis prendas claras
-   (Blazer Verona, Blusa París, Bolso Seúl, Chaqueta Margot, Top Amelie,
-   Vestido Noir) y los dos bolsos con fondo tostado (Praga y Firenze). Son
-   ocho imágenes y se llevan todo lo que queda por arreglar.
-2. **Las 2 o 3 primeras de la ficha de esos ocho**, que son las que se ven
+1. **Los dos bolsos con fondo tostado: Praga y Firenze.** Son los únicos que
+   el tema no puede resolver, porque su fondo no es más claro que la página.
+   Con recortar sus dos portadas se acaba el asunto.
+2. **Las 2 o 3 primeras de la ficha de esos dos**, que son las que se ven
    antes de que el visitante decida seguir bajando.
 3. El resto, sólo si queda ánimo. No se va a notar.
 
-Cuando recortes una de las seis claras, quítala también de las dos listas
-(`levelup-fondos.css` y el `lu_claros` del pie): ya no necesita el apaño, y
-sin él vuelve a beneficiarse del borrado normal.
+Ya no hay ninguna lista de excepciones que mantener: al recortar una foto,
+el CSS la respeta sola, porque lo transparente sigue transparente.
 
 | Producto | Fotos | Portada |
 |---|---|---|
@@ -352,23 +287,26 @@ recortada manda en la rejilla y las de escenario aportan contexto más abajo.
 
 ## Qué avisar después
 
-Tres cosas que hay que mirar y que no se pueden anticipar sin verlas — el
+Cuatro cosas que hay que mirar y que no se pueden anticipar sin verlas — el
 dominio de la tienda está bloqueado desde el entorno donde se generan estos
 archivos:
 
-1. **Las seis prendas claras, que ahora se ven.** Es el cambio grande: antes
-   estaban borradas y ahora se enseñan enteras, con su fondo y el borde
-   fundido. Mira si el fundido queda bien o si en alguna se come un trozo de
-   prenda — son dos números (`--lu-fundido-x` y `--lu-fundido-y`) y se
-   ajustan en un minuto.
-
-   Y al revés: si alguna prenda **que no está en la lista** se ve lavada,
-   dime cuál. Se añade y queda igual que estas seis.
-2. **El recorte de la galería.** La ficha usa proporción vertical (1/1.25) y
+1. **Que ninguna prenda se vea lavada.** Es lo que hay que comprobar primero,
+   porque es el fallo que ya ocurrió dos veces. Con darken solo no debería
+   pasarle a ninguna, pero si alguna se ve descolorida o le falta pliegue,
+   dime cuál.
+2. **Que no quede ningún recuadro** aparte de los bolsos Praga y Firenze, que
+   ya sabemos que se quedan. Si aparece otro, ese producto tiene el fondo por
+   debajo de 247 y toca decidir entre recortarlo o reintroducir la rodilla.
+3. **El orden de las tallas.** Debería leerse XS S M L en vez de L M S XS.
+   Si sigue desordenado, es que Horizon no maqueta ese `<fieldset>` como flex
+   ni como grid, y hay que arreglarlo por otro lado (o reordenar los valores
+   a mano desde el admin, que es donde de verdad corresponde).
+4. **El recorte de la galería.** La ficha usa proporción vertical (1/1.25) y
    recorta para llenar. Con el fondo ya fundido, la prenda queda más
    expuesta; en los bolsos, que son anchos, puede comerse un borde. Si pasa,
    se cambia la proporción a automática y las fotos se muestran enteras.
-3. **El carrito.** No pude verificar si el cajón del carrito pinta un cuadro
+5. **El carrito.** No pude verificar si el cajón del carrito pinta un cuadro
    gris detrás de la miniatura, como hacía la barra de compra: el archivo son
    31 KB y no lo abrí entero. Agrega algo al carrito y mándame una captura;
    si aparece el cuadrito, es una línea de CSS.

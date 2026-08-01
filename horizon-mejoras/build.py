@@ -568,60 +568,24 @@ def build_footer():
     # están en todas las páginas, así que el fondo de estudio de las fotos hay
     # que borrarlo en todas.
     #
-    # Con el CSS viaja el filtro que usa: una curva por canal que deja quieto
-    # todo lo que esté por debajo de 0.75 y empuja a blanco puro lo que pase de
-    # 0.90. Es lo que permite borrar un fondo gris o crema, que al ser más
-    # OSCURO que la página sobrevivía al mix-blend-mode: darken. El detalle
-    # está en la cabecera de levelup-fondos.css.
+    # levelup-fondos.css es una sola regla: mix-blend-mode: darken. Aquí no
+    # hace falta nada más que cargarlo.
     #
-    # Tiene que ser un <svg> de verdad en el documento: Safari no resuelve
-    # filter: url() contra un data: URI. Y va aquí, pegado a la etiqueta del
-    # CSS, para que nunca se cargue el uno sin el otro.
-    curva = "0 .05 .1 .15 .2 .25 .3 .35 .4 .45 .5 .55 .6 .65 .7 .75 .81 .88 1 1 1"
-    filtro = (
-        '<svg class="lu-filtros" width="0" height="0" aria-hidden="true"'
-        ' focusable="false"><defs>'
-        '<filter id="lu-blanquear" x="0%" y="0%" width="100%" height="100%"'
-        ' color-interpolation-filters="sRGB"><feComponentTransfer>'
-        + "".join(
-            f'<feFunc{canal} type="table" tableValues="{curva}"/>'
-            for canal in "RGB"
-        )
-        + "</feComponentTransfer></filter></defs></svg>"
-    )
-
-    # Esa curva borra el fondo de estudio, pero no distingue el fondo de una
-    # prenda blanca: los dos ocupan el mismo rango (el ciclorama del proveedor
-    # va de 234 a 255; una prenda blanca, de 230 a 255). Medido sobre la
-    # tienda, se comía el 93% del Top Amelie y el 95% de la Chaqueta Margot.
+    # Llevó encima un filtro SVG con una curva que empujaba a blanco puro todo
+    # lo que pasara de 229, para borrar también fondos grises. Se quitó: los
+    # fondos grises no existían —medidos sin filtro dan (255,253,255)— y la
+    # curva se comía las prendas blancas, hasta el 95% de la Chaqueta Margot.
+    # El razonamiento y los números están en la cabecera del CSS.
     #
-    # Así que en estos seis productos se apaga. levelup-fondos.css ya lo hace
-    # para las tarjetas, seleccionando por el nombre del archivo, pero ahí sólo
-    # están las tres primeras fotos de cada uno. En la ficha se ven todas, y
-    # aquí Liquid sí sabe qué producto es: se apaga para el producto entero.
-    claros = ",".join((
-        "fashionable-and-versatile-solid-color-double-breasted-blazer",
-        "feitong-women-ladies-blouses-and-tops-casual-ruffles-lace-polka-dot"
-        "-o-neck-shirt-long-sleeve-blouse-blusas-mujer-de-moda",
-        "korean-shoulder-bag-white-1-piece",
-        "casual-versatile-retro-chic-polka-dot-color-block-collar-jacket",
-        "solid-color-versatile-fitted-top-for-women",
-        "dress-sleeveless-bodycon-dresses-vestidos-ropa-mujer",
-    ))
-    prendas_claras = (
-        "{%- assign lu_claros = '" + claros + "' | split: ',' -%}\n"
-        "{%- if template.name == 'product'"
-        " and lu_claros contains product.handle -%}\n"
-        "  <style>.media-gallery__grid .product-media__image{"
-        "--lu-filtro:none;--lu-mezcla:normal;--lu-mascara:var(--lu-fundido)}"
-        "</style>\n"
-        "{%- endif -%}"
-    )
-
+    # Al no haber filtro tampoco hay que inyectar el <svg> en la página, que
+    # era la parte frágil: si el CSS se cargaba sin el SVG, un navegador podía
+    # dejar de pintar la imagen entera.
+    # levelup-tallas.css también va fuera de la condición: el selector de talla
+    # sale en la ficha, pero también en el diálogo de compra rápida, y ese se
+    # abre desde las tarjetas de cualquier página.
     d["sections"]["levelup_animations"]["settings"]["custom_liquid"] = (
         "{{ 'levelup-fondos.css' | asset_url | stylesheet_tag }}\n"
-        + filtro + "\n"
-        + prendas_claras + "\n"
+        "{{ 'levelup-tallas.css' | asset_url | stylesheet_tag }}\n"
         "{%- if template.name == 'product' -%}\n"
         "  {{ 'levelup-motion.css' | asset_url | stylesheet_tag }}\n"
         "  <script src=\"{{ 'levelup-motion.js' | asset_url }}\" defer></script>\n"

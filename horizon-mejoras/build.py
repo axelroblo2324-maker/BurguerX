@@ -233,9 +233,21 @@ def build_product():
     g = d["sections"]["main"]["blocks"]["media-gallery"]["settings"]
     g["media_columns"] = "one"
     g["large_first_image"] = False        # sólo aplica con dos columnas
-    # "portrait" no es un valor del esquema: la proporción vertical es
-    # "1/1.25". Con el valor inválido no se aplicaba ninguna proporción.
-    g["aspect_ratio"] = "1/1.25"
+    # "portrait" no es un valor del esquema; los válidos son "adapt", "1/1.25",
+    # "1" y "2/1". Con el valor inválido no se aplicaba ninguna proporción.
+    #
+    # Estuvo en "1/1.25" (0.8) y recortaba: las fotos del proveedor son
+    # cuadradas, así que para llenar un marco de 0.8 object-fit las ampliaba
+    # un 25% y se comía el 20% del ancho. Medido en la rejilla, al Top Amelie
+    # le cortaba la manga entera. En la ficha pesa aún más, porque la galería
+    # ocupa la pantalla completa en celular.
+    #
+    # "adapt" da a cada foto su proporción natural: cero recorte en los veinte
+    # productos, incluida la Blusa París, que es la única realmente 4/5. En una
+    # galería vertical las alturas desiguales no molestan —se ve una prenda
+    # cada vez— y constrain_to_viewport sigue evitando que una foto muy alta
+    # se desborde.
+    g["aspect_ratio"] = "adapt"
     # Igual con "none", que no está entre los iconos de carrusel.
     g["icons_style"] = "arrow"
     # Separación amplia: con constrain_to_viewport cada prenda ocupa casi

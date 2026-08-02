@@ -203,10 +203,6 @@
    fondo blanco de la foto disimulaba dónde acababa la imagen; ahora que el
    fondo desaparece, el corte queda a la vista.
 
-   Repasando las fotos principales de los 20 productos: nueve de cada diez son
-   cuadradas. La única que de verdad es 4/5 es la Blusa París (1122x1402), que
-   con este cambio pierde un 20% por arriba y por abajo. Nueve a una.
-
    ---------------------------------------------------------------------------
    Cómo
 
@@ -225,4 +221,16 @@
 
 .card-gallery[data-image-ratio='portrait'] {
   --gallery-aspect-ratio: 1 !important;
+}
+
+/* La excepción: la Blusa París es la única cuya foto SÍ es 4/5 (1122x1402).
+   Con el marco cuadrado perdería un 20% por arriba y por abajo, así que se
+   queda con el suyo. Horizon escribe data-product-id en la misma etiqueta,
+   así que la excepción cuesta una línea y el arreglo pasa a no recortar
+   absolutamente nada, en ningún producto.
+
+   Si algún día le cambias las fotos por unas cuadradas, borra este bloque. */
+
+.card-gallery[data-image-ratio='portrait'][data-product-id='10299836793127'] {
+  --gallery-aspect-ratio: 4 / 5 !important;
 }

@@ -160,48 +160,84 @@ dura no evita la devolución: evita la segunda compra.
 
 ---
 
-### Texto propuesto
+### Texto propuesto — versión dura
+
+Este es el máximo endurecimiento posible. Todo lo que la ley no obliga a
+conceder, aquí se niega expresamente.
+
+Lo que **sí** se puede negar en redondo, y se niega:
+
+- **Cambios de talla o de color.** Ninguna ley obliga a ofrecer cambios. Fuera.
+- **Devoluciones por arrepentimiento pasado el plazo legal.** Fuera, sin
+  excepción. Son 360 días del año en los que la respuesta es no.
+- **Pagar el envío de retorno.** Lo paga quien devuelve.
+- **Reembolsar prenda usada, lavada o sin etiquetas.** Se rechaza y se
+  devuelve el paquete a costa del comprador.
+- **Higiene.** Ropa interior, trajes de baño y aretes, sin vuelta atrás.
+
+Lo que **no** se puede negar, porque no depende de la tienda:
+
+- Los 5 días hábiles de retracto en México (y 14 naturales si se vende a la
+  UE o Reino Unido).
+- La respuesta por producto defectuoso o distinto al anunciado.
 
 > **Cambios y devoluciones**
 >
-> **Si tu pedido llega mal.** Si recibes una prenda dañada, incompleta o
+> **Toda venta es final**, salvo en los dos casos que se detallan abajo.
+>
+> **No hacemos cambios de talla ni de color.** Revisa la guía de tallas antes
+> de comprar: nuestro corte es asiático y va más pequeño que el mexicano. Si
+> dudas, escríbenos **antes** de tu pedido y te ayudamos a elegir.
+>
+> **1. Si tu pedido llega mal.** Si la prenda llega dañada, incompleta o
 > distinta a la que pediste, escríbenos a [VERIFICAR: correo] dentro de las
-> **48 horas** siguientes a la entrega con tu número de pedido y fotos.
-> Cubrimos todos los costos y eliges entre reposición o reembolso completo.
-> En la mayoría de los casos no te pediremos que nos regreses la prenda.
+> **48 horas** siguientes a la entrega, con número de pedido y fotos claras.
+> Verificado el caso, elegimos reposición o reembolso completo y cubrimos el
+> costo. Pasadas esas 48 horas no se admiten reclamaciones por este concepto.
 >
-> **Si el pedido no llega.** Escríbenos y lo rastreamos contigo. Si se
-> confirma extraviado, reponemos la prenda o te devolvemos tu dinero.
+> **2. Derecho de cancelación.** La ley te concede **5 días hábiles desde la
+> entrega** para cancelar tu compra sin explicaciones (14 días naturales si
+> compras desde la Unión Europea o el Reino Unido). Para ejercerlo:
 >
-> **Si cambiaste de opinión.** Tienes **5 días hábiles desde que recibes tu
-> pedido** (14 días naturales si compras desde la Unión Europea o el Reino
-> Unido) para pedirnos la cancelación, sin dar explicaciones. Condiciones:
+> - Avísanos por escrito **dentro del plazo**. Fuera de plazo no hay
+>   devolución de ningún tipo.
+> - La prenda debe llegarnos **sin usar, sin lavar, sin perfume, con todas sus
+>   etiquetas puestas y en su empaque original**. Si llega en otro estado, se
+>   rechaza y se te reenvía por tu cuenta.
+> - **El envío de retorno es a tu cargo**, y no se reembolsa el costo de envío
+>   original.
+> - Recibida y revisada la prenda, reembolsamos su precio al mismo método de
+>   pago en [VERIFICAR: X] días hábiles.
 >
-> - La prenda debe estar **sin usar, sin lavar, con sus etiquetas puestas y en
->   su empaque original**.
-> - **El envío de retorno corre por tu cuenta.** Te damos la dirección al
->   confirmar.
-> - Recibido y revisado el paquete, te reembolsamos el precio de la prenda al
->   mismo método de pago en [VERIFICAR: X] días hábiles. También puedes
->   elegir **nota de crédito por el 110%** del valor, si prefieres cambiarla
->   por otra cosa.
+> **No admiten cancelación** —por higiene— la ropa interior, los trajes de
+> baño y los aretes una vez abiertos o retirada su etiqueta sanitaria.
 >
-> **Lo que no admite devolución por arrepentimiento:** ropa interior, trajes
-> de baño y aretes una vez abiertos o retirada su etiqueta sanitaria, por
-> higiene.
->
-> **Antes de comprar.** Nuestro tallaje es de corte asiático y corre más
-> pequeño que el mexicano. Cada prenda tiene su guía de tallas, y si dudas
-> escríbenos: te ayudamos a elegir y nos ahorramos el viaje los dos.
->
-> **Tus derechos.** Nada de lo anterior limita los derechos que te dan la Ley
-> Federal de Protección al Consumidor ni, si compras desde fuera de México, la
-> normativa de tu país.
+> **Tus derechos.** Nada de lo anterior limita los derechos que te otorgan la
+> Ley Federal de Protección al Consumidor ni, si compras desde fuera de
+> México, la normativa de tu país.
 
-**El 110% de la nota de crédito no es un adorno:** convierte una devolución en
-una segunda visita, y suele salir más barato que reembolsar.
+### Dos maneras de endurecerlo de verdad
 
----
+Si el objetivo es reducir devoluciones al mínimo, estas dos hacen más que
+cualquier redacción:
+
+1. **Vender sólo a México.** Hoy la tienda envía a 29 países. Cada venta a la
+   UE trae 14 días naturales de retracto en vez de 5 hábiles, más IVA de
+   importación. Cerrar los otros 28 destinos casi triplica de golpe la
+   restricción del plazo, y es un interruptor en Configuración → Envíos.
+2. **Aceptar tarjeta.** Suena al revés, pero no lo es: mientras PayPal sea el
+   único método de pago, su Protección al Comprador da 180 días y decide
+   PayPal, no la política. Con tarjeta vía Shopify Payments las contracargas
+   se disputan con evidencia —y una política clara y publicada **es** la
+   evidencia que gana esas disputas—. Hoy esa política no te sirve de nada
+   porque el que resuelve no la lee.
+
+### Por qué la frase "sin reembolsos" cuesta dinero
+
+Escrita en la tienda no impide un solo reembolso: PayPal reembolsa igual. Lo
+que sí hace es acumular disputas resueltas en contra, y una tasa alta de
+disputas es lo que lleva a PayPal a limitar o retener fondos de una cuenta.
+Se paga el reembolso y además el historial.
 
 ## Lo que falta para cumplir, y no es la política de devoluciones
 

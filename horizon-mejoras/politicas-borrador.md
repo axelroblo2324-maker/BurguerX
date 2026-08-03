@@ -101,41 +101,127 @@ todos modos y que sí puedes cumplir, porque son casos raros.
 
 ## Política de devoluciones
 
-Redactada para que coincida con lo que la tienda dice hoy: se cubren las
-incidencias, no el arrepentimiento. Si decides ampliarla, avísame y actualizo
-también los textos de la tienda.
+### Antes del texto: por qué no puede decir "no aceptamos devoluciones"
 
-> **Si tu pedido llega mal**
->
-> Si recibes una prenda **dañada, incompleta o distinta a la que pediste**,
-> escríbenos a [VERIFICAR: correo] dentro de las **48 horas** siguientes a la
-> entrega, con tu número de pedido y fotos.
->
-> En esos casos cubrimos todos los costos: puedes elegir entre el reemplazo
-> de la prenda o el reembolso completo. El reembolso se procesa al mismo
-> método de pago en [VERIFICAR: X] días hábiles; el tiempo que tarde en
-> reflejarse depende de tu banco.
->
-> **Si el pedido no llega**
->
-> Escríbenos y lo rastreamos contigo. Si se confirma extraviado, reponemos la
-> prenda o te devolvemos tu dinero.
->
-> **Cambios por talla o por arrepentimiento**
->
-> [VERIFICAR: hoy la tienda no los ofrece. Si decides aceptarlos, define quién
-> paga el envío de retorno y en qué plazo.]
->
-> Para acertar a la primera, cada prenda tiene su guía de tallas. Nuestro
-> tallaje es de corte asiático y corre más pequeño que el mexicano. Si dudas,
-> escríbenos antes de comprar y te ayudamos a elegir.
->
-> **Derechos que no se limitan**
->
-> Esta política no restringe los derechos que te da la Ley Federal de
-> Protección al Consumidor.
+El encargo fue "no devolvemos productos". No se puede redactar así, y conviene
+saber exactamente por qué antes de decidir nada.
+
+**1. La tienda envía a 29 países.** Consultado a Shopify: además de México,
+salen pedidos a Estados Unidos, Canadá, Reino Unido, Alemania, Francia,
+España, Italia, Japón, Australia y veinte más. Cada uno trae su propia ley:
+
+| Mercado | Derecho de retracto | ¿Se puede renunciar? |
+|---|---|---|
+| México (LFPC art. 56) | 5 días hábiles desde la entrega | No |
+| Unión Europea | 14 días naturales | No |
+| Reino Unido | 14 días naturales | No |
+
+Son derechos de orden público: una cláusula en la tienda que diga lo
+contrario simplemente no vale, y tenerla escrita es lo que da pie a la multa.
+
+**2. Producto defectuoso es otra cosa, y también es obligatorio.** El art. 92
+de la LFPC da al comprador la opción de reposición, devolución del dinero o
+rebaja del precio cuando la cosa no corresponde a lo ofrecido. Eso aplica
+siempre, sin plazo de arrepentimiento de por medio.
+
+**3. Y aunque nada de lo anterior existiera, PayPal manda.** Hoy es el único
+método de pago de la tienda. Su Protección al Comprador da 180 días para
+abrir una disputa, y quien decide es PayPal, no la política de la tienda. El
+resultado práctico de un "no hay devoluciones" es el mismo reembolso, más una
+disputa en el historial y comisión perdida. Se paga dos veces por decir que no.
+
+### Lo que sí se puede hacer, y es bastante
+
+El objetivo real —que no te devuelvan por capricho— se consigue con
+condiciones, no con una negativa. Todo esto es legal y es lo que hacen las
+marcas serias:
+
+- **Plazo justo al mínimo legal**, ni un día más.
+- **Prenda sin usar, con etiquetas y en su empaque.** Se puede exigir y se
+  puede rechazar la devolución si llega usada.
+- **El envío de retorno lo paga quien se arrepiente.** Legal en México y en la
+  UE siempre que se avise antes de comprar. En la UE, si no lo avisas, lo
+  pagas tú: por eso tiene que estar escrito.
+- **Higiene fuera.** Ropa interior, trajes de baño y aretes, una vez abiertos,
+  quedan excluidos. Es una excepción aceptada en todas partes.
+- **Nota de crédito como opción preferente**, ofrecida primero. Muchos la
+  aceptan. Pero si el cliente insiste en su dinero dentro del plazo legal, hay
+  que dárselo.
+- **Defectos sin pedir el retorno.** Con proveedor en China, el reenvío cuesta
+  más que la prenda: conviene reembolsar contra fotos y no pedir que devuelvan
+  nada. Sale más barato y deja mejor sabor.
+
+### La forma barata de tener pocas devoluciones
+
+No es la política, es el tallaje. La tienda ya avisa de que el corte es
+asiático y corre pequeño; ese aviso, la guía de tallas y unas fotos que dejen
+ver el ajuste bajan más las devoluciones que cualquier cláusula. Una política
+dura no evita la devolución: evita la segunda compra.
 
 ---
+
+### Texto propuesto
+
+> **Cambios y devoluciones**
+>
+> **Si tu pedido llega mal.** Si recibes una prenda dañada, incompleta o
+> distinta a la que pediste, escríbenos a [VERIFICAR: correo] dentro de las
+> **48 horas** siguientes a la entrega con tu número de pedido y fotos.
+> Cubrimos todos los costos y eliges entre reposición o reembolso completo.
+> En la mayoría de los casos no te pediremos que nos regreses la prenda.
+>
+> **Si el pedido no llega.** Escríbenos y lo rastreamos contigo. Si se
+> confirma extraviado, reponemos la prenda o te devolvemos tu dinero.
+>
+> **Si cambiaste de opinión.** Tienes **5 días hábiles desde que recibes tu
+> pedido** (14 días naturales si compras desde la Unión Europea o el Reino
+> Unido) para pedirnos la cancelación, sin dar explicaciones. Condiciones:
+>
+> - La prenda debe estar **sin usar, sin lavar, con sus etiquetas puestas y en
+>   su empaque original**.
+> - **El envío de retorno corre por tu cuenta.** Te damos la dirección al
+>   confirmar.
+> - Recibido y revisado el paquete, te reembolsamos el precio de la prenda al
+>   mismo método de pago en [VERIFICAR: X] días hábiles. También puedes
+>   elegir **nota de crédito por el 110%** del valor, si prefieres cambiarla
+>   por otra cosa.
+>
+> **Lo que no admite devolución por arrepentimiento:** ropa interior, trajes
+> de baño y aretes una vez abiertos o retirada su etiqueta sanitaria, por
+> higiene.
+>
+> **Antes de comprar.** Nuestro tallaje es de corte asiático y corre más
+> pequeño que el mexicano. Cada prenda tiene su guía de tallas, y si dudas
+> escríbenos: te ayudamos a elegir y nos ahorramos el viaje los dos.
+>
+> **Tus derechos.** Nada de lo anterior limita los derechos que te dan la Ley
+> Federal de Protección al Consumidor ni, si compras desde fuera de México, la
+> normativa de tu país.
+
+**El 110% de la nota de crédito no es un adorno:** convierte una devolución en
+una segunda visita, y suele salir más barato que reembolsar.
+
+---
+
+## Lo que falta para cumplir, y no es la política de devoluciones
+
+Revisando los datos de la tienda aparecieron cosas más urgentes que ésta:
+
+1. **No hay teléfono publicado y la dirección está mal.** Shopify tiene
+   "Calle Veracruz, San Dieguito Xochimanca, AGS, CP 56246" — pero el 56246
+   es del Estado de México, no de Aguascalientes. El art. 76 bis de la LFPC
+   obliga a publicar domicilio físico y teléfono. Hoy no se cumple.
+2. **El correo de contacto es un Gmail personal.** No infringe nada, pero en
+   una tienda que vende bolsos de $1,200 resta más confianza de lo que cuesta
+   un correo con dominio propio.
+3. **Aviso de privacidad.** La LFPDPPP lo exige con contenido específico
+   (identidad del responsable, finalidades, medios para ejercer derechos ARCO).
+   Y si de verdad se vende a la UE, además hace falta cumplir el RGPD.
+4. **Enviar a 29 países es la decisión más cara de la tienda.** Cada envío a
+   la UE arrastra retracto de 14 días, IVA de importación e IOSS; sin IOSS el
+   paquete llega con cargos sorpresa y acaba en disputa. **La recomendación es
+   dejar sólo México** —y como mucho Estados Unidos— hasta que el volumen
+   justifique la complejidad. Se cambia en Configuración → Envíos.
 
 ## Términos del servicio
 

@@ -190,7 +190,7 @@ Lo que **no** se puede negar, porque no depende de la tienda:
 > dudas, escríbenos **antes** de tu pedido y te ayudamos a elegir.
 >
 > **1. Si tu pedido llega mal.** Si la prenda llega dañada, incompleta o
-> distinta a la que pediste, escríbenos a [VERIFICAR: correo] dentro de las
+> distinta a la que pediste, escríbenos a OficialLevelUPMX@gmail.com dentro de las
 > **48 horas** siguientes a la entrega, con número de pedido y fotos claras.
 > Verificado el caso, elegimos reposición o reembolso completo y cubrimos el
 > costo. Pasadas esas 48 horas no se admiten reclamaciones por este concepto.
@@ -207,7 +207,7 @@ Lo que **no** se puede negar, porque no depende de la tienda:
 > - **El envío de retorno es a tu cargo**, y no se reembolsa el costo de envío
 >   original.
 > - Recibida y revisada la prenda, reembolsamos su precio al mismo método de
->   pago en [VERIFICAR: X] días hábiles.
+>   pago en un plazo máximo de 10 días hábiles.
 >
 > **No admiten cancelación** —por higiene— la ropa interior, los trajes de
 > baño y los aretes una vez abiertos o retirada su etiqueta sanitaria.
@@ -265,7 +265,7 @@ Revisando los datos de la tienda aparecieron cosas más urgentes que ésta:
 >
 > Esta tienda la opera [VERIFICAR: nombre o razón social], con domicilio en
 > [VERIFICAR: domicilio] y RFC [VERIFICAR: RFC, si facturas]. Puedes
-> contactarnos en [VERIFICAR: correo de atención].
+> contactarnos en OficialLevelUPMX@gmail.com.
 >
 > **Aceptación**
 >

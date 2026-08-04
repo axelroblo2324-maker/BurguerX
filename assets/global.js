@@ -500,11 +500,41 @@
     if (!inner) return;
     const available = el.clientWidth;
     if (!available) return;
-    el.style.fontSize = '100px';
-    const width = inner.scrollWidth;
-    if (!width) return;
-    const next = Math.floor((available / width) * 100);
-    el.style.fontSize = `${next}px`;
+
+    // Se mide con offsetWidth. scrollWidth no sirve: da 0 en un span en línea
+    // y, en uno de bloque, nunca pasa del ancho del contenedor, así que la
+    // fuente sólo podía encoger y el nombre se quedaba clavado en 100px.
+    // getBoundingClientRect tampoco: devuelve la caja ya transformada, y estos
+    // titulares entran con un scale(0.98), así que al medir salían más
+    // estrechos de lo que acabarían siendo. offsetWidth es de maquetación pura.
+    //
+    // Se afina en varias pasadas porque el ajuste no es proporcional: el
+    // letter-spacing del tema va en píxeles y no crece con la letra, así que
+    // una sola regla de tres se pasa de largo. Cada pasada corrige el resto.
+    // Se apunta al 99.5% del hueco: el redondeo de la última pasada puede
+    // dejar un par de píxeles de más, y ahí el nombre se recortaría contra el
+    // borde. Medio punto porcentual no se ve; una letra cortada sí.
+    const target = available * 0.995;
+    let size = 100;
+    el.style.fontSize = `${size}px`;
+
+    for (let pass = 0; pass < 3; pass += 1) {
+      const width = inner.offsetWidth;
+      if (!width) return;
+      const next = Math.max(1, Math.floor(size * (target / width)));
+      if (next === size) break;
+      size = next;
+      el.style.fontSize = `${size}px`;
+    }
+
+    // Las pasadas pueden quedarse oscilando un píxel por encima. Esto cierra:
+    // baja de uno en uno hasta que entra, con tope para no colgarse.
+    let guard = 0;
+    while (size > 1 && guard < 6 && inner.offsetWidth > available) {
+      size -= 1;
+      el.style.fontSize = `${size}px`;
+      guard += 1;
+    }
   }
 
   function initWordmarks(root = document) {

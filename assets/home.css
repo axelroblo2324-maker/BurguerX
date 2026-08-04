@@ -90,7 +90,9 @@
   margin-inline: auto;
   padding: calc(var(--header-height) + 2rem) var(--gutter) calc(var(--gutter) + 1rem);
   grid-template-rows: 1fr auto;
+  grid-template-columns: minmax(0, 1fr);
   min-height: inherit;
+  overflow: hidden;
 }
 
 .hero__wordmark {
@@ -99,6 +101,17 @@
   justify-content: var(--hero-align-x, center);
   text-align: var(--hero-text-align, center);
   width: 100%;
+  min-width: 0;
+}
+
+/* El hijo del flex se ajustaba a su contenido y el título, con width:100%, se
+   medía contra ese ancho: o se quedaba corto o, con el texto en una sola
+   línea, arrastraba la caja a lo ancho del texto. min-width:0 corta esa
+   dependencia y deja que el ancho lo mande el hero, no la letra. */
+
+.hero__wordmark > * {
+  width: 100%;
+  min-width: 0;
 }
 
 .hero__title {
@@ -116,6 +129,13 @@
   width: 100%;
   white-space: nowrap;
   line-height: 0.78;
+}
+
+/* inline-block para que offsetWidth tenga una caja definida: de ella sale el
+   tamaño de letra que hace que el nombre llegue de lado a lado. */
+
+.hero__title--stretch [data-wordmark-inner] {
+  display: inline-block;
 }
 
 .hero__subtitle {

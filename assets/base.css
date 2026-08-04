@@ -2152,7 +2152,10 @@ body:has(#MainContent > .shopify-section:first-child [data-header-transparent='t
 }
 
 .footer__wordmark-inner {
-  display: block;
+  /* inline-block y no block: así la caja se ajusta al texto y se puede medir
+     su ancho real para escalar la fuente. Las transformaciones siguen
+     aplicando, cosa que no ocurriría con un inline puro. */
+  display: inline-block;
   transform-origin: left bottom;
 }
 

@@ -20,15 +20,13 @@
         "enable_parallax": true,
         "parallax_strength": 40,
         "enable_transparent_header": true,
-        "show_scroll_hint": true,
-        "scroll_hint_text": "Desliza"
+        "show_scroll_hint": false
       }
     },
     "nuevos-ingresos": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow": "Nuevos ingresos",
-        "heading": "Lo último en llegar",
+        "heading": "Nuevos ingresos",
         "collection": "nueva-coleccion",
         "products_to_show": 4,
         "products_initial": 4,
@@ -45,7 +43,6 @@
     "mujeres": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow": "Mujeres",
         "heading": "Mujeres",
         "collection": "mujeres",
         "products_to_show": 4,
@@ -63,7 +60,6 @@
     "hombres": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow": "Hombres",
         "heading": "Hombres",
         "collection": "hombres",
         "products_to_show": 4,
@@ -81,7 +77,6 @@
     "accesorios": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow": "Accesorios",
         "heading": "Accesorios",
         "collection": "accesorios",
         "products_to_show": 4,
@@ -99,7 +94,6 @@
     "mas-vendidos": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow": "Más vendidos",
         "heading": "Más vendidos",
         "collection": "mas-vendidos",
         "products_to_show": 4,

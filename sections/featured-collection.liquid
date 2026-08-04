@@ -17,36 +17,28 @@
   style="--section-padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;"
 >
   <div class="page-width">
+    {%- comment -%}
+      Un solo renglón: el nombre de la sección a la izquierda y «Ver todos» a
+      la derecha. La tipografía contundente se reserva a la portada y al cierre
+      de la página; aquí lo que tiene que pesar es la fotografía.
+    {%- endcomment -%}
     <div class="editorial-header">
-      <div>
-        {%- if section.settings.eyebrow != blank -%}
-          <p class="eyebrow" data-reveal>{{ section.settings.eyebrow | escape }}</p>
-        {%- endif -%}
-        {%- if section.settings.heading != blank -%}
-          <h2 class="h1 editorial-header__title" data-reveal-words>
-            {{- section.settings.heading | escape -}}
-          </h2>
-        {%- endif -%}
-      </div>
+      {%- if section.settings.heading != blank -%}
+        <h2 class="editorial-header__title" data-reveal>{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
 
-      <div class="editorial-header__aside">
-        {%- if section.settings.description != blank -%}
-          <p class="text-small text-muted" data-reveal style="--reveal-delay: 120ms;">
-            {{ section.settings.description | escape }}
-          </p>
-        {%- endif -%}
-        {%- if section.settings.show_view_all and collection != blank -%}
-          <a
-            href="{{ collection.url }}"
-            class="link-underline large-hide"
-            data-reveal
-            style="--reveal-delay: 160ms;"
-          >
-            {{ section.settings.view_all_label | default: 'Ver todos' | escape }}
-          </a>
-        {%- endif -%}
-      </div>
+      {%- if section.settings.show_view_all and collection != blank -%}
+        <a href="{{ collection.url }}" class="editorial-header__link" data-reveal>
+          {{ section.settings.view_all_label | default: 'Ver todos' | escape }}
+        </a>
+      {%- endif -%}
     </div>
+
+    {%- if section.settings.description != blank -%}
+      <p class="editorial-header__note" data-reveal>
+        {{ section.settings.description | escape }}
+      </p>
+    {%- endif -%}
 
     {%- if products.size > 0 -%}
       <show-more data-initial="{{ initial }}">
@@ -79,13 +71,6 @@
         {%- endif -%}
       </show-more>
 
-      {%- if section.settings.show_view_all and collection != blank -%}
-        <div class="editorial-footer small-hide medium-hide">
-          <a href="{{ collection.url }}" class="button button--outline button--compact">
-            {{ section.settings.view_all_label | default: 'Ver todos' | escape }}
-          </a>
-        </div>
-      {%- endif -%}
     {%- else -%}
       <ul class="editorial-grid">
         {%- for i in (1..4) -%}
@@ -114,14 +99,8 @@
   "settings": [
     {
       "type": "text",
-      "id": "eyebrow",
-      "label": "Etiqueta pequeña",
-      "default": "Recién llegado"
-    },
-    {
-      "type": "text",
       "id": "heading",
-      "label": "Título",
+      "label": "Nombre de la sección",
       "default": "Nuevos lanzamientos"
     },
     {

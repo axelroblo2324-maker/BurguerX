@@ -5,8 +5,8 @@
       "settings": {
         "eyebrow": "LevelUP / Colección",
         "show_description": true,
-        "show_product_count": true,
-        "show_breadcrumbs": true
+        "show_product_count": false,
+        "show_breadcrumbs": false
       }
     },
     "product-grid": {

@@ -26,7 +26,7 @@
     "card_show_vendor": false,
     "card_show_swatches": true,
     "card_show_badges": true,
-    "card_new_days": 30,
+    "card_new_days": 0,
     "card_color_option_names": "Color, Colour, Colores",
     "card_size_option_names": "Talla, Tallas, Size, Tamaño",
     "cart_type": "drawer",

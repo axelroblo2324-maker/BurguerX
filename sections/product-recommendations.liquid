@@ -14,7 +14,7 @@
     <product-recommendations data-url="{{ recommendations_url }}">
       {%- if recommendations.performed and recommendations.products_count > 0 -%}
         <div class="editorial-header">
-          <h2 class="h2 editorial-header__title">
+          <h2 class="editorial-header__title" data-reveal>
             {{ section.settings.heading | default: 'También te puede gustar' | escape }}
           </h2>
         </div>

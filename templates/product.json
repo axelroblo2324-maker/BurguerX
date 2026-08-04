@@ -43,12 +43,6 @@
             "placement": "purchase"
           }
         },
-        "size_chart": {
-          "type": "size_chart",
-          "settings": {
-            "placement": "purchase"
-          }
-        },
         "sku": {
           "type": "sku",
           "settings": {
@@ -104,7 +98,6 @@
         "variant_picker",
         "inventory",
         "buy_buttons",
-        "size_chart",
         "sku",
         "description",
         "materials",

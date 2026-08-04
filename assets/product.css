@@ -475,19 +475,6 @@
   letter-spacing: 0.05em;
 }
 
-.product__size-chart-trigger {
-  font-size: 0.625rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: underline;
-  text-underline-offset: 0.25em;
-  color: var(--color-fg-muted);
-  transition: color var(--duration-fast) var(--ease-out);
-}
-
-.product__size-chart-trigger:hover {
-  color: var(--color-fg);
-}
 
 .product__share {
   display: flex;
@@ -573,18 +560,6 @@ sticky-buy.is-visible {
   }
 }
 
-/* ------------------------------ Tabla de tallas -------------------------- */
-
-.size-chart__content table {
-  font-size: 0.8125rem;
-}
-
-.size-chart__content th,
-.size-chart__content td {
-  border-bottom: 1px solid var(--color-border);
-  padding: 0.6rem 0.5rem;
-  text-align: left;
-}
 
 /* --------------------------- Media diferida ------------------------------ */
 

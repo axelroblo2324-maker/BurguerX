@@ -128,7 +128,6 @@
         "image_available": "Imagen {{ index }} en la galería",
         "open_zoom": "Ampliar imagen"
       },
-      "size_chart": "Tabla de tallas",
       "view_details": "Ver detalles",
       "choose_options": "Elegir opciones",
       "variant_label": "{{ option }}",

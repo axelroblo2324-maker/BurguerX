@@ -4,10 +4,6 @@
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
   assign product_form_id = 'product-form-' | append: section.id
-  assign size_chart_id = ''
-  if section.settings.size_chart_page != blank
-    assign size_chart_id = 'SizeChart-' | append: section.id
-  endif
 -%}
 
 <div
@@ -165,7 +161,6 @@
                   product: product,
                   section_id: section.id,
                   product_form_id: product_form_id,
-                  size_chart_id: size_chart_id,
                   update_url: true
                 %}
               </div>
@@ -195,19 +190,6 @@
                   {{ 'products.product.sku' | t }}: {{ current_variant.sku }}
                 {%- endif -%}
               </div>
-
-            {%- when 'size_chart' -%}
-              {%- if size_chart_id != blank -%}
-                <button
-                  type="button"
-                  class="product__size-chart-trigger"
-                  data-modal-trigger="{{ size_chart_id }}"
-                  style="justify-self: start;"
-                  {{ block.shopify_attributes }}
-                >
-                  {{ 'products.product.size_chart' | t }}
-                </button>
-              {%- endif -%}
 
             {%- when 'text' -%}
               <div class="product__text rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
@@ -251,25 +233,6 @@
       </button>
     </div>
   </sticky-buy>
-{%- endif -%}
-
-{%- if size_chart_id != blank -%}
-  <theme-modal id="{{ size_chart_id }}" class="modal" role="dialog" aria-modal="true" aria-label="{{ 'products.product.size_chart' | t }}" hidden>
-    <div class="modal__overlay"></div>
-    <div class="modal__content size-chart__content">
-      <button type="button" class="icon-button modal__close" data-modal-close aria-label="{{ 'accessibility.close' | t }}">
-        {% render 'icon', icon: 'close', size: 18 %}
-      </button>
-      <h2 class="h3" style="margin-bottom: 1.25rem;">
-        {%- if section.settings.size_chart_page.title != blank -%}
-          {{ section.settings.size_chart_page.title | escape }}
-        {%- else -%}
-          {{ 'products.product.size_chart' | t }}
-        {%- endif -%}
-      </h2>
-      <div class="rte">{{ section.settings.size_chart_page.content }}</div>
-    </div>
-  </theme-modal>
 {%- endif -%}
 
 {{ product | structured_data }}
@@ -318,12 +281,6 @@
       "id": "show_breadcrumbs",
       "label": "Mostrar ruta de navegación",
       "default": true
-    },
-    {
-      "type": "page",
-      "id": "size_chart_page",
-      "label": "Página de tabla de tallas",
-      "info": "Se abre en una ventana modal desde el selector de talla."
     },
     {
       "type": "range",
@@ -492,23 +449,6 @@
           "label": "Columna",
           "options": [
             { "value": "purchase", "label": "Derecha" }
-          ],
-          "default": "purchase"
-        }
-      ]
-    },
-    {
-      "type": "size_chart",
-      "name": "Enlace a tabla de tallas",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "select",
-          "id": "placement",
-          "label": "Columna",
-          "options": [
-            { "value": "purchase", "label": "Derecha" },
-            { "value": "info", "label": "Izquierda" }
           ],
           "default": "purchase"
         }

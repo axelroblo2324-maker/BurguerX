@@ -1,6 +1,6 @@
 {%- comment -%}
   Selector de variantes con swatches de color y botones de talla.
-  Parámetros: product, section_id, product_form_id, size_chart_id, update_url
+  Parámetros: product, section_id, product_form_id, update_url
 {%- endcomment -%}
 
 {%- liquid
@@ -171,17 +171,6 @@
               </label>
             {%- endfor -%}
           </div>
-
-          {%- if is_size and size_chart_id != blank -%}
-            <button
-              type="button"
-              class="product__size-chart-trigger"
-              data-modal-trigger="{{ size_chart_id }}"
-              style="justify-self: start; margin-top: 0.25rem;"
-            >
-              {{ 'products.product.size_chart' | t }}
-            </button>
-          {%- endif -%}
         {%- endif -%}
       </fieldset>
     {%- endfor -%}

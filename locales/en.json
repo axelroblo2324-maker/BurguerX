@@ -128,7 +128,6 @@
         "image_available": "Image {{ index }} in gallery",
         "open_zoom": "Zoom image"
       },
-      "size_chart": "Size guide",
       "view_details": "View details",
       "choose_options": "Choose options",
       "variant_label": "{{ option }}",

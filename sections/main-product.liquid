@@ -132,6 +132,7 @@
         {% render 'product-gallery',
           product: product,
           gallery_style: section.settings.gallery_style,
+          enable_motion: section.settings.enable_gallery_motion,
           section_id: section.id
         %}
       </div>
@@ -298,6 +299,13 @@
       "max": 4,
       "step": 0.1,
       "default": 2.4
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_gallery_motion",
+      "label": "Animar las fotografías al desplazar",
+      "info": "En escritorio, cada foto entra subiendo y ganando nitidez mientras la anterior se desvanece. Se desactiva con «reducir movimiento».",
+      "default": true
     },
     {
       "type": "checkbox",

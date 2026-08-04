@@ -5,13 +5,13 @@
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        "eyebrow": "Lista privada",
-        "heading": "Acceso anticipado",
-        "text": "<p>Suscríbete y entérate antes que nadie de cada lanzamiento limitado.</p>",
-        "layout": "split",
-        "background": "warm",
-        "padding_top": 112,
-        "padding_bottom": 112
+        "eyebrow": "Acceso al próximo drop",
+        "heading": "No todos pueden tener piezas limitadas.",
+        "text": "<p>Cada lanzamiento es de producción corta. Suscríbete y recibe la fecha, las piezas y el acceso anticipado antes de que salgan a la tienda.</p>",
+        "layout": "center",
+        "background": "default",
+        "padding_top": 144,
+        "padding_bottom": 120
       }
     },
     "footer": {

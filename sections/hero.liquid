@@ -30,10 +30,19 @@
   if section.settings.video_mobile != blank
     assign has_mobile_video = true
   endif
+
+  comment
+    El parallax sólo se monta si no hay video: mover un video en bucle cuesta
+    mucho más de lo que aporta, y el recorte del encuadre se nota.
+  endcomment
+  assign parallax_enabled = false
+  if section.settings.enable_parallax and has_desktop_video == false and has_mobile_video == false
+    assign parallax_enabled = true
+  endif
 -%}
 
 <section
-  class="hero {% if section.settings.text_color_scheme == 'light' %}hero--light-text{% else %}hero--dark-text{% endif %}"
+  class="hero {% if section.settings.text_color_scheme == 'light' %}hero--light-text{% else %}hero--dark-text{% endif %}{% if parallax_enabled %} hero--parallax{% endif %}"
   style="
     min-height: {{ section.settings.height }}vh;
     min-height: {{ section.settings.height }}svh;
@@ -49,81 +58,75 @@
     data-header-color="{{ text_color }}"
   {% endif %}
 >
-  <div class="hero__media hero__media--desktop">
-    {%- if has_desktop_video -%}
-      {{
-        section.settings.video_desktop
-        | video_tag:
-          image_size: '1920x',
-          autoplay: true,
-          loop: true,
-          muted: true,
-          controls: false,
-          playsinline: true
-      }}
-    {%- elsif section.settings.image_desktop != blank -%}
-      {{
-        section.settings.image_desktop
-        | image_url: width: 3000
-        | image_tag:
-          loading: 'eager',
-          fetchpriority: 'high',
-          widths: '750, 1100, 1500, 1900, 2400, 3000',
-          sizes: '100vw',
-          alt: section.settings.image_desktop.alt
-      }}
+  {%- comment -%}
+    Un solo <picture>: el navegador descarga la versión de escritorio o la de
+    celular, nunca las dos. Con dos <img> en divs que se ocultan por CSS se
+    bajaban ambas, y esta es la imagen LCP de la portada.
+  {%- endcomment -%}
+  <div
+    class="hero__media"
+    {% if parallax_enabled %}
+      data-parallax="{{ section.settings.parallax_strength }}"
+      data-parallax-always
+    {% endif %}
+  >
+    {%- if has_desktop_video or has_mobile_video -%}
+      {%- liquid
+        assign desktop_video = section.settings.video_desktop | default: section.settings.video_mobile
+        assign mobile_video = section.settings.video_mobile | default: section.settings.video_desktop
+      -%}
+      <div class="hero__layer hero__layer--desktop">
+        {{
+          desktop_video
+          | video_tag: image_size: '1920x', autoplay: true, loop: true, muted: true, controls: false, playsinline: true
+        }}
+      </div>
+      <div class="hero__layer hero__layer--mobile">
+        {{
+          mobile_video
+          | video_tag: image_size: '1000x', autoplay: true, loop: true, muted: true, controls: false, playsinline: true
+        }}
+      </div>
+
+    {%- elsif section.settings.image_desktop != blank or section.settings.image_mobile != blank -%}
+      {%- liquid
+        assign image_wide = section.settings.image_desktop | default: section.settings.image_mobile
+        assign image_narrow = section.settings.image_mobile | default: section.settings.image_desktop
+      -%}
+      <picture class="hero__picture">
+        <source
+          media="(min-width: 750px)"
+          srcset="
+            {{ image_wide | image_url: width: 1100 }} 1100w,
+            {{ image_wide | image_url: width: 1500 }} 1500w,
+            {{ image_wide | image_url: width: 1900 }} 1900w,
+            {{ image_wide | image_url: width: 2400 }} 2400w,
+            {{ image_wide | image_url: width: 3000 }} 3000w
+          "
+          sizes="100vw"
+          width="{{ image_wide.width }}"
+          height="{{ image_wide.height }}"
+        >
+        <img
+          src="{{ image_narrow | image_url: width: 1000 }}"
+          srcset="
+            {{ image_narrow | image_url: width: 500 }} 500w,
+            {{ image_narrow | image_url: width: 750 }} 750w,
+            {{ image_narrow | image_url: width: 1000 }} 1000w,
+            {{ image_narrow | image_url: width: 1400 }} 1400w
+          "
+          sizes="100vw"
+          width="{{ image_narrow.width }}"
+          height="{{ image_narrow.height }}"
+          alt="{{ image_narrow.alt | escape }}"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        >
+      </picture>
+
     {%- else -%}
       {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-    {%- endif -%}
-  </div>
-
-  <div class="hero__media hero__media--mobile">
-    {%- if has_mobile_video -%}
-      {{
-        section.settings.video_mobile
-        | video_tag:
-          image_size: '1000x',
-          autoplay: true,
-          loop: true,
-          muted: true,
-          controls: false,
-          playsinline: true
-      }}
-    {%- elsif section.settings.image_mobile != blank -%}
-      {{
-        section.settings.image_mobile
-        | image_url: width: 1400
-        | image_tag:
-          loading: 'eager',
-          fetchpriority: 'high',
-          widths: '500, 750, 1000, 1400',
-          sizes: '100vw',
-          alt: section.settings.image_mobile.alt
-      }}
-    {%- elsif has_desktop_video -%}
-      {{
-        section.settings.video_desktop
-        | video_tag:
-          image_size: '1000x',
-          autoplay: true,
-          loop: true,
-          muted: true,
-          controls: false,
-          playsinline: true
-      }}
-    {%- elsif section.settings.image_desktop != blank -%}
-      {{
-        section.settings.image_desktop
-        | image_url: width: 1400
-        | image_tag:
-          loading: 'eager',
-          fetchpriority: 'high',
-          widths: '500, 750, 1000, 1400',
-          sizes: '100vw',
-          alt: section.settings.image_desktop.alt
-      }}
-    {%- else -%}
-      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
     {%- endif -%}
   </div>
 
@@ -358,6 +361,27 @@
       "type": "url",
       "id": "button_link_2",
       "label": "Enlace del botón secundario"
+    },
+    {
+      "type": "header",
+      "content": "Movimiento"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Parallax al desplazar",
+      "info": "La imagen se mueve un poco más despacio que la página. No se aplica si usas video ni con «reducir movimiento» activado.",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "parallax_strength",
+      "label": "Intensidad del parallax",
+      "min": 10,
+      "max": 90,
+      "step": 5,
+      "unit": "px",
+      "default": 40
     },
     {
       "type": "header",

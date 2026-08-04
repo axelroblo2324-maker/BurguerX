@@ -8,6 +8,7 @@
     show_swatches  — muestra los colores disponibles
     show_badges    — muestra etiquetas
     heading_class  — clase extra para el título
+    card_index     — posición en la rejilla; escalona la entrada
 {%- endcomment -%}
 
 {%- liquid
@@ -49,9 +50,15 @@
       assign is_new = true
     endif
   endif
+
+  comment
+    El escalonado se reinicia en cada fila de cuatro: si creciera con el índice,
+    los últimos productos de una colección larga tardarían segundos en aparecer.
+  endcomment
+  assign stagger_step = card_index | default: 0 | modulo: 4 | times: 70
 -%}
 
-<div class="product-card" data-reveal>
+<div class="product-card" data-reveal style="--reveal-delay: {{ stagger_step }}ms;">
   <a
     class="product-card__media {{ media_class }} {% if settings.animations_image_zoom %}media-zoom{% endif %}"
     href="{{ product.url }}"
@@ -106,11 +113,13 @@
       <span class="product-card__vendor">{{ product.vendor | escape }}</span>
     {%- endif -%}
 
-    <h3 class="product-card__title {{ heading_class }}">
-      <a href="{{ product.url }}">{{ product.title | escape }}</a>
-    </h3>
+    <div class="product-card__row">
+      <h3 class="product-card__title {{ heading_class }}">
+        <a href="{{ product.url }}">{{ product.title | escape }}</a>
+      </h3>
 
-    {% render 'price', product: product, show_from: true, class: 'product-card__price' %}
+      {% render 'price', product: product, show_from: true, class: 'product-card__price' %}
+    </div>
 
     {%- if swatches_enabled -%}
       {% render 'card-swatches', product: product %}

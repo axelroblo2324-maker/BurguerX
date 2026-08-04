@@ -44,6 +44,64 @@
         endif
       -%}
 
+      {%- comment -%}
+        Shopify entrega las tallas en el orden en que se capturaron, que suele
+        ser alfabético: L, M, S, XL. Aquí se reordenan a la escala real. A cada
+        valor se le antepone un rango de cuatro cifras y se ordena por texto:
+        con cuatro cifras fijas ese orden coincide con el numérico.
+          1000-1090  tallas de letra, de XXXS a XXXXL
+          2001-2999  tallas numéricas (28, 30, 32…), por su número
+          9000-9999  cualquier otra cosa, en el orden original
+      {%- endcomment -%}
+      {%- liquid
+        assign option_values = option.values
+
+        if is_size and option.values.size > 1
+          assign size_scale = 'XXXS,XXS,XS,S,M,L,XL,XXL,XXXL,XXXXL' | split: ','
+          assign keyed = ''
+
+          for value in option.values
+            assign position = forloop.index0
+            assign token = value | upcase | strip | replace: ' ', '' | replace: '-', ''
+            assign rank = 9000 | plus: position
+
+            for step in size_scale
+              if token == step
+                assign rank = forloop.index0 | times: 10 | plus: 1000
+                break
+              endif
+            endfor
+
+            if rank >= 9000
+              assign numeric = token | plus: 0
+              if numeric > 0 and numeric < 1000
+                assign rank = numeric | plus: 2000
+              endif
+            endif
+
+            assign keyed = keyed | append: rank | append: '|' | append: value | append: '~~'
+          endfor
+
+          assign ordered = ''
+          assign sorted_keys = keyed | split: '~~' | sort
+
+          for entry in sorted_keys
+            assign entry_value = entry | slice: 5, 250
+            assign ordered = ordered | append: entry_value | append: '~~'
+          endfor
+
+          comment
+            Sólo se adopta el orden nuevo si conserva todas las tallas. Si algo
+            saliera mal se muestra el orden original: una talla de menos en el
+            selector es una venta perdida, un orden raro no.
+          endcomment
+          assign reordered = ordered | split: '~~'
+          if reordered.size == option.values.size
+            assign option_values = reordered
+          endif
+        endif
+      -%}
+
       <fieldset
         class="variant-option {% if is_color %}variant-option--swatch{% endif %}"
         data-option-index="{{ option_index }}"
@@ -62,7 +120,7 @@
             name="options[{{ option.name | escape }}]"
             aria-label="{{ option.name | escape }}"
           >
-            {%- for value in option.values -%}
+            {%- for value in option_values -%}
               <option
                 value="{{ value | escape }}"
                 {% if value == option.selected_value %}selected{% endif %}
@@ -73,7 +131,7 @@
           </select>
         {%- else -%}
           <div class="variant-option__list">
-            {%- for value in option.values -%}
+            {%- for value in option_values -%}
               {%- liquid
                 assign input_id = 'Option-' | append: section_id | append: '-' | append: option_index | append: '-' | append: forloop.index0
                 assign swatch_style = ''

@@ -22,6 +22,27 @@ html {
   }
 }
 
+/* Transición entre páginas. Donde el navegador no la soporta simplemente no
+   pasa nada: no hay JavaScript detrás ni bloqueo de la navegación. */
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 260ms;
+  animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 body {
   margin: 0;
   background-color: var(--color-bg);
@@ -610,9 +631,9 @@ textarea.field__input {
 
 [data-reveal] {
   opacity: 0;
-  transform: translate3d(0, 18px, 0);
-  transition: opacity var(--duration-slow) var(--ease-out),
-    transform var(--duration-slow) var(--ease-out);
+  transform: translate3d(0, 24px, 0) scale(0.98);
+  transition: opacity var(--duration-reveal) var(--ease-out),
+    transform var(--duration-reveal) var(--ease-out);
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
 }
@@ -620,11 +641,39 @@ textarea.field__input {
 [data-reveal].is-revealed {
   opacity: 1;
   transform: none;
+  will-change: auto;
 }
 
 .no-js [data-reveal],
 .animations-off [data-reveal] {
   opacity: 1;
+  transform: none;
+}
+
+/* Titulares que entran palabra por palabra. El span exterior hace de máscara;
+   el interior es lo único que se mueve. */
+
+[data-reveal-words] .reveal-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+[data-reveal-words] .reveal-word > span {
+  display: inline-block;
+  transform: translate3d(0, 110%, 0);
+  transition: transform var(--duration-reveal) var(--ease-out);
+  transition-delay: calc(var(--word-index, 0) * 60ms);
+}
+
+[data-reveal-words].is-revealed .reveal-word > span {
+  transform: none;
+}
+
+.no-js [data-reveal-words] .reveal-word > span,
+.animations-off [data-reveal-words] .reveal-word > span {
   transform: none;
 }
 
@@ -651,7 +700,8 @@ textarea.field__input {
 
 @media (prefers-reduced-motion: reduce) {
   [data-reveal],
-  [data-reveal-lines] .reveal-line > span {
+  [data-reveal-lines] .reveal-line > span,
+  [data-reveal-words] .reveal-word > span {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
@@ -1358,7 +1408,19 @@ body:has(#MainContent > .shopify-section:first-child [data-header-transparent='t
 .product-card__info {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.35rem;
+}
+
+/* Nombre a la izquierda, precio alineado a la derecha. La altura mínima de dos
+   líneas mantiene todas las tarjetas de la fila a ras, aunque los nombres
+   tengan largos distintos. */
+
+.product-card__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 2.4em;
 }
 
 .product-card__vendor {
@@ -1369,12 +1431,18 @@ body:has(#MainContent > .shopify-section:first-child [data-header-transparent='t
 }
 
 .product-card__title {
+  flex: 1 1 auto;
+  min-width: 0;
   font-family: var(--font-body-family);
   font-weight: var(--font-body-weight);
-  font-size: 0.8125rem;
-  line-height: 1.4;
-  letter-spacing: 0.01em;
-  text-transform: none;
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .product-card__title a::before {
@@ -1385,9 +1453,12 @@ body:has(#MainContent > .shopify-section:first-child [data-header-transparent='t
 }
 
 .product-card__price {
-  font-size: 0.8125rem;
-  line-height: 1.4;
-  color: var(--color-fg-muted);
+  flex: 0 0 auto;
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: var(--color-fg);
 }
 
 .product-card__badges {
@@ -2085,6 +2156,39 @@ body:has(#MainContent > .shopify-section:first-child [data-header-transparent='t
   transform-origin: left bottom;
 }
 
+/* El logotipo gigante sube desde su propio recorte en vez de desvanecerse: a
+   este tamaño un fade se lee como un parpadeo. El padding deja sitio para la
+   cola de la «p» y se compensa con el margen. */
+
+.footer__wordmark[data-reveal] {
+  opacity: 1;
+  transform: none;
+  overflow: hidden;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.2em;
+}
+
+.footer__wordmark[data-reveal] .footer__wordmark-inner {
+  transform: translate3d(0, 110%, 0);
+  transition: transform var(--duration-reveal) var(--ease-out);
+}
+
+.footer__wordmark[data-reveal].is-revealed .footer__wordmark-inner {
+  transform: none;
+}
+
+.no-js .footer__wordmark[data-reveal] .footer__wordmark-inner,
+.animations-off .footer__wordmark[data-reveal] .footer__wordmark-inner {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer__wordmark[data-reveal] .footer__wordmark-inner {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 .footer__bottom {
   display: flex;
   flex-wrap: wrap;
@@ -2124,11 +2228,49 @@ body:has(#MainContent > .shopify-section:first-child [data-header-transparent='t
   }
 }
 
+/* Newsletter centrada: el cierre editorial de la página. */
+
+.newsletter--center {
+  justify-items: center;
+  text-align: center;
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+.newsletter--center .newsletter__heading {
+  margin-top: 0.9rem;
+  text-wrap: balance;
+}
+
+.newsletter--center .rte {
+  margin-inline: auto;
+  max-width: 48ch;
+}
+
+.newsletter--center .newsletter__form {
+  margin-inline: auto;
+  width: 100%;
+}
+
+.newsletter--center .field__label {
+  text-align: left;
+}
+
 .newsletter__form {
   display: flex;
   align-items: flex-end;
   gap: 1rem;
   max-width: 520px;
+}
+
+@media screen and (max-width: 749px) {
+  .newsletter__form {
+    flex-wrap: wrap;
+  }
+
+  .newsletter__form .button {
+    width: 100%;
+  }
 }
 
 .newsletter__form .field {

@@ -8,7 +8,7 @@
         "message-1": {
           "type": "message",
           "settings": {
-            "text": "Envío gratis en pedidos mayores a $1,500 MXN"
+            "text": "Envío gratis en pedidos mayores a $1,050 MXN"
           }
         },
         "message-2": {
@@ -30,7 +30,7 @@
     "header": {
       "type": "header",
       "settings": {
-        "menu": "main-menu",
+        "menu": "main-menu-1",
         "enable_transparent": true,
         "hide_on_scroll": false,
         "drawer_show_account": true,

@@ -3,3 +3,6 @@ extends: theme-check:recommended
 ignore:
   - node_modules/**
   - .git/**
+  # Respaldo del tema Horizon anterior. No forma parte de este tema ni se sube
+  # a Shopify: son archivos de referencia, y revisarlos sólo genera ruido.
+  - horizon-mejoras/**

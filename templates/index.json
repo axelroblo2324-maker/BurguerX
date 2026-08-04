@@ -3,226 +3,124 @@
     "hero": {
       "type": "hero",
       "settings": {
+        "image_desktop": "shopify://shop_images/photo-1469334031218-e382a71b716b.jpg",
+        "image_mobile": "shopify://shop_images/photo-1552374196-c4e7ffc6e126.jpg",
         "focal_point": "center",
-        "height": 95,
-        "overlay_opacity": 25,
+        "height": 90,
+        "overlay_opacity": 30,
+        "heading": "LevelUP",
         "stretch_heading": true,
-        "drop_label": "Drop 01 — Temporada actual",
+        "drop_label": "Nuevo drop — Piezas limitadas",
         "text_color_scheme": "light",
         "text_color": "#ffffff",
         "content_position_x": "center",
         "content_position_y": "center",
-        "button_label": "Comprar ahora",
+        "button_label": "Comprar nuevos ingresos",
+        "button_link": "shopify://collections/nueva-coleccion",
+        "enable_parallax": true,
+        "parallax_strength": 40,
         "enable_transparent_header": true,
         "show_scroll_hint": true,
         "scroll_hint_text": "Desliza"
       }
     },
-    "marquee": {
-      "type": "marquee",
-      "blocks": {
-        "item-1": {
-          "type": "item",
-          "settings": {
-            "text": "Envíos a todo México"
-          }
-        },
-        "item-2": {
-          "type": "item",
-          "settings": {
-            "text": "Piezas limitadas"
-          }
-        },
-        "item-3": {
-          "type": "item",
-          "settings": {
-            "text": "Cambios sin complicaciones"
-          }
-        },
-        "item-4": {
-          "type": "item",
-          "settings": {
-            "text": "Producción corta"
-          }
-        }
-      },
-      "block_order": [
-        "item-1",
-        "item-2",
-        "item-3",
-        "item-4"
-      ],
-      "settings": {
-        "speed": 45,
-        "background": "default"
-      }
-    },
-    "new-arrivals": {
+    "nuevos-ingresos": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow": "Recién llegado",
-        "heading": "Nuevos lanzamientos",
-        "description": "Las piezas más recientes de la temporada, en cantidades limitadas.",
+        "eyebrow": "Nuevos ingresos",
+        "heading": "Lo último en llegar",
         "collection": "nueva-coleccion",
-        "products_to_show": 8,
-        "products_initial": 8,
+        "products_to_show": 4,
+        "products_initial": 4,
         "enable_show_more": false,
         "show_view_all": true,
         "view_all_label": "Ver todos",
-        "stagger": true,
+        "stagger": false,
         "image_ratio": "tall",
         "background": "default",
-        "padding_top": 128,
-        "padding_bottom": 128
+        "padding_top": 112,
+        "padding_bottom": 32
       }
     },
-    "campaign": {
-      "type": "editorial-banner",
+    "mujeres": {
+      "type": "featured-collection",
       "settings": {
-        "layout": "full",
-        "reverse": false,
-        "overlay_opacity": 30,
-        "vertical_position": "end",
-        "text_color": "#ffffff",
-        "eyebrow": "Campaña",
-        "heading": "Piezas limitadas",
-        "text": "<p>Producción corta, patrones propios y acabados pensados para durar más de una temporada.</p>",
-        "button_label": "Ver la campaña",
-        "enable_parallax": true,
-        "parallax_strength": 45,
+        "eyebrow": "Mujeres",
+        "heading": "Mujeres",
+        "collection": "mujeres",
+        "products_to_show": 4,
+        "products_initial": 4,
+        "enable_show_more": false,
+        "show_view_all": true,
+        "view_all_label": "Ver todos",
+        "stagger": false,
+        "image_ratio": "tall",
         "background": "default",
-        "padding_top": 0,
-        "padding_bottom": 0
+        "padding_top": 96,
+        "padding_bottom": 32
       }
     },
-    "lookbook": {
-      "type": "lookbook",
-      "blocks": {
-        "product-1": {
-          "type": "product",
-          "settings": {
-            "product": "autumnwinter-casual-minimalist-hooded-womens-trench-coat",
-            "image_ratio": "tall",
-            "width": 5,
-            "start_column": 1,
-            "offset_top": 0,
-            "width_mobile": "1"
-          }
-        },
-        "text-1": {
-          "type": "text",
-          "settings": {
-            "eyebrow": "La selección",
-            "heading": "Silueta limpia, detalle preciso",
-            "text": "<p>Cada pieza se fotografía sola y sobre modelo para que veas el corte real antes de comprar.</p>",
-            "width": 3,
-            "start_column": 9,
-            "offset_top": 0,
-            "width_mobile": "2"
-          }
-        },
-        "image-1": {
-          "type": "image",
-          "settings": {
-            "image_ratio": "landscape",
-            "width": 7,
-            "start_column": 6,
-            "offset_top": 60,
-            "width_mobile": "2"
-          }
-        },
-        "product-2": {
-          "type": "product",
-          "settings": {
-            "product": "letter-print-denim-jeans-for-men",
-            "image_ratio": "tall",
-            "width": 4,
-            "start_column": 2,
-            "offset_top": 90,
-            "width_mobile": "1"
-          }
-        },
-        "product-3": {
-          "type": "product",
-          "settings": {
-            "product": "womens-printed-high-capacity-shoulder-bag",
-            "image_ratio": "tall",
-            "width": 4,
-            "start_column": 8,
-            "offset_top": 0,
-            "width_mobile": "1"
-          }
-        }
-      },
-      "block_order": [
-        "product-1",
-        "text-1",
-        "image-1",
-        "product-2",
-        "product-3"
-      ],
+    "hombres": {
+      "type": "featured-collection",
       "settings": {
-        "eyebrow": "Colección",
-        "heading": "Lo esencial",
-        "description": "Una selección corta con lo que define la temporada.",
+        "eyebrow": "Hombres",
+        "heading": "Hombres",
+        "collection": "hombres",
+        "products_to_show": 4,
+        "products_initial": 4,
+        "enable_show_more": false,
+        "show_view_all": true,
+        "view_all_label": "Ver todos",
+        "stagger": false,
+        "image_ratio": "tall",
         "background": "default",
-        "padding_top": 140,
-        "padding_bottom": 140
+        "padding_top": 96,
+        "padding_bottom": 32
       }
     },
-    "statement": {
-      "type": "brand-statement",
+    "accesorios": {
+      "type": "featured-collection",
       "settings": {
-        "text": "No todos pueden tener piezas limitadas.",
-        "alignment": "center",
-        "max_width": 22,
-        "background": "warm",
-        "padding_top": 168,
-        "padding_bottom": 168
-      }
-    },
-    "collections": {
-      "type": "collection-list",
-      "blocks": {
-        "collection-1": {
-          "type": "collection",
-          "settings": {
-            "collection": "mujeres"
-          }
-        },
-        "collection-2": {
-          "type": "collection",
-          "settings": {
-            "collection": "hombres"
-          }
-        },
-        "collection-3": {
-          "type": "collection",
-          "settings": {
-            "collection": "accesorios"
-          }
-        }
-      },
-      "block_order": [
-        "collection-1",
-        "collection-2",
-        "collection-3"
-      ],
-      "settings": {
-        "heading": "Explora",
+        "eyebrow": "Accesorios",
+        "heading": "Accesorios",
+        "collection": "accesorios",
+        "products_to_show": 4,
+        "products_initial": 4,
+        "enable_show_more": false,
+        "show_view_all": true,
+        "view_all_label": "Ver todos",
+        "stagger": false,
+        "image_ratio": "tall",
         "background": "default",
-        "padding_top": 120,
+        "padding_top": 96,
+        "padding_bottom": 32
+      }
+    },
+    "mas-vendidos": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Más vendidos",
+        "heading": "Más vendidos",
+        "collection": "mas-vendidos",
+        "products_to_show": 4,
+        "products_initial": 4,
+        "enable_show_more": false,
+        "show_view_all": true,
+        "view_all_label": "Ver todos",
+        "stagger": false,
+        "image_ratio": "tall",
+        "background": "default",
+        "padding_top": 96,
         "padding_bottom": 128
       }
     }
   },
   "order": [
     "hero",
-    "marquee",
-    "new-arrivals",
-    "campaign",
-    "lookbook",
-    "statement",
-    "collections"
+    "nuevos-ingresos",
+    "mujeres",
+    "hombres",
+    "accesorios",
+    "mas-vendidos"
   ]
 }

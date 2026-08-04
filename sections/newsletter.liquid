@@ -5,7 +5,7 @@
   style="--section-padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;"
 >
   <div class="page-width">
-    <div class="newsletter {% if section.settings.layout == 'split' %}newsletter--split{% endif %}">
+    <div class="newsletter newsletter--{{ section.settings.layout }}">
       <div data-reveal>
         {%- if section.settings.eyebrow != blank -%}
           <p class="eyebrow {% if section.settings.background == 'dark' %}eyebrow--contrast{% endif %}">
@@ -14,7 +14,7 @@
         {%- endif -%}
 
         {%- if section.settings.heading != blank -%}
-          <h2 class="h1" style="margin-top: 0.75rem;">{{ section.settings.heading | escape }}</h2>
+          <h2 class="h1 newsletter__heading" data-reveal-words>{{- section.settings.heading | escape -}}</h2>
         {%- endif -%}
 
         {%- if section.settings.text != blank -%}
@@ -113,10 +113,11 @@
       "id": "layout",
       "label": "Composición",
       "options": [
+        { "value": "center", "label": "Centrada" },
         { "value": "split", "label": "Dos columnas" },
         { "value": "stacked", "label": "Apilada" }
       ],
-      "default": "split"
+      "default": "center"
     },
     {
       "type": "select",

@@ -15,17 +15,11 @@
             "placement": "info"
           }
         },
-        "text": {
-          "type": "text",
-          "settings": {
-            "placement": "info"
-          }
-        },
         "price": {
           "type": "price",
           "settings": {
             "show_tax_note": true,
-            "placement": "purchase"
+            "placement": "info"
           }
         },
         "variant_picker": {
@@ -46,6 +40,12 @@
           "settings": {
             "show_quantity": true,
             "show_dynamic_checkout": true,
+            "placement": "purchase"
+          }
+        },
+        "size_chart": {
+          "type": "size_chart",
+          "settings": {
             "placement": "purchase"
           }
         },
@@ -85,7 +85,7 @@
           "type": "accordion",
           "settings": {
             "heading": "Envíos y devoluciones",
-            "content": "<p>Envíos a todo México en 3 a 6 días hábiles. Cambios dentro de los primeros 30 días.</p>",
+            "page": "envios",
             "open_by_default": false,
             "placement": "extras"
           }
@@ -100,11 +100,11 @@
       "block_order": [
         "vendor",
         "title",
-        "text",
         "price",
         "variant_picker",
         "inventory",
         "buy_buttons",
+        "size_chart",
         "sku",
         "description",
         "materials",
@@ -113,8 +113,9 @@
         "share"
       ],
       "settings": {
-        "gallery_style": "editorial",
+        "gallery_style": "stacked",
         "media_width": 2.4,
+        "enable_gallery_motion": true,
         "enable_sticky_buy": true,
         "show_breadcrumbs": true,
         "padding_top": 48,

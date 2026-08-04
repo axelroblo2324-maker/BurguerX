@@ -355,24 +355,54 @@
 
   let revealObserver = null;
 
+  const REVEAL_SELECTOR = '[data-reveal], [data-reveal-lines], [data-reveal-words]';
+
+  // Parte un titular en palabras para que entren escalonadas. Sólo actúa sobre
+  // elementos de puro texto: si el titular trae marcado propio se deja intacto
+  // en lugar de reconstruirlo mal.
+  function splitWords(el) {
+    if (el.dataset.wordsSplit === 'true') return;
+    if (el.children.length) return;
+    const text = el.textContent.replace(/\s+/g, ' ').trim();
+    if (!text) return;
+
+    el.dataset.wordsSplit = 'true';
+    const words = text.split(' ');
+    const fragment = document.createDocumentFragment();
+
+    words.forEach((word, index) => {
+      const mask = document.createElement('span');
+      mask.className = 'reveal-word';
+      const inner = document.createElement('span');
+      inner.textContent = word;
+      inner.style.setProperty('--word-index', String(index));
+      mask.appendChild(inner);
+      fragment.appendChild(mask);
+      if (index < words.length - 1) fragment.appendChild(document.createTextNode(' '));
+    });
+
+    el.textContent = '';
+    el.appendChild(fragment);
+  }
+
   function initReveals(root = document) {
     if (config.animations === false) {
       document.body.classList.add('animations-off');
-      root.querySelectorAll('[data-reveal], [data-reveal-lines]').forEach((el) => {
+      root.querySelectorAll(REVEAL_SELECTOR).forEach((el) => {
         el.classList.add('is-revealed');
       });
       return;
     }
 
     if (prefersReducedMotion.matches) {
-      root.querySelectorAll('[data-reveal], [data-reveal-lines]').forEach((el) => {
+      root.querySelectorAll(REVEAL_SELECTOR).forEach((el) => {
         el.classList.add('is-revealed');
       });
       return;
     }
 
     if (!('IntersectionObserver' in window)) {
-      root.querySelectorAll('[data-reveal], [data-reveal-lines]').forEach((el) => {
+      root.querySelectorAll(REVEAL_SELECTOR).forEach((el) => {
         el.classList.add('is-revealed');
       });
       return;
@@ -391,8 +421,9 @@
       );
     }
 
-    root.querySelectorAll('[data-reveal], [data-reveal-lines]').forEach((el) => {
+    root.querySelectorAll(REVEAL_SELECTOR).forEach((el) => {
       if (el.classList.contains('is-revealed')) return;
+      if (el.hasAttribute('data-reveal-words')) splitWords(el);
       revealObserver.observe(el);
     });
   }
@@ -403,6 +434,7 @@
 
   let parallaxItems = [];
   let parallaxTicking = false;
+  let parallaxListening = false;
 
   function updateParallax() {
     parallaxTicking = false;
@@ -423,22 +455,25 @@
   }
 
   function initParallax(root = document) {
-    const enabled =
-      config.parallax !== false &&
-      !prefersReducedMotion.matches &&
-      window.matchMedia('(min-width: 990px)').matches;
+    // El parallax de secciones interiores se reserva a escritorio; el de la
+    // portada (data-parallax-always) también corre en celular, donde es el
+    // único movimiento ligado al scroll de esa pantalla.
+    const allowed =
+      config.parallax !== false && !prefersReducedMotion.matches;
+    const isDesktop = window.matchMedia('(min-width: 990px)').matches;
 
     const nodes = Array.from(root.querySelectorAll('[data-parallax]'));
 
-    if (!enabled) {
-      nodes.forEach((el) => {
-        const target = el.querySelector('[data-parallax-target]') || el.firstElementChild;
-        if (target) target.style.transform = '';
-      });
-      return;
-    }
-
     nodes.forEach((el) => {
+      const enabled = allowed && (isDesktop || el.hasAttribute('data-parallax-always'));
+      if (enabled) return;
+      const target = el.querySelector('[data-parallax-target]') || el.firstElementChild;
+      if (target) target.style.transform = '';
+    });
+
+    if (!allowed) return;
+
+    nodes.filter((el) => isDesktop || el.hasAttribute('data-parallax-always')).forEach((el) => {
       const target = el.querySelector('[data-parallax-target]') || el.firstElementChild;
       if (!target) return;
       if (parallaxItems.some((item) => item.el === el)) return;
@@ -449,7 +484,8 @@
       });
     });
 
-    if (parallaxItems.length === 1) {
+    if (parallaxItems.length && !parallaxListening) {
+      parallaxListening = true;
       window.addEventListener('scroll', requestParallax, { passive: true });
       window.addEventListener('resize', requestParallax);
     }

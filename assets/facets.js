@@ -117,13 +117,33 @@
       this.target = document.querySelector(this.getAttribute('data-target'));
       if (!this.button || !this.target) return;
 
+      this.loading = false;
       this.button.addEventListener('click', () => this.load());
+
+      // Carga infinita: se pide la página siguiente en cuanto el botón se
+      // acerca a la ventana. El botón se queda por debajo — sirve de aviso
+      // para lectores de pantalla y de plan B si falla el observador.
+      if ('IntersectionObserver' in window) {
+        this.observer = new IntersectionObserver(
+          (entries) => {
+            if (!entries[0].isIntersecting) return;
+            this.load();
+          },
+          { rootMargin: '600px 0px' }
+        );
+        this.observer.observe(this);
+      }
+    }
+
+    disconnectedCallback() {
+      if (this.observer) this.observer.disconnect();
     }
 
     load() {
       const url = this.getAttribute('data-next-url');
-      if (!url) return;
+      if (!url || this.loading) return;
 
+      this.loading = true;
       this.button.setAttribute('aria-busy', 'true');
 
       fetch(url)
@@ -136,16 +156,19 @@
           const nextLoader = doc.querySelector('load-more');
           const nextUrl = nextLoader && nextLoader.getAttribute('data-next-url');
 
+          this.loading = false;
+          this.button.removeAttribute('aria-busy');
+          if (Theme.initReveals) Theme.initReveals(this.target);
+
           if (nextUrl) {
             this.setAttribute('data-next-url', nextUrl);
           } else {
+            if (this.observer) this.observer.disconnect();
             this.remove();
           }
-
-          this.button.removeAttribute('aria-busy');
-          if (Theme.initReveals) Theme.initReveals(this.target);
         })
         .catch(() => {
+          this.loading = false;
           this.button.removeAttribute('aria-busy');
         });
     }

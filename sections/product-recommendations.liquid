@@ -25,6 +25,7 @@
               {% render 'product-card',
                 product: recommended_product,
                 image_loading: 'lazy',
+                card_index: forloop.index0,
                 sizes: '(min-width: 990px) 23vw, 46vw'
               %}
             </li>

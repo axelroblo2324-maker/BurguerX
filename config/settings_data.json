@@ -32,7 +32,7 @@
     "cart_type": "drawer",
     "cart_show_note": true,
     "cart_free_shipping_enabled": true,
-    "cart_free_shipping_threshold": "1500",
+    "cart_free_shipping_threshold": "1050",
     "animations_enabled": true,
     "animations_image_zoom": true,
     "animations_parallax": true,

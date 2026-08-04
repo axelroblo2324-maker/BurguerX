@@ -8,6 +8,14 @@
 
   const Theme = window.Theme || {};
   const strings = window.themeStrings || {};
+  const config = window.themeConfig || {};
+
+  const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const desktopQuery = window.matchMedia('(min-width: 990px)');
+
+  function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
 
   /* --------------------------- Selector de variantes ---------------------- */
 
@@ -208,10 +216,107 @@
         );
         this.items.forEach((item) => this.observer.observe(item));
       }
+
+      this.setupMotion();
     }
 
     disconnectedCallback() {
       if (this.observer) this.observer.disconnect();
+      if (this.onMotionScroll) {
+        window.removeEventListener('scroll', this.onMotionScroll);
+        window.removeEventListener('resize', this.onMotionSync);
+        if (reduceMotionQuery.removeEventListener) {
+          reduceMotionQuery.removeEventListener('change', this.onMotionSync);
+        }
+      }
+    }
+
+    /* --------- Recorrido de las fotos ligado al scroll (escritorio) --------
+       Cada foto entra subiendo, ganando opacidad y escalando de 0.96 a 1
+       mientras la anterior se desvanece. Los valores se escriben en cada
+       cuadro: no hay transición CSS que pelear, sólo transform y opacity.
+       Nada de esto se aplica antes de que corra el JS, así que la primera
+       foto —la imagen LCP— nunca queda escondida esperando. */
+
+    get motionEnabled() {
+      return (
+        this.hasAttribute('data-gallery-motion') &&
+        config.animations !== false &&
+        desktopQuery.matches &&
+        !reduceMotionQuery.matches
+      );
+    }
+
+    setupMotion() {
+      if (!this.hasAttribute('data-gallery-motion')) return;
+      if (config.animations === false) return;
+
+      this.motionTicking = false;
+      this.onMotionScroll = () => this.requestMotion();
+      this.onMotionSync = () => this.syncMotion();
+
+      window.addEventListener('scroll', this.onMotionScroll, { passive: true });
+      window.addEventListener('resize', this.onMotionSync);
+      if (reduceMotionQuery.addEventListener) {
+        reduceMotionQuery.addEventListener('change', this.onMotionSync);
+      }
+
+      this.syncMotion();
+    }
+
+    syncMotion() {
+      if (this.motionEnabled) {
+        this.classList.add('product-gallery--motion');
+        this.requestMotion();
+        return;
+      }
+
+      this.classList.remove('product-gallery--motion');
+      this.items.forEach((item) => {
+        item.style.opacity = '';
+        item.style.transform = '';
+        const image = item.querySelector('.product-gallery__image');
+        if (image) image.style.transform = '';
+      });
+    }
+
+    requestMotion() {
+      if (this.motionTicking || !this.motionEnabled) return;
+      this.motionTicking = true;
+      requestAnimationFrame(() => this.updateMotion());
+    }
+
+    updateMotion() {
+      this.motionTicking = false;
+      if (!this.motionEnabled) return;
+
+      const viewportHeight = window.innerHeight;
+
+      this.items.forEach((item) => {
+        const rect = item.getBoundingClientRect();
+        // Fuera de este margen no se toca nada: al entrar en él la foto ya
+        // lleva puesto su estado inicial, así que no hay salto.
+        if (rect.bottom < -viewportHeight || rect.top > viewportHeight * 2) return;
+
+        const enter = clamp((viewportHeight - rect.top) / (viewportHeight * 0.55), 0, 1);
+        const exit = clamp(rect.bottom / (viewportHeight * 0.5), 0, 1);
+        const presence = Math.min(enter, exit);
+
+        const shift = (1 - enter) * 26;
+        const scale = 0.96 + 0.04 * enter;
+
+        item.style.opacity = (0.18 + 0.82 * presence).toFixed(3);
+        item.style.transform = `translate3d(0, ${shift.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+
+        const image = item.querySelector('.product-gallery__image');
+        if (image) {
+          // Parallax interior mínimo. El 1.03 de escala es el margen que hace
+          // falta para que el desplazamiento no descubra el borde del marco.
+          const center = (rect.top + rect.height / 2 - viewportHeight / 2) / viewportHeight;
+          const inner = clamp(-center * 10, -10, 10);
+          image.style.transform = `translate3d(0, ${inner.toFixed(2)}px, 0) scale(1.03)`;
+        }
+      });
     }
 
     setActiveDot(index) {

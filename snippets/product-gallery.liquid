@@ -1,6 +1,6 @@
 {%- comment -%}
   Galería vertical del producto.
-  Parámetros: product, gallery_style ('stacked' | 'editorial'), section_id
+  Parámetros: product, gallery_style ('stacked' | 'editorial'), enable_motion, section_id
 {%- endcomment -%}
 
 {%- liquid
@@ -15,6 +15,7 @@
   class="{{ style_class }}"
   role="region"
   aria-label="{{ 'products.product.media.gallery_label' | t }}"
+  {% if enable_motion %}data-gallery-motion{% endif %}
 >
   <div class="product-gallery__viewport" data-gallery-viewport>
     {%- if media_items.size > 0 -%}
@@ -27,7 +28,7 @@
             assign priority = 'high'
           endif
         -%}
-        <div class="product-gallery__item" data-media-id="{{ media.id }}">
+        <div class="product-gallery__item" data-media-id="{{ media.id }}" data-media-index="{{ forloop.index0 }}">
           {%- case media.media_type -%}
             {%- when 'image' -%}
               {{
@@ -38,6 +39,7 @@
                   fetchpriority: priority,
                   widths: '400, 600, 800, 1000, 1300, 1600, 2000, 2200',
                   sizes: '(min-width: 990px) 52vw, 88vw',
+                  class: 'product-gallery__image',
                   alt: media.alt
               }}
 

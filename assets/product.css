@@ -150,6 +150,33 @@
   display: block;
 }
 
+/* Una foto por tramo vertical: el aire entre ellas es lo que hace que cada
+   una llegue sola a la pantalla. */
+
+@media screen and (min-width: 990px) {
+  .product-gallery__viewport {
+    gap: clamp(1.5rem, 4vw, 4rem);
+  }
+
+  .product-gallery--motion .product-gallery__item {
+    transform-origin: center center;
+    will-change: transform, opacity;
+  }
+
+  .product-gallery--motion .product-gallery__image {
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-gallery__item,
+  .product-gallery__image {
+    opacity: 1 !important;
+    transform: none !important;
+    will-change: auto;
+  }
+}
+
 .product-gallery__item .deferred-media__poster img {
   width: 100%;
   height: auto;
@@ -416,6 +443,16 @@
 
 .product__add-button {
   position: relative;
+}
+
+/* En celular la compra es el único destino de la pantalla: botón a todo lo
+   ancho y con altura de dedo. */
+
+@media screen and (max-width: 989px) {
+  .product__add-button {
+    min-height: 54px;
+    font-size: 0.8125rem;
+  }
 }
 
 .product__add-button.is-loading [data-add-label] {

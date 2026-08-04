@@ -4,8 +4,12 @@
 
 .collection-hero {
   display: grid;
-  gap: 1rem;
-  padding-block: clamp(2.5rem, 6vw, 6rem) clamp(1.5rem, 3vw, 2.5rem);
+  gap: 0.85rem;
+  padding-block: clamp(3rem, 8vw, 7rem) clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.collection-hero__eyebrow {
+  color: var(--color-fg-muted);
 }
 
 .collection-hero__title {
@@ -26,46 +30,6 @@
   letter-spacing: var(--eyebrow-tracking);
   text-transform: uppercase;
   color: var(--color-fg-muted);
-}
-
-.collection-hero--image {
-  position: relative;
-  min-height: min(60svh, 620px);
-  align-content: end;
-  color: #fff;
-  overflow: hidden;
-  padding: clamp(2rem, 5vw, 4rem) var(--gutter);
-  margin-inline: calc(var(--gutter) * -1);
-}
-
-.collection-hero--image .collection-hero__media {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.collection-hero--image .collection-hero__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.collection-hero--image::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1) 65%);
-}
-
-.collection-hero--image > *:not(.collection-hero__media) {
-  position: relative;
-  z-index: 2;
-}
-
-.collection-hero--image .collection-hero__description,
-.collection-hero--image .collection-hero__meta {
-  color: rgba(255, 255, 255, 0.85);
 }
 
 /* ------------------------------- Barra de filtros ------------------------ */

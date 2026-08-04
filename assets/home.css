@@ -19,6 +19,15 @@
   z-index: 0;
 }
 
+/* Con parallax la imagen sobresale por arriba y por abajo: es el margen que
+   consume el desplazamiento sin descubrir el fondo. Sin JS no se mueve nada,
+   así que este 8% de más simplemente no se ve. */
+
+.hero--parallax .hero__media {
+  top: -8%;
+  bottom: -8%;
+}
+
 .hero__media img,
 .hero__media video {
   width: 100%;
@@ -27,20 +36,34 @@
   object-position: var(--hero-focal, center);
 }
 
-.hero__media--mobile {
+.hero__picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Las capas sólo existen cuando la portada lleva video: ahí sí hacen falta dos
+   elementos, porque un <source> no cambia de archivo en un <video> ya cargado. */
+
+.hero__layer {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__layer--mobile {
   display: block;
 }
 
-.hero__media--desktop {
+.hero__layer--desktop {
   display: none;
 }
 
 @media screen and (min-width: 750px) {
-  .hero__media--mobile {
+  .hero__layer--mobile {
     display: none;
   }
 
-  .hero__media--desktop {
+  .hero__layer--desktop {
     display: block;
   }
 }

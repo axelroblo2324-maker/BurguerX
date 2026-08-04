@@ -1368,6 +1368,14 @@ body:has(#MainContent > .shopify-section:first-child [data-header-transparent='t
   background-color: var(--color-bg-warm);
 }
 
+/* Rejilla de sólo fotografía: sin texto, el enlace es la propia foto, así que
+   el foco de teclado tiene que verse sobre ella. */
+
+.product-card--bare .product-card__media:focus-visible {
+  outline: 2px solid var(--color-fg);
+  outline-offset: 3px;
+}
+
 .product-card__media img {
   width: 100%;
   height: 100%;

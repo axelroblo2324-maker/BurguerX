@@ -37,7 +37,8 @@
         "image_ratio": "tall",
         "background": "default",
         "padding_top": 112,
-        "padding_bottom": 32
+        "padding_bottom": 32,
+        "show_card_text": false
       }
     },
     "mujeres": {
@@ -54,7 +55,8 @@
         "image_ratio": "tall",
         "background": "default",
         "padding_top": 96,
-        "padding_bottom": 32
+        "padding_bottom": 32,
+        "show_card_text": false
       }
     },
     "hombres": {
@@ -71,7 +73,8 @@
         "image_ratio": "tall",
         "background": "default",
         "padding_top": 96,
-        "padding_bottom": 32
+        "padding_bottom": 32,
+        "show_card_text": false
       }
     },
     "accesorios": {
@@ -88,7 +91,8 @@
         "image_ratio": "tall",
         "background": "default",
         "padding_top": 96,
-        "padding_bottom": 32
+        "padding_bottom": 32,
+        "show_card_text": false
       }
     },
     "mas-vendidos": {
@@ -105,7 +109,8 @@
         "image_ratio": "tall",
         "background": "default",
         "padding_top": 96,
-        "padding_bottom": 128
+        "padding_bottom": 128,
+        "show_card_text": false
       }
     }
   },

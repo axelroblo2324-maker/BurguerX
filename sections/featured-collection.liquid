@@ -56,6 +56,7 @@
                 image_loading: 'lazy',
                 image_ratio: section.settings.image_ratio,
                 card_index: forloop.index0,
+                show_text: section.settings.show_card_text,
                 sizes: '(min-width: 990px) 23vw, (min-width: 750px) 31vw, 46vw'
               %}
             </li>
@@ -159,6 +160,13 @@
     {
       "type": "header",
       "content": "Estilo"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_text",
+      "label": "Mostrar nombre y precio bajo cada foto",
+      "info": "Al apagarlo queda una rejilla de sólo fotografía. El precio deja de verse hasta entrar al producto; los lectores de pantalla lo siguen anunciando.",
+      "default": true
     },
     {
       "type": "checkbox",

@@ -56,14 +56,31 @@
     los últimos productos de una colección larga tardarían segundos en aparecer.
   endcomment
   assign stagger_step = card_index | default: 0 | modulo: 4 | times: 70
+
+  comment
+    Rejilla de sólo fotografía. Cuando el texto se oculta, el enlace deja de
+    ser el nombre y pasa a serlo la propia foto: si no, la tarjeta se quedaría
+    sin enlace y sin nombre que anunciar. El título sigue ahí para lectores de
+    pantalla, sólo que sin ocupar sitio.
+  endcomment
+  assign text_enabled = true
+  if show_text == false
+    assign text_enabled = false
+  endif
 -%}
 
-<div class="product-card" data-reveal style="--reveal-delay: {{ stagger_step }}ms;">
+<div
+  class="product-card{% unless text_enabled %} product-card--bare{% endunless %}"
+  data-reveal
+  style="--reveal-delay: {{ stagger_step }}ms;"
+>
   <a
     class="product-card__media {{ media_class }} {% if settings.animations_image_zoom %}media-zoom{% endif %}"
     href="{{ product.url }}"
-    tabindex="-1"
-    aria-hidden="true"
+    {% if text_enabled %}
+      tabindex="-1"
+      aria-hidden="true"
+    {% endif %}
   >
     {%- if product.featured_media -%}
       {{
@@ -92,6 +109,13 @@
     {%- else -%}
       {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
     {%- endif -%}
+
+    {%- unless text_enabled -%}
+      <span class="visually-hidden">
+        {{- product.title | escape }} — {{ product.price | money -}}
+        {%- unless product.available %} ({{ 'products.product.sold_out' | t }}){% endunless -%}
+      </span>
+    {%- endunless -%}
   </a>
 
   {%- if badges_enabled -%}
@@ -108,7 +132,8 @@
     </div>
   {%- endif -%}
 
-  <div class="product-card__info">
+  {%- if text_enabled -%}
+    <div class="product-card__info">
     {%- if settings.card_show_vendor and product.vendor != blank -%}
       <span class="product-card__vendor">{{ product.vendor | escape }}</span>
     {%- endif -%}
@@ -124,5 +149,6 @@
     {%- if swatches_enabled -%}
       {% render 'card-swatches', product: product %}
     {%- endif -%}
-  </div>
+    </div>
+  {%- endif -%}
 </div>

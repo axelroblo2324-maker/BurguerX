@@ -21,6 +21,7 @@
     "layout_gutter_mobile": 20,
     "layout_section_spacing": 120,
     "logo_width": 130,
+    "share_image": "shopify://shop_images/photo-1469334031218-e382a71b716b.jpg",
     "card_image_ratio": "tall",
     "card_hover_second_image": true,
     "card_show_vendor": false,

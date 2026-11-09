@@ -1,0 +1,12 @@
+001 - WILLY PRUEBA LA SALSA PICANTE
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers, deadpan expression. Outfit: open black zip hoodie, white t-shirt, small black crossbody bag, baggy light-blue jeans, white sneakers. Scene: a busy Mexican street taco stand at night, warm string lights, steam rising from the grill. Willy stands at the counter holding a taco al pastor dripping with bright red salsa, about to take a bite. Behind the counter a chubby taquero with a white apron and cap watches him with a mischievous smile, holding a bottle of hot sauce. Two customers in the background eating. Photorealistic, shot on iPhone at night, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Handheld phone video, realistic. 0-2s: the alien Willy takes a big bite of the taco. 2-5s: he freezes, chewing slowly, and his green skin gradually turns bright red from the neck up to the top of his head while the taquero laughs. 5-8s: thin steam rises from the top of his head and his huge black eyes water. 8-10s: completely red, he calmly takes another big bite and gives a thumbs up. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Le dije que no picaba 🌶️"
+CAPTION: En mi planeta no existe el chile 🥵👽 #willy #alien #tacos #salsapicante #humor #reels

@@ -1,0 +1,12 @@
+010 - WILLY UN LUNES
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers, tired deadpan expression. Outfit: bright yellow raincoat over a black hoodie, baggy light-blue jeans, white sneakers, holding a black umbrella. Scene: a city bus stop on a rainy Monday morning, grey sky, wet street, cars passing. People wait under the bus stop roof: a man in a suit with a briefcase and a woman with a coffee cup. Willy stands at the edge of the sidewalk in the rain. Photorealistic, moody rainy light, filmed on a phone, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Handheld phone video, realistic, rain falling. 0-2s: the alien Willy opens his umbrella upside down. 2-5s: the umbrella quickly fills with rain water while the people at the bus stop stare. 5-8s: he lifts it with both hands and calmly drinks from it like a giant cup. 8-10s: he politely offers some to the man in the suit, who slowly steps away. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Lunes 7:00 AM"
+CAPTION: Así se hidrata un lunes 🌧️☔ #lunes #lluvia #alien #willy #humor #reels

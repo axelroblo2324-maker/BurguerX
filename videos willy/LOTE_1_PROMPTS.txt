@@ -1,0 +1,184 @@
+==========================================================
+   WILLY EL ALIEN - LOTE 1 (10 VIDEOS)
+   Prompts listos para copiar y pegar en Higgsfield
+==========================================================
+
+CÓMO USARLO
+1. Copia el PROMPT DE IMAGEN -> Nano Banana Pro
+   - Sube la foto de Willy como referencia
+   - Formato: 9:16
+2. Cuando salga la imagen, úsala como imagen inicial en Seedance 2.5
+   y copia el PROMPT DE VIDEO de abajo.
+   - Formato: 9:16 | Duración: 10 s | 720p
+3. En CapCut pon el TEXTO EN PANTALLA y una canción en tendencia.
+4. Publica con el CAPTION.
+
+TIP RÁPIDO: manda las 10 imágenes primero, una tras otra,
+y luego haz los videos mientras las demás terminan.
+
+
+==========================================================
+001 - WILLY PRUEBA LA SALSA PICANTE
+==========================================================
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers, deadpan expression. Outfit: open black zip hoodie, white t-shirt, small black crossbody bag, baggy light-blue jeans, white sneakers. Scene: a busy Mexican street taco stand at night, warm string lights, steam rising from the grill. Willy stands at the counter holding a taco al pastor dripping with bright red salsa, about to take a bite. Behind the counter a chubby taquero with a white apron and cap watches him with a mischievous smile, holding a bottle of hot sauce. Two customers in the background eating. Photorealistic, shot on iPhone at night, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Handheld phone video, realistic. 0-2s: the alien Willy takes a big bite of the taco. 2-5s: he freezes, chewing slowly, and his green skin gradually turns bright red from the neck up to the top of his head while the taquero laughs. 5-8s: thin steam rises from the top of his head and his huge black eyes water. 8-10s: completely red, he calmly takes another big bite and gives a thumbs up. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Le dije que no picaba 🌶️"
+CAPTION: En mi planeta no existe el chile 🥵👽 #willy #alien #tacos #salsapicante #humor #reels
+
+
+==========================================================
+002 - WILLY EN EL GYM
+==========================================================
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim skinny human-sized body, long thin greenish fingers, deadpan expression. Outfit: loose grey tank top, black gym shorts, white running shoes, small white towel over his shoulder, water bottle in hand. Scene: a busy modern gym at night with bright lights and mirrors. Willy stands next to a full dumbbell rack. Behind him, two big muscular guys in tank tops are lifting heavy weights and a woman runs on a treadmill. Photorealistic, shot on iPhone, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Handheld phone video, realistic. 0-2s: the skinny alien Willy casually lifts the ENTIRE heavy dumbbell rack above his head with one hand. 2-6s: the muscular guys freeze and stare with their mouths open, one drops his dumbbell. 6-8s: Willy gently puts the rack down. 8-10s: he picks up a tiny pink 1kg dumbbell and starts doing slow serious bicep curls, looking at himself in the mirror. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Primer día en el gym 💪"
+CAPTION: Dice que hoy es día de brazo 😂 #gym #gymhumor #alien #willy #fitness #reels
+
+
+==========================================================
+003 - WILLY DE MESERO
+==========================================================
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers, deadpan expression. Outfit: white dress shirt, black vest, black bow tie, long black waiter apron, white towel over his arm. Scene: an elegant Italian restaurant at night with candles on the tables. Willy walks between the tables with a straight back. Several plates of pasta and pizza are floating in the air behind him in a line. Elegantly dressed couples sit at the tables, a man in a suit stares at the floating plates. Photorealistic, cinematic warm lighting, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Smooth cinematic tracking shot. 0-2s: the alien waiter Willy walks forward with a line of 10 plates floating behind him. 2-6s: with tiny finger movements he makes each plate float down and land perfectly on each table, customers lean back amazed. 6-8s: a man raises his hand to call him. 8-10s: Willy points at him and a plate of spaghetti gently floats and lands on the man's head; Willy bows politely. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Contrataron al nuevo mesero"
+CAPTION: 5 estrellas en servicio 🛸🍝 #mesero #restaurante #alien #willy #humor #reels
+
+
+==========================================================
+004 - WILLY CHOFER DE UBER
+==========================================================
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers, deadpan expression. Outfit: black hoodie, black sunglasses resting on top of his big head, small lanyard. Scene: interior of a clean sedan car at night, view from a dashcam mounted on the windshield facing the inside of the car. Willy sits in the driver seat with both hands on the steering wheel, a phone with a GPS map on the dashboard, a little air freshener shaped like a UFO hanging from the mirror. A young woman with a backpack is opening the back door, looking down at her phone. City lights outside. Dashcam footage look with timestamp in the corner, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Static dashcam footage, slightly grainy, realistic. 0-2s: the young woman sits in the back seat, still looking at her phone. 2-5s: the alien driver Willy slowly turns his head all the way around to look at her. 5-7s: she looks up and screams, pressing herself against the door. 7-10s: Willy calmly offers her a mint and a small bottle of water, and smiles slightly. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Calificación: ⭐⭐⭐⭐⭐"
+CAPTION: Siempre ofrece agua y dulces 🚗👽 #uber #chofer #alien #willy #dashcam #reels
+
+
+==========================================================
+005 - WILLY Y EL REFRI A LAS 3 AM
+==========================================================
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers. Outfit: navy blue pajamas with small yellow stars, fluffy grey slippers. Scene: a dark home kitchen at 3 AM, the only light comes from the open fridge. Willy stands in front of the fridge eating a slice of cold pizza, holding a carton of milk in the other hand. Security camera view from a high ceiling corner, black and white night vision look, timestamp overlay "03:12 AM" in the corner. Vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Grainy security camera footage, static high angle, night vision. 0-3s: the alien Willy eats pizza and drinks milk from the carton in front of the open fridge. 3-5s: the kitchen lights suddenly turn on, a sleepy man in a t-shirt appears at the doorway. 5-7s: Willy freezes completely mid-bite, perfectly still like a statue. 7-10s: very slowly, without looking away, Willy steps backwards into the fridge and closes the door from the inside. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Cámara de la cocina 3:12 AM"
+CAPTION: ¿Quién se comió la pizza? 🍕👀 #camaradeseguridad #3am #alien #willy #humor #reels
+
+
+==========================================================
+006 - WILLY PRUEBA EL CAFÉ
+==========================================================
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers, deadpan expression. Outfit: light blue office shirt with rolled sleeves, crooked dark blue tie, ID badge on a lanyard, grey trousers. Scene: a modern office break room in the morning, coffee machine behind him. Willy holds a tiny white espresso cup with both hands, looking at it curiously. A female coworker in business clothes leans on the counter watching him, smiling. Photorealistic, bright office lighting, shot on iPhone, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Handheld phone video, realistic. 0-2s: the alien Willy takes a small sip of the espresso. 2-3s: his huge black eyes widen and his whole body vibrates. 3-8s: fast-motion timelapse, Willy zooms around the office cleaning desks, typing on four computers at once, watering plants and organizing papers while coworkers stare. 8-10s: back to normal speed, Willy stands in front of the coworker and quietly holds out his empty cup asking for another one. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Su primer café ☕"
+CAPTION: Ahora entiende a los humanos los lunes ☕👽 #cafe #oficina #alien #willy #lunes #reels
+
+
+==========================================================
+007 - WILLY Y LA PUERTA AUTOMÁTICA
+==========================================================
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers, deadpan expression. Outfit: open black zip hoodie, white t-shirt, small black crossbody bag, baggy light-blue jeans, white sneakers. Scene: the entrance of a supermarket during the day with automatic glass sliding doors. Willy stands right in front of the open doors, bowing politely with one hand on his chest. Shoppers with carts are behind him, an old lady watches him confused. Photorealistic, natural daylight, filmed on a phone, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Handheld phone video, realistic. 0-2s: the automatic doors open and the alien Willy bows politely to them. 2-4s: he steps back to let them pass, the doors close. 4-6s: he steps forward, the doors open again, he bows again more deeply. 6-10s: this repeats faster and faster, Willy bowing deeper each time while shoppers wait behind him. End with the doors open and Willy bowing, matching the first frame for a perfect loop. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Las puertas aquí son muy educadas"
+CAPTION: Él solo quería ser amable 🙇‍♂️ #supermercado #alien #willy #humor #loop #reels
+
+
+==========================================================
+008 - WILLY EN EL METRO
+==========================================================
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers, deadpan expression. Outfit: open black zip hoodie, white t-shirt, small black crossbody bag, baggy light-blue jeans, white sneakers, wireless earbuds. Scene: a crowded subway car during rush hour. Every passenger is staring down at their phone: a businessman in a suit, a student with a backpack, a woman with headphones. Willy sits between them holding a raw potato in both hands like a phone, staring at it very seriously. Photorealistic, fluorescent subway lighting, filmed on a phone, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Handheld phone video, realistic. 0-2s: all the passengers scroll on their phones. 2-5s: the alien Willy copies them, swiping his long finger on the potato with total concentration. 5-7s: he silently shakes with laughter at the potato. 7-10s: he turns and shows the potato to the businessman next to him, who looks at it, then at Willy, confused. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Intentando encajar"
+CAPTION: Todavía no entiende el wifi 🥔📱 #metro #celular #alien #willy #humor #reels
+
+
+==========================================================
+009 - WILLY EN UNA CITA
+==========================================================
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers, shy expression. Outfit: black blazer, white dress shirt with the top button closed, holding a bouquet of red roses. Scene: a romantic restaurant at night with candles and dim warm lights. Willy sits at a small table across from a pretty young woman in a red dress with long dark hair, she smiles nervously. Glasses of wine on the table. Photorealistic, cinematic romantic lighting, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Cinematic, realistic. 0-2s: the alien Willy shyly hands the bouquet of roses to the woman. 2-4s: she smiles and places the roses on the table. 4-8s: Willy, confused, picks up a rose and starts eating it petal by petal, keeping eye contact with her. 8-10s: she slowly takes a sip of wine, staring at him in shock, while he offers her a rose to eat too. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Primera cita en la Tierra 🌹"
+CAPTION: Primera cita en la Tierra 💘 #cita #primeracita #alien #willy #humor #reels
+
+
+==========================================================
+010 - WILLY UN LUNES
+==========================================================
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers, tired deadpan expression. Outfit: bright yellow raincoat over a black hoodie, baggy light-blue jeans, white sneakers, holding a black umbrella. Scene: a city bus stop on a rainy Monday morning, grey sky, wet street, cars passing. People wait under the bus stop roof: a man in a suit with a briefcase and a woman with a coffee cup. Willy stands at the edge of the sidewalk in the rain. Photorealistic, moody rainy light, filmed on a phone, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Handheld phone video, realistic, rain falling. 0-2s: the alien Willy opens his umbrella upside down. 2-5s: the umbrella quickly fills with rain water while the people at the bus stop stare. 5-8s: he lifts it with both hands and calmly drinks from it like a giant cup. 8-10s: he politely offers some to the man in the suit, who slowly steps away. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Lunes 7:00 AM"
+CAPTION: Así se hidrata un lunes 🌧️☔ #lunes #lluvia #alien #willy #humor #reels
+
+
+==========================================================
+FIN DEL LOTE 1
+Cuando termines, dime cuáles funcionaron mejor
+y armo el lote 2.
+==========================================================

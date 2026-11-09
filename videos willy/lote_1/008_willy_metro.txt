@@ -1,0 +1,12 @@
+008 - WILLY EN EL METRO
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers, deadpan expression. Outfit: open black zip hoodie, white t-shirt, small black crossbody bag, baggy light-blue jeans, white sneakers, wireless earbuds. Scene: a crowded subway car during rush hour. Every passenger is staring down at their phone: a businessman in a suit, a student with a backpack, a woman with headphones. Willy sits between them holding a raw potato in both hands like a phone, staring at it very seriously. Photorealistic, fluorescent subway lighting, filmed on a phone, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Handheld phone video, realistic. 0-2s: all the passengers scroll on their phones. 2-5s: the alien Willy copies them, swiping his long finger on the potato with total concentration. 5-7s: he silently shakes with laughter at the potato. 7-10s: he turns and shows the potato to the businessman next to him, who looks at it, then at Willy, confused. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Intentando encajar"
+CAPTION: Todavía no entiende el wifi 🥔📱 #metro #celular #alien #willy #humor #reels

@@ -1,0 +1,12 @@
+004 - WILLY CHOFER DE UBER
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers, deadpan expression. Outfit: black hoodie, black sunglasses resting on top of his big head, small lanyard. Scene: interior of a clean sedan car at night, view from a dashcam mounted on the windshield facing the inside of the car. Willy sits in the driver seat with both hands on the steering wheel, a phone with a GPS map on the dashboard, a little air freshener shaped like a UFO hanging from the mirror. A young woman with a backpack is opening the back door, looking down at her phone. City lights outside. Dashcam footage look with timestamp in the corner, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Static dashcam footage, slightly grainy, realistic. 0-2s: the young woman sits in the back seat, still looking at her phone. 2-5s: the alien driver Willy slowly turns his head all the way around to look at her. 5-7s: she looks up and screams, pressing herself against the door. 7-10s: Willy calmly offers her a mint and a small bottle of water, and smiles slightly. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Calificación: ⭐⭐⭐⭐⭐"
+CAPTION: Siempre ofrece agua y dulces 🚗👽 #uber #chofer #alien #willy #dashcam #reels

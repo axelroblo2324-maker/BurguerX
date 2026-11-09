@@ -1,0 +1,12 @@
+007 - WILLY Y LA PUERTA AUTOMÁTICA
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers, deadpan expression. Outfit: open black zip hoodie, white t-shirt, small black crossbody bag, baggy light-blue jeans, white sneakers. Scene: the entrance of a supermarket during the day with automatic glass sliding doors. Willy stands right in front of the open doors, bowing politely with one hand on his chest. Shoppers with carts are behind him, an old lady watches him confused. Photorealistic, natural daylight, filmed on a phone, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Handheld phone video, realistic. 0-2s: the automatic doors open and the alien Willy bows politely to them. 2-4s: he steps back to let them pass, the doors close. 4-6s: he steps forward, the doors open again, he bows again more deeply. 6-10s: this repeats faster and faster, Willy bowing deeper each time while shoppers wait behind him. End with the doors open and Willy bowing, matching the first frame for a perfect loop. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Las puertas aquí son muy educadas"
+CAPTION: Él solo quería ser amable 🙇‍♂️ #supermercado #alien #willy #humor #loop #reels

@@ -1,0 +1,12 @@
+005 - WILLY Y EL REFRI A LAS 3 AM
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers. Outfit: navy blue pajamas with small yellow stars, fluffy grey slippers. Scene: a dark home kitchen at 3 AM, the only light comes from the open fridge. Willy stands in front of the fridge eating a slice of cold pizza, holding a carton of milk in the other hand. Security camera view from a high ceiling corner, black and white night vision look, timestamp overlay "03:12 AM" in the corner. Vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Grainy security camera footage, static high angle, night vision. 0-3s: the alien Willy eats pizza and drinks milk from the carton in front of the open fridge. 3-5s: the kitchen lights suddenly turn on, a sleepy man in a t-shirt appears at the doorway. 5-7s: Willy freezes completely mid-bite, perfectly still like a statue. 7-10s: very slowly, without looking away, Willy steps backwards into the fridge and closes the door from the inside. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Cámara de la cocina 3:12 AM"
+CAPTION: ¿Quién se comió la pizza? 🍕👀 #camaradeseguridad #3am #alien #willy #humor #reels

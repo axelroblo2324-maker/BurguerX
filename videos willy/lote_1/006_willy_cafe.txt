@@ -1,0 +1,12 @@
+006 - WILLY PRUEBA EL CAFÉ
+
+>>> PROMPT DE IMAGEN (Nano Banana Pro)
+
+Use the reference image for the alien's face and body. Willy, a realistic grey-type alien: large smooth bald elongated head, olive-green greyish skin with subtle darker mottled spots and wrinkles, huge glossy pitch-black almond eyes, tiny nose slits, small thin lipless mouth, thin long neck, slim human-sized body, long thin greenish fingers, deadpan expression. Outfit: light blue office shirt with rolled sleeves, crooked dark blue tie, ID badge on a lanyard, grey trousers. Scene: a modern office break room in the morning, coffee machine behind him. Willy holds a tiny white espresso cup with both hands, looking at it curiously. A female coworker in business clothes leans on the counter watching him, smiling. Photorealistic, bright office lighting, shot on iPhone, vertical 9:16.
+
+>>> PROMPT DE VIDEO (Seedance 2.5)
+
+Handheld phone video, realistic. 0-2s: the alien Willy takes a small sip of the espresso. 2-3s: his huge black eyes widen and his whole body vibrates. 3-8s: fast-motion timelapse, Willy zooms around the office cleaning desks, typing on four computers at once, watering plants and organizing papers while coworkers stare. 8-10s: back to normal speed, Willy stands in front of the coworker and quietly holds out his empty cup asking for another one. Keep the alien's face, eyes and outfit identical to the image.
+
+TEXTO EN PANTALLA: "Su primer café ☕"
+CAPTION: Ahora entiende a los humanos los lunes ☕👽 #cafe #oficina #alien #willy #lunes #reels

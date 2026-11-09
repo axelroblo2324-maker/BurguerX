@@ -6,7 +6,9 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Smooth cinematic tracking shot. 0-2s: the alien waiter Willy walks forward with a line of 10 plates floating behind him. 2-6s: with tiny finger movements he makes each plate float down and land perfectly on each table, customers lean back amazed. 6-8s: a man raises his hand to call him. 8-10s: Willy points at him and a plate of spaghetti gently floats and lands on the man's head; Willy bows politely. Keep the alien's face, eyes and outfit identical to the image.
+Smooth cinematic tracking shot, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: the alien waiter Willy walks forward with a line of plates floating behind him, a soft magical humming sound. 2-5s: with tiny finger movements each plate floats down and lands on a table with a gentle "ding", customers gasp "¡Wow!". 5-7s: a man in a suit snaps his fingers and says in Spanish: "¡Joven! ¡Mi espagueti, rápido!" 7-10s: Willy points at him, a plate of spaghetti floats over and gently lands upside down on the man's head with a wet SPLAT; Willy bows and says: "Buen provecho, señor." Sounds: restaurant chatter, cutlery clinking, soft magical hum, splat. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Contrataron al nuevo mesero"
 CAPTION: 5 estrellas en servicio 🛸🍝 #mesero #restaurante #alien #willy #humor #reels
+
+(Recuerda: activa el AUDIO en Seedance)

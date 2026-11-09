@@ -6,7 +6,9 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Grainy security camera footage, static high angle, night vision. 0-3s: the alien Willy eats pizza and drinks milk from the carton in front of the open fridge. 3-5s: the kitchen lights suddenly turn on, a sleepy man in a t-shirt appears at the doorway. 5-7s: Willy freezes completely mid-bite, perfectly still like a statue. 7-10s: very slowly, without looking away, Willy steps backwards into the fridge and closes the door from the inside. Keep the alien's face, eyes and outfit identical to the image.
+Grainy security camera footage, static high angle, night vision, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow, with a subtle robotic echo, speaks Mexican Spanish in a whisper. 0-3s: silence and the hum of the fridge; the alien Willy munches pizza loudly and slurps milk from the carton. 3-5s: the light switch CLICKS on, a sleepy man in a t-shirt appears at the doorway and says in Spanish: "¿Quién anda ahí?" 5-7s: Willy freezes completely mid-bite, then whispers: "Usted está soñando..." 7-10s: very slowly Willy steps backwards into the fridge and closes the door from the inside with a soft thump; the man rubs his eyes and says: "Ya no vuelvo a cenar tacos." Sounds: fridge hum, crickets outside, munching, slurping, light switch click. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Cámara de la cocina 3:12 AM"
 CAPTION: ¿Quién se comió la pizza? 🍕👀 #camaradeseguridad #3am #alien #willy #humor #reels
+
+(Recuerda: activa el AUDIO en Seedance)

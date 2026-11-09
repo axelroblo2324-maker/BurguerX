@@ -6,7 +6,9 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Handheld phone video, realistic. 0-2s: the skinny alien Willy casually lifts the ENTIRE heavy dumbbell rack above his head with one hand. 2-6s: the muscular guys freeze and stare with their mouths open, one drops his dumbbell. 6-8s: Willy gently puts the rack down. 8-10s: he picks up a tiny pink 1kg dumbbell and starts doing slow serious bicep curls, looking at himself in the mirror. Keep the alien's face, eyes and outfit identical to the image.
+Handheld phone video, realistic, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: the skinny alien Willy casually lifts the ENTIRE heavy dumbbell rack above his head with one hand, loud metal clanking and creaking. 2-5s: the muscular guys freeze, one drops his dumbbell with a heavy THUD on the floor and says in Spanish: "No manches, wey..." 5-7s: Willy gently puts the rack down with a booming metal crash and says: "Perdón. ¿Cuál es el de calentamiento?" 7-10s: he picks up a tiny pink 1kg dumbbell and does slow serious bicep curls in the mirror, grunting dramatically "Uff... uff..." Sounds: gym ambience, treadmill whirring, metal plates clanking. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Primer día en el gym 💪"
 CAPTION: Dice que hoy es día de brazo 😂 #gym #gymhumor #alien #willy #fitness #reels
+
+(Recuerda: activa el AUDIO en Seedance)

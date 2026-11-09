@@ -6,7 +6,9 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Handheld phone video, realistic. 0-2s: the automatic doors open and the alien Willy bows politely to them. 2-4s: he steps back to let them pass, the doors close. 4-6s: he steps forward, the doors open again, he bows again more deeply. 6-10s: this repeats faster and faster, Willy bowing deeper each time while shoppers wait behind him. End with the doors open and Willy bowing, matching the first frame for a perfect loop. Keep the alien's face, eyes and outfit identical to the image.
+Handheld phone video, realistic, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: the automatic doors open with a "whoosh" and a "ding", Willy bows and says: "Muchas gracias, señora puerta." 2-4s: he steps back, the doors close with a whoosh. 4-6s: he steps forward, the doors open again, he bows deeper: "No, no, usted primero." 6-10s: this repeats faster and faster with whoosh-whoosh sounds, an old lady behind him with a cart sighs and says: "Ay, mijo, ya pásale." End with the doors open and Willy bowing, matching the first frame for a perfect loop. Sounds: supermarket ambience, store announcement in the background, shopping cart wheels. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Las puertas aquí son muy educadas"
 CAPTION: Él solo quería ser amable 🙇‍♂️ #supermercado #alien #willy #humor #loop #reels
+
+(Recuerda: activa el AUDIO en Seedance)

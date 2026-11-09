@@ -10,6 +10,12 @@ CÓMO USARLO
 2. Cuando salga la imagen, úsala como imagen inicial en Seedance 2.5
    y copia el PROMPT DE VIDEO de abajo.
    - Formato: 9:16 | Duración: 10 s | 720p
+   - IMPORTANTE: activa el AUDIO (generate audio / sonido ON)
+     para que salgan las voces y los efectos.
+   - Los diálogos van en español entre comillas. Si el modelo
+     cambia las palabras, acorta la frase y vuelve a generar.
+   - Los prompts dicen "no background music" para que tú
+     pongas la canción en CapCut sin que tape las voces.
 3. En CapCut pon el TEXTO EN PANTALLA y una canción en tendencia.
 4. Publica con el CAPTION.
 
@@ -27,7 +33,7 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Handheld phone video, realistic. 0-2s: the alien Willy takes a big bite of the taco. 2-5s: he freezes, chewing slowly, and his green skin gradually turns bright red from the neck up to the top of his head while the taquero laughs. 5-8s: thin steam rises from the top of his head and his huge black eyes water. 8-10s: completely red, he calmly takes another big bite and gives a thumbs up. Keep the alien's face, eyes and outfit identical to the image.
+Handheld phone video, realistic, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: the taquero says in Spanish with a cheeky Mexican accent: "Tranquilo, güero, no pica nada." Willy takes a big crunchy bite of the taco. 2-5s: he freezes, chewing slowly, his green skin gradually turns bright red from the neck up to the top of his head, a rising whistle sound like a boiling kettle; the taquero bursts out laughing. 5-8s: steam hisses out of the top of his head, his huge black eyes water, a customer says "¡Ay, se está cocinando!". 8-10s: completely red, Willy says calmly: "Delicioso. Mi planeta está en llamas." and takes another bite. Sounds: sizzling grill, street traffic, crowd chatter, crunching taco, kettle whistle, steam hiss. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Le dije que no picaba 🌶️"
 CAPTION: En mi planeta no existe el chile 🥵👽 #willy #alien #tacos #salsapicante #humor #reels
@@ -43,7 +49,7 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Handheld phone video, realistic. 0-2s: the skinny alien Willy casually lifts the ENTIRE heavy dumbbell rack above his head with one hand. 2-6s: the muscular guys freeze and stare with their mouths open, one drops his dumbbell. 6-8s: Willy gently puts the rack down. 8-10s: he picks up a tiny pink 1kg dumbbell and starts doing slow serious bicep curls, looking at himself in the mirror. Keep the alien's face, eyes and outfit identical to the image.
+Handheld phone video, realistic, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: the skinny alien Willy casually lifts the ENTIRE heavy dumbbell rack above his head with one hand, loud metal clanking and creaking. 2-5s: the muscular guys freeze, one drops his dumbbell with a heavy THUD on the floor and says in Spanish: "No manches, wey..." 5-7s: Willy gently puts the rack down with a booming metal crash and says: "Perdón. ¿Cuál es el de calentamiento?" 7-10s: he picks up a tiny pink 1kg dumbbell and does slow serious bicep curls in the mirror, grunting dramatically "Uff... uff..." Sounds: gym ambience, treadmill whirring, metal plates clanking. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Primer día en el gym 💪"
 CAPTION: Dice que hoy es día de brazo 😂 #gym #gymhumor #alien #willy #fitness #reels
@@ -59,7 +65,7 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Smooth cinematic tracking shot. 0-2s: the alien waiter Willy walks forward with a line of 10 plates floating behind him. 2-6s: with tiny finger movements he makes each plate float down and land perfectly on each table, customers lean back amazed. 6-8s: a man raises his hand to call him. 8-10s: Willy points at him and a plate of spaghetti gently floats and lands on the man's head; Willy bows politely. Keep the alien's face, eyes and outfit identical to the image.
+Smooth cinematic tracking shot, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: the alien waiter Willy walks forward with a line of plates floating behind him, a soft magical humming sound. 2-5s: with tiny finger movements each plate floats down and lands on a table with a gentle "ding", customers gasp "¡Wow!". 5-7s: a man in a suit snaps his fingers and says in Spanish: "¡Joven! ¡Mi espagueti, rápido!" 7-10s: Willy points at him, a plate of spaghetti floats over and gently lands upside down on the man's head with a wet SPLAT; Willy bows and says: "Buen provecho, señor." Sounds: restaurant chatter, cutlery clinking, soft magical hum, splat. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Contrataron al nuevo mesero"
 CAPTION: 5 estrellas en servicio 🛸🍝 #mesero #restaurante #alien #willy #humor #reels
@@ -75,7 +81,7 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Static dashcam footage, slightly grainy, realistic. 0-2s: the young woman sits in the back seat, still looking at her phone. 2-5s: the alien driver Willy slowly turns his head all the way around to look at her. 5-7s: she looks up and screams, pressing herself against the door. 7-10s: Willy calmly offers her a mint and a small bottle of water, and smiles slightly. Keep the alien's face, eyes and outfit identical to the image.
+Static dashcam footage, slightly grainy, realistic, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: the car door slams, the young woman sits in the back looking at her phone and says in Spanish: "Hola, ¿a Polanco, verdad?" 2-5s: with a slow creaking sound, the alien driver Willy turns his head all the way around to look at her and says: "Sí, humana. Abróchese el cinturón." 5-7s: she looks up and screams loudly, pressing herself against the door. 7-10s: Willy calmly offers her a mint and a small bottle of water and says: "¿Gusta un dulce? Acepto cinco estrellas." Sounds: car engine idling, turn signal clicking, city traffic, GPS voice in the background. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Calificación: ⭐⭐⭐⭐⭐"
 CAPTION: Siempre ofrece agua y dulces 🚗👽 #uber #chofer #alien #willy #dashcam #reels
@@ -91,7 +97,7 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Grainy security camera footage, static high angle, night vision. 0-3s: the alien Willy eats pizza and drinks milk from the carton in front of the open fridge. 3-5s: the kitchen lights suddenly turn on, a sleepy man in a t-shirt appears at the doorway. 5-7s: Willy freezes completely mid-bite, perfectly still like a statue. 7-10s: very slowly, without looking away, Willy steps backwards into the fridge and closes the door from the inside. Keep the alien's face, eyes and outfit identical to the image.
+Grainy security camera footage, static high angle, night vision, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow, with a subtle robotic echo, speaks Mexican Spanish in a whisper. 0-3s: silence and the hum of the fridge; the alien Willy munches pizza loudly and slurps milk from the carton. 3-5s: the light switch CLICKS on, a sleepy man in a t-shirt appears at the doorway and says in Spanish: "¿Quién anda ahí?" 5-7s: Willy freezes completely mid-bite, then whispers: "Usted está soñando..." 7-10s: very slowly Willy steps backwards into the fridge and closes the door from the inside with a soft thump; the man rubs his eyes and says: "Ya no vuelvo a cenar tacos." Sounds: fridge hum, crickets outside, munching, slurping, light switch click. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Cámara de la cocina 3:12 AM"
 CAPTION: ¿Quién se comió la pizza? 🍕👀 #camaradeseguridad #3am #alien #willy #humor #reels
@@ -107,7 +113,7 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Handheld phone video, realistic. 0-2s: the alien Willy takes a small sip of the espresso. 2-3s: his huge black eyes widen and his whole body vibrates. 3-8s: fast-motion timelapse, Willy zooms around the office cleaning desks, typing on four computers at once, watering plants and organizing papers while coworkers stare. 8-10s: back to normal speed, Willy stands in front of the coworker and quietly holds out his empty cup asking for another one. Keep the alien's face, eyes and outfit identical to the image.
+Handheld phone video, realistic, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: the coworker says in Spanish: "Pruébalo, te va a despertar." Willy takes a small loud slurp of the espresso. 2-3s: his huge black eyes widen, his body vibrates with a rising electronic buzzing sound like a machine powering up. 3-8s: fast-motion, Willy zooms around the office with whooshing sounds, rapid keyboard typing on four computers, papers flying, a printer going crazy; coworkers say "¿Qué le pasa?" 8-10s: back to normal speed and silence, Willy stands in front of the coworker, holds out the empty cup and says very fast: "Otro-por-favor-gracias." Sounds: office ambience, coffee machine, whooshes, typing. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Su primer café ☕"
 CAPTION: Ahora entiende a los humanos los lunes ☕👽 #cafe #oficina #alien #willy #lunes #reels
@@ -123,7 +129,7 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Handheld phone video, realistic. 0-2s: the automatic doors open and the alien Willy bows politely to them. 2-4s: he steps back to let them pass, the doors close. 4-6s: he steps forward, the doors open again, he bows again more deeply. 6-10s: this repeats faster and faster, Willy bowing deeper each time while shoppers wait behind him. End with the doors open and Willy bowing, matching the first frame for a perfect loop. Keep the alien's face, eyes and outfit identical to the image.
+Handheld phone video, realistic, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: the automatic doors open with a "whoosh" and a "ding", Willy bows and says: "Muchas gracias, señora puerta." 2-4s: he steps back, the doors close with a whoosh. 4-6s: he steps forward, the doors open again, he bows deeper: "No, no, usted primero." 6-10s: this repeats faster and faster with whoosh-whoosh sounds, an old lady behind him with a cart sighs and says: "Ay, mijo, ya pásale." End with the doors open and Willy bowing, matching the first frame for a perfect loop. Sounds: supermarket ambience, store announcement in the background, shopping cart wheels. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Las puertas aquí son muy educadas"
 CAPTION: Él solo quería ser amable 🙇‍♂️ #supermercado #alien #willy #humor #loop #reels
@@ -139,7 +145,7 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Handheld phone video, realistic. 0-2s: all the passengers scroll on their phones. 2-5s: the alien Willy copies them, swiping his long finger on the potato with total concentration. 5-7s: he silently shakes with laughter at the potato. 7-10s: he turns and shows the potato to the businessman next to him, who looks at it, then at Willy, confused. Keep the alien's face, eyes and outfit identical to the image.
+Handheld phone video, realistic, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: the train rumbles, all the passengers scroll on their phones with notification sounds. 2-5s: the alien Willy copies them, swiping his long finger on the potato with total concentration, making little "tap tap" sounds. 5-7s: he laughs out loud in a strange high-pitched robotic giggle "jijiji" at the potato. 7-10s: he turns and shows the potato to the businessman next to him and says: "Mire, este video está buenísimo." The businessman looks at the potato, then at Willy, and says in Spanish: "...Es una papa." Sounds: subway train rumbling, brakes screeching, station announcement "Próxima estación". No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Intentando encajar"
 CAPTION: Todavía no entiende el wifi 🥔📱 #metro #celular #alien #willy #humor #reels
@@ -155,7 +161,7 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Cinematic, realistic. 0-2s: the alien Willy shyly hands the bouquet of roses to the woman. 2-4s: she smiles and places the roses on the table. 4-8s: Willy, confused, picks up a rose and starts eating it petal by petal, keeping eye contact with her. 8-10s: she slowly takes a sip of wine, staring at him in shock, while he offers her a rose to eat too. Keep the alien's face, eyes and outfit identical to the image.
+Cinematic, realistic, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and shy, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: Willy shyly hands the bouquet to the woman and says: "Para usted, terrícola hermosa." 2-4s: she smiles and says in Spanish: "Ay, qué lindo... gracias." and places the roses on the table. 4-8s: Willy, confused, picks up a rose and starts eating it petal by petal with loud crunching sounds, keeping eye contact with her. 8-10s: she stares at him in shock; Willy offers her a rose and says: "¿No va a comer? Están deliciosas." Sounds: soft restaurant chatter, glasses clinking, candle crackling, crunching petals. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Primera cita en la Tierra 🌹"
 CAPTION: Primera cita en la Tierra 💘 #cita #primeracita #alien #willy #humor #reels
@@ -171,7 +177,7 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Handheld phone video, realistic, rain falling. 0-2s: the alien Willy opens his umbrella upside down. 2-5s: the umbrella quickly fills with rain water while the people at the bus stop stare. 5-8s: he lifts it with both hands and calmly drinks from it like a giant cup. 8-10s: he politely offers some to the man in the suit, who slowly steps away. Keep the alien's face, eyes and outfit identical to the image.
+Handheld phone video, realistic, rain falling, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: heavy rain and thunder, Willy opens his umbrella upside down with a "fwump" sound. 2-5s: rain drums loudly into the umbrella as it fills with water; the woman with coffee whispers in Spanish: "¿Qué está haciendo?" 5-8s: he lifts it with both hands and drinks from it with loud gulping sounds, then says: "Ahhh... el lunes sabe a nube." 8-10s: he politely offers it to the man in the suit: "¿Gusta? Es de temporada." The man slowly steps away and says: "No, gracias..." A bus passes and splashes water. Sounds: rain, thunder, cars on wet road, bus splash. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Lunes 7:00 AM"
 CAPTION: Así se hidrata un lunes 🌧️☔ #lunes #lluvia #alien #willy #humor #reels

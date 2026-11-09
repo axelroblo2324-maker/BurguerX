@@ -6,7 +6,9 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Handheld phone video, realistic. 0-2s: the alien Willy takes a big bite of the taco. 2-5s: he freezes, chewing slowly, and his green skin gradually turns bright red from the neck up to the top of his head while the taquero laughs. 5-8s: thin steam rises from the top of his head and his huge black eyes water. 8-10s: completely red, he calmly takes another big bite and gives a thumbs up. Keep the alien's face, eyes and outfit identical to the image.
+Handheld phone video, realistic, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: the taquero says in Spanish with a cheeky Mexican accent: "Tranquilo, güero, no pica nada." Willy takes a big crunchy bite of the taco. 2-5s: he freezes, chewing slowly, his green skin gradually turns bright red from the neck up to the top of his head, a rising whistle sound like a boiling kettle; the taquero bursts out laughing. 5-8s: steam hisses out of the top of his head, his huge black eyes water, a customer says "¡Ay, se está cocinando!". 8-10s: completely red, Willy says calmly: "Delicioso. Mi planeta está en llamas." and takes another bite. Sounds: sizzling grill, street traffic, crowd chatter, crunching taco, kettle whistle, steam hiss. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Le dije que no picaba 🌶️"
 CAPTION: En mi planeta no existe el chile 🥵👽 #willy #alien #tacos #salsapicante #humor #reels
+
+(Recuerda: activa el AUDIO en Seedance)

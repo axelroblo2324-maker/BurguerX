@@ -6,7 +6,9 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Static dashcam footage, slightly grainy, realistic. 0-2s: the young woman sits in the back seat, still looking at her phone. 2-5s: the alien driver Willy slowly turns his head all the way around to look at her. 5-7s: she looks up and screams, pressing herself against the door. 7-10s: Willy calmly offers her a mint and a small bottle of water, and smiles slightly. Keep the alien's face, eyes and outfit identical to the image.
+Static dashcam footage, slightly grainy, realistic, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: the car door slams, the young woman sits in the back looking at her phone and says in Spanish: "Hola, ¿a Polanco, verdad?" 2-5s: with a slow creaking sound, the alien driver Willy turns his head all the way around to look at her and says: "Sí, humana. Abróchese el cinturón." 5-7s: she looks up and screams loudly, pressing herself against the door. 7-10s: Willy calmly offers her a mint and a small bottle of water and says: "¿Gusta un dulce? Acepto cinco estrellas." Sounds: car engine idling, turn signal clicking, city traffic, GPS voice in the background. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Calificación: ⭐⭐⭐⭐⭐"
 CAPTION: Siempre ofrece agua y dulces 🚗👽 #uber #chofer #alien #willy #dashcam #reels
+
+(Recuerda: activa el AUDIO en Seedance)

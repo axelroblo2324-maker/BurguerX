@@ -6,7 +6,9 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Cinematic, realistic. 0-2s: the alien Willy shyly hands the bouquet of roses to the woman. 2-4s: she smiles and places the roses on the table. 4-8s: Willy, confused, picks up a rose and starts eating it petal by petal, keeping eye contact with her. 8-10s: she slowly takes a sip of wine, staring at him in shock, while he offers her a rose to eat too. Keep the alien's face, eyes and outfit identical to the image.
+Cinematic, realistic, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and shy, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: Willy shyly hands the bouquet to the woman and says: "Para usted, terrícola hermosa." 2-4s: she smiles and says in Spanish: "Ay, qué lindo... gracias." and places the roses on the table. 4-8s: Willy, confused, picks up a rose and starts eating it petal by petal with loud crunching sounds, keeping eye contact with her. 8-10s: she stares at him in shock; Willy offers her a rose and says: "¿No va a comer? Están deliciosas." Sounds: soft restaurant chatter, glasses clinking, candle crackling, crunching petals. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Primera cita en la Tierra 🌹"
 CAPTION: Primera cita en la Tierra 💘 #cita #primeracita #alien #willy #humor #reels
+
+(Recuerda: activa el AUDIO en Seedance)

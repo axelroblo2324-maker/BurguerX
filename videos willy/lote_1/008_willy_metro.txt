@@ -6,7 +6,9 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Handheld phone video, realistic. 0-2s: all the passengers scroll on their phones. 2-5s: the alien Willy copies them, swiping his long finger on the potato with total concentration. 5-7s: he silently shakes with laughter at the potato. 7-10s: he turns and shows the potato to the businessman next to him, who looks at it, then at Willy, confused. Keep the alien's face, eyes and outfit identical to the image.
+Handheld phone video, realistic, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: the train rumbles, all the passengers scroll on their phones with notification sounds. 2-5s: the alien Willy copies them, swiping his long finger on the potato with total concentration, making little "tap tap" sounds. 5-7s: he laughs out loud in a strange high-pitched robotic giggle "jijiji" at the potato. 7-10s: he turns and shows the potato to the businessman next to him and says: "Mire, este video está buenísimo." The businessman looks at the potato, then at Willy, and says in Spanish: "...Es una papa." Sounds: subway train rumbling, brakes screeching, station announcement "Próxima estación". No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Intentando encajar"
 CAPTION: Todavía no entiende el wifi 🥔📱 #metro #celular #alien #willy #humor #reels
+
+(Recuerda: activa el AUDIO en Seedance)

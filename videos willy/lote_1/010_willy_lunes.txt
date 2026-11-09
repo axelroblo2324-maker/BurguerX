@@ -6,7 +6,9 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Handheld phone video, realistic, rain falling. 0-2s: the alien Willy opens his umbrella upside down. 2-5s: the umbrella quickly fills with rain water while the people at the bus stop stare. 5-8s: he lifts it with both hands and calmly drinks from it like a giant cup. 8-10s: he politely offers some to the man in the suit, who slowly steps away. Keep the alien's face, eyes and outfit identical to the image.
+Handheld phone video, realistic, rain falling, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: heavy rain and thunder, Willy opens his umbrella upside down with a "fwump" sound. 2-5s: rain drums loudly into the umbrella as it fills with water; the woman with coffee whispers in Spanish: "¿Qué está haciendo?" 5-8s: he lifts it with both hands and drinks from it with loud gulping sounds, then says: "Ahhh... el lunes sabe a nube." 8-10s: he politely offers it to the man in the suit: "¿Gusta? Es de temporada." The man slowly steps away and says: "No, gracias..." A bus passes and splashes water. Sounds: rain, thunder, cars on wet road, bus splash. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Lunes 7:00 AM"
 CAPTION: Así se hidrata un lunes 🌧️☔ #lunes #lluvia #alien #willy #humor #reels
+
+(Recuerda: activa el AUDIO en Seedance)

@@ -6,7 +6,9 @@ Use the reference image for the alien's face and body. Willy, a realistic grey-t
 
 >>> PROMPT DE VIDEO (Seedance 2.5)
 
-Handheld phone video, realistic. 0-2s: the alien Willy takes a small sip of the espresso. 2-3s: his huge black eyes widen and his whole body vibrates. 3-8s: fast-motion timelapse, Willy zooms around the office cleaning desks, typing on four computers at once, watering plants and organizing papers while coworkers stare. 8-10s: back to normal speed, Willy stands in front of the coworker and quietly holds out his empty cup asking for another one. Keep the alien's face, eyes and outfit identical to the image.
+Handheld phone video, realistic, with dialogue and sound. Willy's voice: soft, slightly high-pitched, slow and calm, with a subtle robotic echo, speaks Mexican Spanish very politely. 0-2s: the coworker says in Spanish: "Pruébalo, te va a despertar." Willy takes a small loud slurp of the espresso. 2-3s: his huge black eyes widen, his body vibrates with a rising electronic buzzing sound like a machine powering up. 3-8s: fast-motion, Willy zooms around the office with whooshing sounds, rapid keyboard typing on four computers, papers flying, a printer going crazy; coworkers say "¿Qué le pasa?" 8-10s: back to normal speed and silence, Willy stands in front of the coworker, holds out the empty cup and says very fast: "Otro-por-favor-gracias." Sounds: office ambience, coffee machine, whooshes, typing. No background music. Keep the alien's face, eyes and outfit identical to the image.
 
 TEXTO EN PANTALLA: "Su primer café ☕"
 CAPTION: Ahora entiende a los humanos los lunes ☕👽 #cafe #oficina #alien #willy #lunes #reels
+
+(Recuerda: activa el AUDIO en Seedance)
